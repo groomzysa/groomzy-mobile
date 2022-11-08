@@ -1,0 +1,138 @@
+"""Exposes a URL that specifies the behavior of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behavior of this scalar."""
+  url: String!
+) on SCALAR
+
+type Address {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  streetNumber: String!
+  streetName: String!
+  town: String!
+  city: String!
+  province: String!
+  areaCode: String!
+}
+
+type Booking {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  bookingTime: String!
+  inHouse: Boolean!
+  status: BookingStatus!
+  provider: Provider!
+  client: Client!
+  service: Service!
+}
+
+enum BookingStatus {
+  ACTIVE
+  CANCELLED
+  DELETED
+  DONE
+  PENDING
+}
+
+type BusinessProfile {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  address: Address!
+}
+
+type Category {
+  id: Int!
+  createdAt: String!
+  updatedAt: String!
+  category: CategoryType!
+  services: [Service!]!
+}
+
+enum CategoryType {
+  BARBER
+  HAIRDRESSER
+  MAKEUP_ARTIST
+  NAIL_TECHNICIAN
+  SPA
+}
+
+type Client {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  phone: String
+  user: User!
+  bookings: [Booking!]!
+}
+
+enum DurationUnitType {
+  MIN
+  HR
+}
+
+scalar File
+
+type Mutation {
+  addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!): User!
+}
+
+type Provider {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  phone: String!
+  user: User!
+  profile: BusinessProfile!
+  bookings: [Booking!]!
+}
+
+type Query {
+  providers: [Provider!]!
+}
+
+type Service {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  name: String!
+  description: String!
+  duration: Float!
+  durationUnit: DurationUnitType!
+  inHouse: Boolean!
+  price: Float!
+  category: Category!
+}
+
+type Subscription {
+  updateBooking: String
+}
+
+type User {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  state: UserStatus!
+  role: UserRole!
+  address: Address
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+  PROVIDER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  SUSPENDED
+  DELETED
+}
+
