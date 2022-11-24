@@ -4,7 +4,7 @@ import {
   CategoryType,
   DurationUnitType,
 } from "../../../../../api/graphql/api.schema";
-import { useAddService } from "../../../../../api/hooks/mutations";
+import { useUpdateService } from "../../../../../api/hooks/mutations";
 import {
   GButton,
   GErrorMessage,
@@ -20,24 +20,24 @@ import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../../../../utils/common/styles";
-import { ADD_SERVICE_MESSAGE } from "../../../../../utils/messages";
-import { ErrorText, SubTitleText } from "./styles";
-import { IAddServiceProps } from "./types";
+import { UPDATE_SERVICE_MESSAGE } from "../../../../../utils/messages";
+import { SubTitleText } from "./styles";
+import { IUpdateServiceProps } from "./types";
 
-export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
+export const UpdateService: FC<IUpdateServiceProps> = ({
+  service,
+  visible,
+  hideDialog,
+}) => {
   const [name, setName] = useState<string>("");
-  const [nameError, setNameError] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [descriptionError, setDescriptionError] = useState<string>("");
   const [price, setPrice] = useState<string>("");
-  const [priceError, setPriceError] = useState<string>("");
   const [duration, setDuration] = useState<string>("");
-  const [durationError, setDurationError] = useState<string>("");
   const [durationUnit, setDurationUnit] = useState<DurationUnitType>();
-  const [durationUnitError, setDurationUnitError] = useState<string>("");
   const [category, setCategory] = useState<CategoryType>();
-  const [categoryError, setCategoryError] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
+
+  const { id: serviceId } = service;
 
   /**
    *
@@ -45,12 +45,12 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
    *
    */
   const {
-    addServiceTrigger,
-    addService,
-    addServiceLoading,
-    addServiceHasError,
-    addServiceError,
-  } = useAddService();
+    updateServiceTrigger,
+    updateService,
+    updateServiceLoading,
+    updateServiceHasError,
+    updateServiceError,
+  } = useUpdateService();
 
   /**
    *
@@ -58,19 +58,23 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
    *
    */
   useEffect(() => {
-    if (!addService) return;
+    if (!updateService) return;
 
-    setSuccessMessage(ADD_SERVICE_MESSAGE);
+    setSuccessMessage(UPDATE_SERVICE_MESSAGE);
 
-    // After user added service successfully
-    // Reset state and close dialog
+    // After service updated successfully
+    // Reset state
     setName("");
     setDescription("");
     setPrice("");
     setDuration("");
     setDurationUnit(undefined);
     setCategory(undefined);
-  }, [addService]);
+
+    setTimeout(() => {
+      hideDialog();
+    }, 5000);
+  }, [updateService]);
 
   useEffect(() => {
     if (!successMessage) return;
@@ -78,7 +82,7 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
     setTimeout(() => {
       setSuccessMessage("");
       hideDialog();
-    }, 3000);
+    }, 5000);
   }, [successMessage]);
 
   /**
@@ -110,49 +114,9 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
     setCategory(CategoryType.Spa);
   };
 
-  const addServiceHandler = () => {
-    const arbortAddService =
-      !name ||
-      !description ||
-      !price ||
-      !duration ||
-      !durationUnit ||
-      !category;
-
-    if (!name) {
-      setNameError("Name is required!");
-    } else if (nameError) {
-      setNameError("");
-    }
-    if (!description) {
-      setDescriptionError("Description is required!");
-    } else if (descriptionError) {
-      setDescriptionError("");
-    }
-    if (!price) {
-      setPriceError("Price is required!");
-    } else if (priceError) {
-      setPriceError("");
-    }
-    if (!duration) {
-      setDurationError("Duration is required!");
-    } else if (durationError) {
-      setDurationError("");
-    }
-    if (!durationUnit) {
-      setDurationUnitError("Duration unit is required!");
-    } else if (durationUnitError) {
-      setDurationUnitError("");
-    }
-    if (!category) {
-      setCategoryError("Category is required!");
-    } else if (categoryError) {
-      setCategoryError("");
-    }
-
-    if (arbortAddService) return;
-
-    addServiceTrigger({
+  const updateServiceHandler = () => {
+    updateServiceTrigger({
+      serviceId,
       name,
       description,
       price: Number(price),
@@ -167,46 +131,46 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
       <KeyboardAvoidingViewContainer>
         <ScrollViewContainer>
-          <Dialog.Title>Add service</Dialog.Title>
+          <Dialog.Title>Update service</Dialog.Title>
           {successMessage && <GSuccessMessage message={successMessage} />}
-          {addServiceHasError && <GErrorMessage message={addServiceError} />}
+          {updateServiceHasError && (
+            <GErrorMessage message={updateServiceError} />
+          )}
           <GTextInput
             testID="serviceName"
             label="Name"
-            value={name}
+            value={name || service?.name || ""}
             onTextChange={setName}
-            errorMessage={nameError}
           />
           <GTextInput
             testID="serviceDescription"
             label="Description"
-            value={description}
+            value={description || service?.description || ""}
             onTextChange={setDescription}
-            errorMessage={descriptionError}
             multiline
           />
           <GTextInput
             testID="servicePrice"
             label="Price"
-            value={price}
+            value={price || service?.price?.toString()}
             onTextChange={setPrice}
-            errorMessage={priceError}
             keyboardType="decimal-pad"
           />
           <GTextInput
             testID="serviceDuration"
             label="Duration"
-            value={duration}
+            value={duration || service?.duration?.toString()}
             onTextChange={setDuration}
-            errorMessage={durationError}
             keyboardType="decimal-pad"
           />
+          <SubTitleText>Duration unit</SubTitleText>
           <FlexRowContainer>
             <Flex1>
               <GRadioButton
                 label="MIN"
                 status={
-                  durationUnit === DurationUnitType.Min
+                  durationUnit === DurationUnitType.Min ||
+                  service.durationUnit === DurationUnitType.Min
                     ? "checked"
                     : "unchecked"
                 }
@@ -217,7 +181,8 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
               <GRadioButton
                 label="HRS"
                 status={
-                  durationUnit === DurationUnitType.Hrs
+                  durationUnit === DurationUnitType.Hrs ||
+                  service.durationUnit === DurationUnitType.Hrs
                     ? "checked"
                     : "unchecked"
                 }
@@ -225,35 +190,43 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
               />
             </Flex1>
           </FlexRowContainer>
-          {durationUnitError && <ErrorText>{durationUnitError}</ErrorText>}
           <SubTitleText>Choose category</SubTitleText>
-          {categoryError && <ErrorText>{categoryError}</ErrorText>}
           <FlexColumContainer>
             <GRadioButton
               label={CategoryType.Barber}
               status={
-                category === CategoryType.Barber ? "checked" : "unchecked"
+                category === CategoryType.Barber ||
+                service.category === CategoryType.Barber
+                  ? "checked"
+                  : "unchecked"
               }
               onPress={categoryBarberHandler}
             />
             <GRadioButton
               label={CategoryType.Hairdresser}
               status={
-                category === CategoryType.Hairdresser ? "checked" : "unchecked"
+                category === CategoryType.Hairdresser ||
+                service.category === CategoryType.Hairdresser
+                  ? "checked"
+                  : "unchecked"
               }
               onPress={categoryHairdresserHandler}
             />
             <GRadioButton
               label={CategoryType.MakeupArtist.toString().replace("_", " ")}
               status={
-                category === CategoryType.MakeupArtist ? "checked" : "unchecked"
+                category === CategoryType.MakeupArtist ||
+                service.category === CategoryType.MakeupArtist
+                  ? "checked"
+                  : "unchecked"
               }
               onPress={categoryMakeupArtistHandler}
             />
             <GRadioButton
               label={CategoryType.NailTechnician.toString().replace("_", " ")}
               status={
-                category === CategoryType.NailTechnician
+                category === CategoryType.NailTechnician ||
+                service.category === CategoryType.NailTechnician
                   ? "checked"
                   : "unchecked"
               }
@@ -267,10 +240,10 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
           </FlexColumContainer>
           <FlexRowEndContainer>
             <GButton
-              label="Add"
-              onPress={addServiceHandler}
-              loading={addServiceLoading}
-              testID="addServiceButton"
+              label="Update"
+              onPress={updateServiceHandler}
+              loading={updateServiceLoading}
+              testID="updateServiceButton"
             />
             <GButton
               label="Cancel"

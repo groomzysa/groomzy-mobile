@@ -93,8 +93,6 @@ export const BusinessProfile: FC = () => {
     setCityName("");
     setTownName("");
     setAreaCode("");
-
-    setTimeout(() => {}, 5000);
   }, [addProvider]);
 
   useEffect(() => {
@@ -112,8 +110,6 @@ export const BusinessProfile: FC = () => {
     setCityName("");
     setTownName("");
     setAreaCode("");
-
-    setTimeout(() => {}, 5000);
   }, [updateProvider]);
 
   /**

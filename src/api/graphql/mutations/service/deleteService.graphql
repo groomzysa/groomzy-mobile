@@ -1,5 +1,5 @@
-query services {
-  services {
+mutation deleteService($serviceId: Int!) {
+  deleteService(serviceId: $serviceId) {
     id
     name
     description

@@ -22,3 +22,5 @@ export const UPDATE_PROVIDER_BUSINESS_DETAILS_MESSAGE = `Business details update
  *
  */
 export const ADD_SERVICE_MESSAGE = `Service added successfuly`;
+export const UPDATE_SERVICE_MESSAGE = `Service updated successfuly`;
+export const DELETE_SERVICE_MESSAGE = `Service deleted successfuly`;

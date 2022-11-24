@@ -142,6 +142,7 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
             value={email}
             onTextChange={setEmail}
             errorMessage={emailError}
+            keyboardType="email-address"
           />
           <GTextInput
             testID="password"

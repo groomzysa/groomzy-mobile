@@ -83,7 +83,7 @@ export type Client = {
 };
 
 export enum DurationUnitType {
-  Hr = "HR",
+  Hrs = "HRS",
   Min = "MIN",
 }
 
@@ -92,8 +92,10 @@ export type Mutation = {
   addProvider: Provider;
   addService: Service;
   addUser: User;
+  deleteService: Service;
   signIn: Token;
   updateProvider: Provider;
+  updateService: Service;
 };
 
 export type MutationAddProviderArgs = {
@@ -127,6 +129,10 @@ export type MutationAddUserArgs = {
   userImage?: InputMaybe<Scalars["File"]>;
 };
 
+export type MutationDeleteServiceArgs = {
+  serviceId: Scalars["Int"];
+};
+
 export type MutationSignInArgs = {
   email: Scalars["String"];
   password: Scalars["String"];
@@ -144,6 +150,17 @@ export type MutationUpdateProviderArgs = {
   streetNumber?: InputMaybe<Scalars["String"]>;
   town?: InputMaybe<Scalars["String"]>;
   tradingName?: InputMaybe<Scalars["String"]>;
+};
+
+export type MutationUpdateServiceArgs = {
+  category?: InputMaybe<CategoryType>;
+  description?: InputMaybe<Scalars["String"]>;
+  duration?: InputMaybe<Scalars["Float"]>;
+  durationUnit?: InputMaybe<DurationUnitType>;
+  inHouse?: InputMaybe<Scalars["Boolean"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  price?: InputMaybe<Scalars["Float"]>;
+  serviceId: Scalars["Int"];
 };
 
 export type Provider = {
@@ -316,6 +333,51 @@ export type AddServiceMutation = {
   };
 };
 
+export type DeleteServiceMutationVariables = Exact<{
+  serviceId: Scalars["Int"];
+}>;
+
+export type DeleteServiceMutation = {
+  __typename?: "Mutation";
+  deleteService: {
+    __typename?: "Service";
+    id: number;
+    name: string;
+    description?: string | null;
+    price?: number | null;
+    duration?: number | null;
+    durationUnit?: DurationUnitType | null;
+    inHouse?: boolean | null;
+    category?: CategoryType | null;
+  };
+};
+
+export type UpdateServiceMutationVariables = Exact<{
+  serviceId: Scalars["Int"];
+  name?: InputMaybe<Scalars["String"]>;
+  description?: InputMaybe<Scalars["String"]>;
+  price?: InputMaybe<Scalars["Float"]>;
+  duration?: InputMaybe<Scalars["Float"]>;
+  durationUnit?: InputMaybe<DurationUnitType>;
+  inHouse?: InputMaybe<Scalars["Boolean"]>;
+  category?: InputMaybe<CategoryType>;
+}>;
+
+export type UpdateServiceMutation = {
+  __typename?: "Mutation";
+  updateService: {
+    __typename?: "Service";
+    id: number;
+    name: string;
+    description?: string | null;
+    price?: number | null;
+    duration?: number | null;
+    durationUnit?: DurationUnitType | null;
+    inHouse?: boolean | null;
+    category?: CategoryType | null;
+  };
+};
+
 export type AddUserMutationVariables = Exact<{
   firstName: Scalars["String"];
   lastName: Scalars["String"];
@@ -409,6 +471,7 @@ export type ServicesQuery = {
     duration?: number | null;
     durationUnit?: DurationUnitType | null;
     inHouse?: boolean | null;
+    category?: CategoryType | null;
   }>;
 };
 

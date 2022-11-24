@@ -15,7 +15,8 @@ export const GTextInput: FC<IGTextInputProps> = ({
   errorMessage = "",
   value = "",
   keyboardType = "default",
-  multiline,
+  multiline = false,
+  disabled = false,
 }) => {
   const showError = errorMessage.length > 0;
 
@@ -34,6 +35,7 @@ export const GTextInput: FC<IGTextInputProps> = ({
         error={showError}
         keyboardType={keyboardType}
         multiline={multiline}
+        disabled={disabled}
       />
       {showError && (
         <HelperText type="error" visible={showError}>

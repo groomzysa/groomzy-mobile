@@ -1,7 +1,11 @@
 import React, { FC } from "react";
 import { Text } from "react-native";
 import { theme } from "../../utils/theme";
-import { RadioButtonCheck, RadioButtonCheckContainer } from "./styles";
+import {
+  RadioButtonCheck,
+  RadioButtonCheckContainer,
+  RadioButtonLabel,
+} from "./styles";
 import { IGRadioButton } from "./types";
 
 export const GRadioButton: FC<IGRadioButton> = ({
@@ -9,6 +13,7 @@ export const GRadioButton: FC<IGRadioButton> = ({
   status = "unchecked",
   value = "",
   onPress = () => {},
+  disabled = false,
 }) => {
   return (
     <RadioButtonCheckContainer>
@@ -17,8 +22,11 @@ export const GRadioButton: FC<IGRadioButton> = ({
         onPress={onPress}
         value={value}
         color={theme.colors.button.primary}
+        disabled={disabled}
       />
-      {label && <Text>{label}</Text>}
+      {label && (
+        <RadioButtonLabel disabled={disabled}>{label}</RadioButtonLabel>
+      )}
     </RadioButtonCheckContainer>
   );
 };

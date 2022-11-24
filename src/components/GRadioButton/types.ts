@@ -3,4 +3,5 @@ export interface IGRadioButton {
   label?: string;
   value?: string;
   onPress?: () => void;
+  disabled?: boolean;
 }

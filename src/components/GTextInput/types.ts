@@ -11,6 +11,7 @@ export interface IGTextInputProps {
   errorMessage?: string;
   value?: string;
   multiline?: boolean;
+  disabled?: boolean;
   keyboardType?:
     | "default"
     | "number-pad"

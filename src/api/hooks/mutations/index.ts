@@ -20,3 +20,5 @@ export { useUpdateProvider } from "./provider/useUpdateProvider";
  *
  */
 export { useAddService } from "./service/useAddService";
+export { useUpdateService } from "./service/useUpdateService";
+export { useDeleteService } from "./service/useDeleteService";

@@ -12,11 +12,13 @@
 import type * as Types from "../../api.schema";
 
 import { api } from "../../..";
-export type ServicesQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type DeleteServiceMutationVariables = Types.Exact<{
+  serviceId: Types.Scalars["Int"];
+}>;
 
-export type ServicesQueryResult = {
-  __typename?: "Query";
-  services: Array<{
+export type DeleteServiceMutationResult = {
+  __typename?: "Mutation";
+  deleteService: {
     __typename?: "Service";
     id: number;
     name: string;
@@ -26,12 +28,12 @@ export type ServicesQueryResult = {
     durationUnit?: Types.DurationUnitType | null;
     inHouse?: boolean | null;
     category?: Types.CategoryType | null;
-  }>;
+  };
 };
 
-export const ServicesDocument = `
-    query services {
-  services {
+export const DeleteServiceDocument = `
+    mutation deleteService($serviceId: Int!) {
+  deleteService(serviceId: $serviceId) {
     id
     name
     description
@@ -46,11 +48,14 @@ export const ServicesDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    services: build.query<ServicesQueryResult, ServicesQueryVariables | void>({
-      query: (variables) => ({ document: ServicesDocument, variables }),
+    deleteService: build.mutation<
+      DeleteServiceMutationResult,
+      DeleteServiceMutationVariables
+    >({
+      query: (variables) => ({ document: DeleteServiceDocument, variables }),
     }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useServicesQuery, useLazyServicesQuery } = injectedRtkApi;
+export const { useDeleteServiceMutation } = injectedRtkApi;

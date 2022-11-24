@@ -103,6 +103,7 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
             value={email}
             onTextChange={setEmail}
             errorMessage={emailError}
+            keyboardType="email-address"
           />
           <GTextInput
             testID="password"

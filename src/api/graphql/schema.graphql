@@ -65,7 +65,7 @@ type Client {
 
 enum DurationUnitType {
   MIN
-  HR
+  HRS
 }
 
 scalar File
@@ -74,8 +74,10 @@ type Mutation {
   addProvider(tradingName: String!, streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!, phone: String!, logo: File): Provider!
   addService(name: String!, description: String!, price: Float!, duration: Float!, durationUnit: DurationUnitType!, inHouse: Boolean!, category: CategoryType!): Service!
   addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!, userImage: File): User!
+  deleteService(serviceId: Int!): Service!
   signIn(email: String!, password: String!, role: UserRole!): Token!
   updateProvider(providerId: Int!, tradingName: String, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String, phone: String, logo: File): Provider!
+  updateService(serviceId: Int!, name: String, description: String, duration: Float, durationUnit: DurationUnitType, inHouse: Boolean, price: Float, category: CategoryType): Service!
 }
 
 type Provider {

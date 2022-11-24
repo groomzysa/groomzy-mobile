@@ -19,7 +19,8 @@ import { GErrorMessage } from "../../../../components";
 import { theme } from "../../../../utils/theme";
 
 export const Services: FC = () => {
-  const [visible, setVisible] = React.useState(false);
+  const [addDialogVisible, setAddDialogVisible] = React.useState(false);
+  const [updateDialogVisible, setUpdateDialogVisible] = React.useState(false);
 
   /**
    *
@@ -34,9 +35,11 @@ export const Services: FC = () => {
    * Handlers
    *
    */
-  const showDialog = () => setVisible(true);
+  const showAddDialogHandler = () => setAddDialogVisible(true);
+  const showUpdateDialogHandler = () => setUpdateDialogVisible(true);
 
-  const hideDialog = () => setVisible(false);
+  const hideAddDialogHandler = () => setAddDialogVisible(false);
+  const hideUpdateDialogHandler = () => setUpdateDialogVisible(false);
 
   return (
     <Container>
@@ -46,7 +49,7 @@ export const Services: FC = () => {
         <Content>
           <TouchableOpacity
             onPress={() => {
-              showDialog();
+              showAddDialogHandler();
             }}
           >
             <AddButtonContainer>
@@ -73,7 +76,10 @@ export const Services: FC = () => {
           </FlatListContainer>
         </Content>
       )}
-      <AddService visible={visible} hideDialog={hideDialog} />
+      <AddService
+        visible={addDialogVisible}
+        hideDialog={hideAddDialogHandler}
+      />
     </Container>
   );
 };
