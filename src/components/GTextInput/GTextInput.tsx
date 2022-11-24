@@ -14,6 +14,8 @@ export const GTextInput: FC<IGTextInputProps> = ({
   onTextChange = () => {},
   errorMessage = "",
   value = "",
+  keyboardType = "default",
+  multiline,
 }) => {
   const showError = errorMessage.length > 0;
 
@@ -30,6 +32,8 @@ export const GTextInput: FC<IGTextInputProps> = ({
         secureTextEntry={secureTextEntry}
         onChangeText={onTextChange}
         error={showError}
+        keyboardType={keyboardType}
+        multiline={multiline}
       />
       {showError && (
         <HelperText type="error" visible={showError}>

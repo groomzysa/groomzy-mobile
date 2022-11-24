@@ -9,15 +9,15 @@ import {
   GSuccessMessage,
   GTextInput,
 } from "../../components";
-import {
-  Container,
-  Flext1,
-  FlexRowContainer,
-  TextStyled,
-  SignUpContent,
-} from "./styles";
+import { TextStyled, ContentContainer } from "./styles";
 import { SignUpProps } from "./types";
 import { SIGN_UP_MESSAGE } from "../../utils/messages";
+import {
+  Flex1,
+  FlexRowContainer,
+  KeyboardAvoidingViewContainer,
+  ScrollViewContainer,
+} from "../../utils/common/styles";
 
 export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
   const [firstName, setFirstName] = useState<string>("");
@@ -59,11 +59,6 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
     setPassword("");
     setIsProvider(false);
 
-    setFirstNameError("");
-    setLastNameError("");
-    setEmailError("");
-    setEmail("");
-
     setTimeout(() => {
       navigation.reset({ routes: [{ name: "Sign in" }] });
     }, 5000);
@@ -80,15 +75,23 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
     const abortSignUp = !firstName || !lastName || emailAbort || passwordAbort;
     if (!firstName) {
       setFirstNameError("First name is required!");
+    } else if (firstNameError) {
+      setFirstNameError("");
     }
     if (!lastName) {
       setLastNameError("Last name is required!");
+    } else if (lastNameError) {
+      setLastNameError("");
     }
     if (!validate(email)) {
       setEmailError("Email is invalid.");
+    } else if (emailError) {
+      setEmailError("");
     }
     if (password.length < 5) {
-      setPasswordError("Password too short!");
+      setPasswordError("Password is too short!");
+    } else if (passwordError) {
+      setPasswordError("");
     }
 
     if (abortSignUp) return;
@@ -103,64 +106,70 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
   };
 
   return (
-    <Container>
-      <SignUpContent>
-        {addUser && <GSuccessMessage message={SIGN_UP_MESSAGE} />}
-        {addUserHasError && <GErrorMessage message={addUserError?.message} />}
-        <FlexRowContainer>
-          <Flext1>
-            <GTextInput
-              testID="firstName"
-              label="First name"
-              value={firstName}
-              onTextChange={setFirstName}
-              errorMessage={firstNameError}
-            />
-          </Flext1>
-          <Flext1>
-            <GTextInput
-              testID="lastName"
-              label="last name"
-              value={lastName}
-              onTextChange={setLastName}
-              errorMessage={lastNameError}
-            />
-          </Flext1>
-        </FlexRowContainer>
+    <KeyboardAvoidingViewContainer>
+      <ScrollViewContainer
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
+      >
+        <ContentContainer>
+          {addUser && <GSuccessMessage message={SIGN_UP_MESSAGE} />}
+          {addUserHasError && <GErrorMessage message={addUserError} />}
+          <FlexRowContainer>
+            <Flex1>
+              <GTextInput
+                testID="firstName"
+                label="First name"
+                value={firstName}
+                onTextChange={setFirstName}
+                errorMessage={firstNameError}
+              />
+            </Flex1>
+            <Flex1>
+              <GTextInput
+                testID="lastName"
+                label="last name"
+                value={lastName}
+                onTextChange={setLastName}
+                errorMessage={lastNameError}
+              />
+            </Flex1>
+          </FlexRowContainer>
 
-        <GTextInput
-          testID="email"
-          label="email"
-          value={email}
-          onTextChange={setEmail}
-          errorMessage={emailError}
-        />
-        <GTextInput
-          testID="password"
-          label="password"
-          value={password}
-          onTextChange={setPassword}
-          errorMessage={passwordError}
-          secureTextEntry
-        />
-        <GRadioButton
-          label="Service provider?"
-          status={isProvider ? "checked" : "unchecked"}
-          onPress={() => setIsProvider(!isProvider)}
-        />
-        <GButton
-          label="Sing up"
-          onPress={addUserhandler}
-          loading={addUserLoading}
-        />
-        <TextStyled
-          onPress={() => {
-            navigation.navigate("Sign in");
-          }}
-        >
-          Already signed up?
-        </TextStyled>
-      </SignUpContent>
-    </Container>
+          <GTextInput
+            testID="email"
+            label="email"
+            value={email}
+            onTextChange={setEmail}
+            errorMessage={emailError}
+          />
+          <GTextInput
+            testID="password"
+            label="password"
+            value={password}
+            onTextChange={setPassword}
+            errorMessage={passwordError}
+            secureTextEntry
+          />
+          <GRadioButton
+            label="Service provider?"
+            status={isProvider ? "checked" : "unchecked"}
+            onPress={() => setIsProvider(!isProvider)}
+          />
+          <GButton
+            label="Sing up"
+            onPress={addUserhandler}
+            loading={addUserLoading}
+          />
+          <TextStyled
+            onPress={() => {
+              navigation.navigate("Sign in");
+            }}
+          >
+            Already signed up?
+          </TextStyled>
+        </ContentContainer>
+      </ScrollViewContainer>
+    </KeyboardAvoidingViewContainer>
   );
 };

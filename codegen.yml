@@ -28,7 +28,7 @@ generates:
       - typescript-operations
       - typescript-rtk-query:
           exportHooks: true
-          importBaseApiFrom: "../.."
+          importBaseApiFrom: "../../.."
     config:
       operationResultSuffix: Result
       dedupeOperationSuffix: true

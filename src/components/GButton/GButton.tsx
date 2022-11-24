@@ -7,6 +7,7 @@ export const GButton: FC<IGButtonProps> = ({
   label = "",
   onPress = () => {},
   loading = false,
+  variant = "primary",
 }) => {
   return (
     <ButtonContainer>
@@ -15,6 +16,7 @@ export const GButton: FC<IGButtonProps> = ({
         mode="contained"
         onPress={onPress}
         loading={loading}
+        variant={variant}
       >
         {label}
       </ButtonStyled>

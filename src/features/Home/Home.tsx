@@ -1,56 +1,57 @@
 import { StatusBar } from "expo-status-bar";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { FlatList, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
 import { useFetchProviders } from "../../api/hooks/queries";
-import { GSearch, GTitle } from "../../components";
+import { GErrorMessage, GSearch } from "../../components";
 import { theme } from "../../utils/theme";
-import { HomeSafeArea, ProviderSummary } from "./components";
-import { FlatListContainer, FlatListItemWrapper } from "./styles";
+import { ProviderSummary } from "./components";
+import {
+  FlatListContainer,
+  FlatListItemWrapper,
+  HomeSafeAreaView,
+} from "./styles";
 
 export const Home: FC = () => {
+  const [search, setSearch] = useState<string>("");
   const { providers, providersError, providersHasError, providersLoading } =
     useFetchProviders();
 
   return (
-    <>
-      <HomeSafeArea>
-        {providersLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <>
-            <View>
-              <GSearch testID="homeSearch" label="Search service provider" />
-            </View>
-            <View>
-              {providersHasError && (
-                <View>
-                  <GTitle
-                    title={providersError!.message ?? "Something is wrong"}
-                  />
-                </View>
+    <HomeSafeAreaView>
+      {providersLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <View>
+            <GSearch
+              testID="homeSearch"
+              label="Search service provider"
+              value={search}
+              onTextChange={setSearch}
+            />
+          </View>
+          <View>
+            {providersHasError && <GErrorMessage message={providersError} />}
+          </View>
+          <FlatListContainer>
+            <FlatList
+              data={providers}
+              renderItem={({ item: provider }) => (
+                <FlatListItemWrapper>
+                  <ProviderSummary provider={provider} />
+                </FlatListItemWrapper>
               )}
-            </View>
-            <FlatListContainer>
-              <FlatList
-                data={providers}
-                keyExtractor={(provider) => provider.id}
-                renderItem={({ item: provider }) => (
-                  <FlatListItemWrapper>
-                    <ProviderSummary provider={provider} />
-                  </FlatListItemWrapper>
-                )}
-                contentContainerStyle={{
-                  padding: theme.spacing.container.xsmall,
-                }}
-              />
-            </FlatListContainer>
-          </>
-        )}
+              contentContainerStyle={{
+                padding: theme.spacing.container.xsmall,
+              }}
+            />
+          </FlatListContainer>
+        </>
+      )}
 
-        <StatusBar style="auto" />
-      </HomeSafeArea>
-    </>
+      <StatusBar style="auto" />
+    </HomeSafeAreaView>
   );
 };

@@ -1,0 +1,11 @@
+query services {
+  services {
+    id
+    name
+    description
+    price
+    duration
+    durationUnit
+    inHouse
+  }
+}

@@ -7,6 +7,7 @@ export interface IFontSizes {
   body: {
     header: number;
     title: number;
+    largeTitle: number;
     subTitle: number;
     normal: number;
   };
@@ -15,6 +16,11 @@ export interface IFontSizes {
     title: number;
     subTitle: number;
     normal: number;
+  };
+  button: {
+    small: number;
+    medium: number;
+    large: number;
   };
 }
 
@@ -75,7 +81,9 @@ export interface IColors {
   button: {
     primary: string;
     secondary: string;
+    cancel: string;
   };
+  white: string;
   disabled: string;
   error: string;
   success: string;

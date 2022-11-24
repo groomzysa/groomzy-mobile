@@ -1,2 +1,12 @@
-export type tabIconNameType = "Home" | "Map" | "Settings";
-export type IoniconsType = "md-home" | "md-map" | "md-settings";
+import { User } from "../../../../api/graphql/api.schema";
+
+export type TRootAppDrawerParamList = {
+  Home: undefined;
+  About: undefined;
+  Contact: undefined;
+  Account: undefined;
+  "Sign in": undefined;
+  "Sign up": undefined;
+  "Sign out": undefined;
+  "Ts and Cs": undefined;
+};

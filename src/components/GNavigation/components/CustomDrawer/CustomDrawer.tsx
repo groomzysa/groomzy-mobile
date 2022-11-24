@@ -1,21 +1,32 @@
 import {
-  DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
 import React, { FC } from "react";
-import { ImageBackground, View, Image, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { useDispatch, useSelector } from "react-redux";
+import { removeToken } from "../../../../api/helpers";
+import { setToken, setUser } from "../../../../store/slices/appSlice";
+import { IAppSliceState } from "../../../../store/slices/types";
 import {
   AppDrawerHeaderImage,
   AppDrawerHeaderImageBackground,
   AppDrawerText,
-  AppDrawerVersionContainer,
+  AppDrawerBottomContainer,
   AppDrawerVersionContent,
   DrawerItemListContainer,
   DrawerUserName,
+  SignOutText,
 } from "./styles";
+import { ICustomDrawerProps } from "./types";
 
-export const CustomDrawer: FC<DrawerContentComponentProps> = (props) => {
+export const CustomDrawer: FC<ICustomDrawerProps> = ({ drawerProps }) => {
+  const { user } = useSelector<{ appSlice: IAppSliceState }, IAppSliceState>(
+    (state) => state.appSlice
+  );
+  const dispatch = useDispatch();
+
   return (
     <View style={{ flex: 1 }}>
       <AppDrawerHeaderImageBackground
@@ -29,24 +40,41 @@ export const CustomDrawer: FC<DrawerContentComponentProps> = (props) => {
           }}
         />
         <DrawerUserName>
-          <Text>John Doe</Text>
+          {
+            <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>
+              {user ? `${user?.firstName} ${user?.lastName}` : "Not signed in"}
+            </Text>
+          }
+          {user && (
+            <View>
+              <TouchableOpacity
+                onPress={async () => {
+                  await removeToken();
+                  dispatch(setToken({ token: undefined }));
+                  dispatch(setUser({ user: undefined }));
+                  drawerProps.navigation.navigate("Home");
+                }}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Ionicons name="exit-outline" size={22} color="white" />
+                  <SignOutText>Sign Out</SignOutText>
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
         </DrawerUserName>
       </AppDrawerHeaderImageBackground>
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={{ backgroundColor: "#607d8b" }}
-      >
+      <DrawerContentScrollView {...drawerProps}>
         <DrawerItemListContainer>
-          <DrawerItemList {...props} />
+          <DrawerItemList {...drawerProps} />
         </DrawerItemListContainer>
       </DrawerContentScrollView>
-      <AppDrawerVersionContainer>
+      <AppDrawerBottomContainer>
         <AppDrawerVersionContent>
           <AppDrawerText>Groomzy (EST 2020)</AppDrawerText>
-
           <AppDrawerText>v1.0.0</AppDrawerText>
         </AppDrawerVersionContent>
-      </AppDrawerVersionContainer>
+      </AppDrawerBottomContainer>
     </View>
   );
 };

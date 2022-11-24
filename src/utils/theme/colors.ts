@@ -24,7 +24,9 @@ export const colors: IColors = {
   button: {
     primary: "#607d8b",
     secondary: "#c6c6c6",
+    cancel: "#f44336",
   },
+  white: "#ffffff",
   disabled: "#d3d3d3",
   error: "#f44336",
   success: "#8bc34a",

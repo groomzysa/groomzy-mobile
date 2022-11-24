@@ -1,0 +1,37 @@
+query providers {
+  providers {
+    id
+    user {
+      id
+      firstName
+      lastName
+      email
+      role
+      state
+      address {
+        id
+        streetNumber
+        streetName
+        town
+        city
+        province
+        areaCode
+      }
+    }
+    profile {
+      id
+      tradingName
+      phone
+      logoUrl
+      address {
+        id
+        streetNumber
+        streetName
+        town
+        city
+        province
+        areaCode
+      }
+    }
+  }
+}

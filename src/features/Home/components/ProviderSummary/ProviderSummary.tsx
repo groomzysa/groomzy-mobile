@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { Platform, TouchableOpacity, View, Text } from "react-native";
-import { Button } from "react-native-paper";
+import { Platform, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
 //@ts-ignore
 import { SvgXml as SvgXmlWeb } from "react-native-svgxml-web";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { starSVG } from "../../../../../assets/star";
 import { GCarousel } from "../../../../components";
@@ -16,13 +16,13 @@ import {
   Section,
   SectionEnd,
   Title,
+  ViewButtonContainer,
+  ViewButtonText,
 } from "./styles";
 import { IProviderSummaryProps } from "./types";
 
 export const ProviderSummary: FC<IProviderSummaryProps> = ({ provider }) => {
   const { user, profile } = provider;
-  const { firstName, lastName } = user;
-  const { address } = profile;
   const placeholderImageUrl =
     "https://images.unsplash.com/photo-1633681926035-ec1ac984418a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8c2Fsb258ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60";
   return (
@@ -36,35 +36,17 @@ export const ProviderSummary: FC<IProviderSummaryProps> = ({ provider }) => {
         ]}
       />
       <Info>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "baseline",
-            justifyContent: "space-between",
-          }}
-        >
-          <Title>{fullName(firstName, lastName)}</Title>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              backgroundColor: "#607d8b",
-              marginLeft: 10,
-              width: 50,
-              borderRadius: 10,
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                textAlign: "center",
-                fontSize: 14,
-              }}
-            >
-              View
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Section>
+          <Title>{profile?.tradingName || user?.firstName || "Provider"}</Title>
+          <SectionEnd>
+            <TouchableOpacity onPress={() => {}}>
+              <ViewButtonContainer>
+                <Ionicons name="eye-outline" size={20} color="white" />
+                <ViewButtonText>View</ViewButtonText>
+              </ViewButtonContainer>
+            </TouchableOpacity>
+          </SectionEnd>
+        </Section>
         <Section>
           <Rating>
             {[1, 2, 3, 4, 5].map((rate, index) => {
@@ -80,7 +62,7 @@ export const ProviderSummary: FC<IProviderSummaryProps> = ({ provider }) => {
           </SectionEnd>
         </Section>
 
-        <Caption>{addressName(address)}</Caption>
+        <Caption>{profile?.address && addressName(profile.address)}</Caption>
       </Info>
     </ProviderSummaryCard>
   );

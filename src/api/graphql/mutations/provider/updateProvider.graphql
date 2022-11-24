@@ -1,0 +1,42 @@
+mutation updateProvider(
+  $providerId: Int!
+  $tradingName: String
+  $streetNumber: String
+  $streetName: String
+  $town: String
+  $city: String
+  $province: String
+  $areaCode: String
+  $phone: String
+  $logo: File
+) {
+  updateProvider(
+    providerId: $providerId
+    tradingName: $tradingName
+    streetNumber: $streetNumber
+    streetName: $streetName
+    town: $town
+    city: $city
+    province: $province
+    areaCode: $areaCode
+    phone: $phone
+    logo: $logo
+  ) {
+    id
+    profile {
+      id
+      tradingName
+      phone
+      logoUrl
+      address {
+        id
+        streetNumber
+        streetName
+        town
+        city
+        province
+        areaCode
+      }
+    }
+  }
+}

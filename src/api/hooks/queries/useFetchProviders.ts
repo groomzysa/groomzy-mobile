@@ -1,4 +1,5 @@
-import { useProvidersQuery } from "../../graphql/quries/providers.generated";
+import { useProvidersQuery } from "../../graphql/quries/provider/providers.enhanced";
+import { getErrorMessage } from "../../helpers";
 
 export const useFetchProviders = () => {
   const { data, isLoading, isError, error } = useProvidersQuery();
@@ -7,6 +8,6 @@ export const useFetchProviders = () => {
     providers: data?.providers,
     providersLoading: isLoading,
     providersHasError: isError,
-    providersError: error,
+    providersError: getErrorMessage(error),
   };
 };

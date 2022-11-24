@@ -1,5 +1,5 @@
 import { DrawerScreenProps } from "@react-navigation/drawer";
-import { RootAppDrawerParamList } from "../../utils/types";
+import { TRootAppDrawerParamList } from "../../components/GNavigation/components/AppNavigator/types";
 
 export interface SignInProps
-  extends DrawerScreenProps<RootAppDrawerParamList, "Sign in"> {}
+  extends DrawerScreenProps<TRootAppDrawerParamList, "Sign in"> {}

@@ -9,6 +9,7 @@ export const GCarousel: FC<IGCarouselProps> = ({ data }) => {
   return (
     <Carousel
       data={data}
+      vertical={undefined}
       renderItem={({
         item,
         index,
@@ -19,7 +20,6 @@ export const GCarousel: FC<IGCarouselProps> = ({ data }) => {
       }) => <BannerSlider key={index} uri={item as string} />}
       sliderWidth={WINDOW_WIDTH - theme.spacing.container.xsmall * 2}
       itemWidth={300}
-      // autoplay
       loop
     />
   );

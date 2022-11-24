@@ -1,9 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import {
-  NavigationContainer,
-  ParamListBase,
-  RouteProp,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import React, { FC } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -12,13 +8,13 @@ import { Text } from "react-native";
 import { theme } from "../../../../utils/theme";
 import { GSafeArea } from "../../../GSafeArea/GSafeArea";
 import { CustomDrawer } from "../CustomDrawer/CustomDrawer";
-import { HomeNavigator } from "../HomeNavigator/HomeNavigator";
-import { TAB_ICON } from "./constants";
-import { IoniconsType, tabIconNameType } from "./types";
-import { SignIn, SignUp } from "../../../../features";
-import { RootAppDrawerParamList } from "../../../../utils/types";
+import { TRootAppDrawerParamList } from "./types";
+import { Home, ProviderHome, SignIn, SignUp } from "../../../../features";
+import { UserRole } from "../../../../api/graphql/api.schema";
+import { useSelector } from "react-redux";
+import { IAppSliceState } from "../../../../store/slices/types";
 
-const Drawer = createDrawerNavigator<RootAppDrawerParamList>();
+const Drawer = createDrawerNavigator<TRootAppDrawerParamList>();
 
 const About: FC = () => (
   <GSafeArea>
@@ -32,15 +28,9 @@ const Contact: FC = () => (
   </GSafeArea>
 );
 
-const Profile: FC = () => (
+const Account: FC = () => (
   <GSafeArea>
-    <Text>Profile</Text>
-  </GSafeArea>
-);
-
-const SignOut: FC = () => (
-  <GSafeArea>
-    <Text>Sign out</Text>
+    <Text>Account</Text>
   </GSafeArea>
 );
 
@@ -50,108 +40,111 @@ const TsAndCs: FC = () => (
   </GSafeArea>
 );
 
-const createScreenOptions = ({
-  route,
-}: {
-  route: RouteProp<ParamListBase, string>;
-  navigation: any;
-}) => {
-  const iconName: IoniconsType = TAB_ICON[
-    route.name as tabIconNameType
-  ] as IoniconsType;
+const createScreenOptions = () => {
   return {
-    tabBarIcon: ({ size, color }: { size: number; color: string }) => (
-      <Ionicons name={iconName} size={size} color={color} />
-    ),
     drawerActiveTintColor: theme.colors.brand.primary,
     drawerInactiveTintColor: "gray",
   };
 };
 
-export const AppNavigator: FC = () => (
-  <NavigationContainer>
-    <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawer {...props} />}
-      screenOptions={createScreenOptions}
-      initialRouteName="Home"
-    >
-      <Drawer.Screen
-        name="Home"
-        component={HomeNavigator}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="home-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="About"
-        component={About}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons
-              name="information-circle-outline"
-              size={22}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Contact"
-        component={Contact}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="phone-portrait-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="person-outline" size={22} color={color} />
-          ),
-        }}
-      />
+export const AppNavigator: FC = () => {
+  const { user } = useSelector<{ appSlice: IAppSliceState }, IAppSliceState>(
+    (state) => state.appSlice
+  );
 
-      <Drawer.Screen
-        name="Sign in"
-        component={SignIn}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="log-in-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Sign up"
-        component={SignUp}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="person-add-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Sign out"
-        component={SignOut}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="exit-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Ts and Cs"
-        component={TsAndCs}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="documents-outline" size={22} color={color} />
-          ),
-        }}
-      />
-    </Drawer.Navigator>
-  </NavigationContainer>
-);
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawer drawerProps={props} />}
+        screenOptions={createScreenOptions}
+        initialRouteName="Home"
+      >
+        {!user && (
+          <Drawer.Screen
+            name="Home"
+            component={Home}
+            options={{
+              drawerIcon: ({ color }) => (
+                <Ionicons name="home-outline" size={22} color={color} />
+              ),
+            }}
+          />
+        )}
+        {user && user.role === UserRole.Provider && (
+          <Drawer.Screen
+            name="Home"
+            component={ProviderHome}
+            options={{
+              drawerIcon: ({ color }) => (
+                <Ionicons name="home-outline" size={22} color={color} />
+              ),
+            }}
+          />
+        )}
+        <Drawer.Screen
+          name="About"
+          component={About}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Ionicons
+                name="information-circle-outline"
+                size={22}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Contact"
+          component={Contact}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Ionicons name="phone-portrait-outline" size={22} color={color} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Account"
+          component={Account}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Ionicons name="person-outline" size={22} color={color} />
+            ),
+          }}
+        />
+
+        {!user && (
+          <Drawer.Screen
+            name="Sign in"
+            component={SignIn}
+            options={{
+              drawerIcon: ({ color }) => (
+                <Ionicons name="log-in-outline" size={22} color={color} />
+              ),
+            }}
+          />
+        )}
+        {!user && (
+          <Drawer.Screen
+            name="Sign up"
+            component={SignUp}
+            options={{
+              drawerIcon: ({ color }) => (
+                <Ionicons name="person-add-outline" size={22} color={color} />
+              ),
+            }}
+          />
+        )}
+        <Drawer.Screen
+          name="Ts and Cs"
+          component={TsAndCs}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Ionicons name="documents-outline" size={22} color={color} />
+            ),
+          }}
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+};

@@ -3,7 +3,10 @@ import styled from "styled-components/native";
 import { ITheme } from "../../../../utils/theme/types";
 
 export const AppDrawerHeaderImageBackground = styled(ImageBackground)`
-  padding: ${({ theme }: { theme: ITheme }) => theme.spacing.container.small}px;
+  padding-top: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.xlarge}px;
+  padding-left: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.small}px;
 `;
 
 export const AppDrawerHeaderImage = styled(Image)`
@@ -14,7 +17,7 @@ export const AppDrawerHeaderImage = styled(Image)`
     theme.spacing.container.xxsmall}px;
 `;
 
-export const AppDrawerVersionContainer = styled(View)`
+export const AppDrawerBottomContainer = styled(View)`
   padding: ${({ theme }: { theme: ITheme }) => theme.spacing.container.small}px;
   border-top-width: 1px;
   border-top-color: lightgray;
@@ -27,7 +30,7 @@ export const AppDrawerVersionContent = styled(View)`
 
 export const DrawerItemListContainer = styled(View)`
   flex: 1;
-  background-color: white;
+  background-color: ${({ theme }: { theme: ITheme }) => theme.colors.white};
   padding-top: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xsmall}px;
 `;
@@ -37,10 +40,22 @@ export const AppDrawerText = styled(Text)`
     theme.fontSizes.body.subTitle}px;
 `;
 
-export const DrawerUserName = styled(Text)`
-  color: white;
-  font-size: ${({ theme }: { theme: ITheme }) => theme.fontSizes.body.normal}px;
+export const DrawerUserName = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.small}px;
+`;
+
+export const SignOutText = styled(Text)`
+  font-size: ${({ theme }: { theme: ITheme }) =>
+    theme.fontSizes.body.subTitle}px;
   font-weight: bold;
-  margin-bottom: ${({ theme }: { theme: ITheme }) =>
-    theme.spacing.container.xxsmall}px;
+  margin-left: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.xsmall}px;
+  margin-right: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.medium}px;
+  color: ${({ theme }: { theme: ITheme }) => theme.colors.white};
 `;

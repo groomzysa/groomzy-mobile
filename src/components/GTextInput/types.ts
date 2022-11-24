@@ -10,4 +10,13 @@ export interface IGTextInputProps {
   onTextChange?: Dispatch<SetStateAction<string>>;
   errorMessage?: string;
   value?: string;
+  multiline?: boolean;
+  keyboardType?:
+    | "default"
+    | "number-pad"
+    | "decimal-pad"
+    | "numeric"
+    | "email-address"
+    | "phone-pad"
+    | "url";
 }

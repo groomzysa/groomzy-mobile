@@ -13,8 +13,13 @@ export const ButtonContainer = styled(View)`
 
 export const ButtonStyled = styled(Button)`
   width: 100%;
-  background-color: ${({ theme }: { theme: ITheme }) =>
-    theme.colors.button.primary};
+  background-color: ${({
+    theme,
+    variant,
+  }: {
+    theme: ITheme;
+    variant: "primary" | "secondary" | "cancel";
+  }) => theme.colors.button?.[variant]};
   border-radius: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xxsmall}px;
 `;

@@ -4,7 +4,6 @@ import styled from "styled-components/native";
 import { ITheme } from "../../utils/theme/types";
 
 export const RadioButtonCheckContainer = styled(View)`
-  flex-grow: 1;
   flex-direction: row;
   align-items: center;
 `;

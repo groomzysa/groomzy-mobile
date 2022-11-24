@@ -5,27 +5,27 @@ directive @specifiedBy(
 ) on SCALAR
 
 type Address {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
-  streetNumber: String!
-  streetName: String!
-  town: String!
-  city: String!
-  province: String!
-  areaCode: String!
+  id: Int!
+  createdAt: String
+  updatedAt: String
+  streetNumber: String
+  streetName: String
+  town: String
+  city: String
+  province: String
+  areaCode: String
 }
 
 type Booking {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
-  bookingTime: String!
-  inHouse: Boolean!
-  status: BookingStatus!
-  provider: Provider!
-  client: Client!
-  service: Service!
+  id: Int!
+  createdAt: String
+  updatedAt: String
+  bookingTime: String
+  inHouse: Boolean
+  status: BookingStatus
+  provider: Provider
+  client: Client
+  service: Service
 }
 
 enum BookingStatus {
@@ -37,18 +37,13 @@ enum BookingStatus {
 }
 
 type BusinessProfile {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
-  address: Address!
-}
-
-type Category {
   id: Int!
-  createdAt: String!
-  updatedAt: String!
-  category: CategoryType!
-  services: [Service!]!
+  tradingName: String
+  phone: String
+  logoUrl: String
+  createdAt: String
+  updatedAt: String
+  address: Address
 }
 
 enum CategoryType {
@@ -60,12 +55,12 @@ enum CategoryType {
 }
 
 type Client {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
+  id: Int!
+  createdAt: String
+  updatedAt: String
   phone: String
-  user: User!
-  bookings: [Booking!]!
+  user: User
+  bookings: [Booking!]
 }
 
 enum DurationUnitType {
@@ -76,49 +71,60 @@ enum DurationUnitType {
 scalar File
 
 type Mutation {
-  addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!): User!
+  addProvider(tradingName: String!, streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!, phone: String!, logo: File): Provider!
+  addService(name: String!, description: String!, price: Float!, duration: Float!, durationUnit: DurationUnitType!, inHouse: Boolean!, category: CategoryType!): Service!
+  addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!, userImage: File): User!
+  signIn(email: String!, password: String!, role: UserRole!): Token!
+  updateProvider(providerId: Int!, tradingName: String, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String, phone: String, logo: File): Provider!
 }
 
 type Provider {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
-  phone: String!
-  user: User!
-  profile: BusinessProfile!
-  bookings: [Booking!]!
+  id: Int!
+  createdAt: String
+  updatedAt: String
+  user: User
+  profile: BusinessProfile
+  bookings: [Booking!]
 }
 
 type Query {
   providers: [Provider!]!
+  services: [Service!]!
+  user: User
 }
 
 type Service {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
+  id: Int!
+  createdAt: String
+  updatedAt: String
   name: String!
-  description: String!
-  duration: Float!
-  durationUnit: DurationUnitType!
-  inHouse: Boolean!
-  price: Float!
-  category: Category!
+  description: String
+  duration: Float
+  durationUnit: DurationUnitType
+  inHouse: Boolean
+  price: Float
+  category: CategoryType
 }
 
 type Subscription {
   updateBooking: String
 }
 
+type Token {
+  token: String!
+}
+
 type User {
-  id: ID!
-  createdAt: String!
-  updatedAt: String!
-  firstName: String!
-  lastName: String!
-  email: String!
-  state: UserStatus!
-  role: UserRole!
+  id: Int!
+  createdAt: String
+  updatedAt: String
+  userImageUrl: String
+  firstName: String
+  lastName: String
+  email: String
+  state: UserStatus
+  role: UserRole
+  provider: Provider
   address: Address
 }
 

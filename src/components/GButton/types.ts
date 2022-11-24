@@ -3,4 +3,5 @@ export interface IGButtonProps {
   label?: string;
   onPress?: () => void;
   loading?: boolean;
+  variant?: "primary" | "secondary" | "cancel";
 }
