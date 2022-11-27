@@ -1,1 +1,1 @@
-export { ProviderSummary } from "./ProviderSummary/ProviderSummary";
+export { HomeNavigator } from "./HomeNavigator/HomeNavigator";

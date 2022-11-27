@@ -1,6 +1,17 @@
-import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  View,
+  SafeAreaView,
+} from "react-native";
 import styled from "styled-components/native";
 import { ITheme } from "../theme/types";
+
+export const SafeAreaViewContainer = styled(SafeAreaView)`
+  flex: 1;
+  background-color: ${({ theme }: { theme: ITheme }) =>
+    theme.colors.bg.primary};
+`;
 
 export const KeyboardAvoidingViewContainer = styled(KeyboardAvoidingView)`
   flex: 1;

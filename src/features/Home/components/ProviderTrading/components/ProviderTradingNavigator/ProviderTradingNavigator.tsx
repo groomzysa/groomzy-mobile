@@ -6,11 +6,18 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { TAB_ICON } from "./constants";
 import { ETabIcon, ETabIconName } from "./types";
-import { theme } from "../../../../utils/theme";
-import { BusinessProfile } from "../BusinessProfile/BusinessProfile";
+import { theme } from "../../../../../../utils/theme";
 import { Services } from "../Services/Services";
 
-const ProviderHomeTabNavigator = createBottomTabNavigator();
+const ProviderTradingTabNavigator = createBottomTabNavigator();
+
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Details!</Text>
+    </View>
+  );
+}
 
 function SocialsScreen() {
   return (
@@ -20,9 +27,9 @@ function SocialsScreen() {
   );
 }
 
-export const ProviderHomeNavigator: FC = () => {
+export const ProviderTradingNavigator: FC = () => {
   return (
-    <ProviderHomeTabNavigator.Navigator
+    <ProviderTradingTabNavigator.Navigator
       screenOptions={({ route }) => {
         const iconName: ETabIcon = TAB_ICON[
           route.name as ETabIconName
@@ -42,18 +49,18 @@ export const ProviderHomeNavigator: FC = () => {
         };
       }}
     >
-      <ProviderHomeTabNavigator.Screen
-        name={ETabIconName.Business_Profile}
-        component={BusinessProfile}
-      />
-      <ProviderHomeTabNavigator.Screen
+      <ProviderTradingTabNavigator.Screen
         name={ETabIconName.Services}
         component={Services}
       />
-      <ProviderHomeTabNavigator.Screen
+      <ProviderTradingTabNavigator.Screen
+        name={ETabIconName.Provider_Details}
+        component={DetailsScreen}
+      />
+      <ProviderTradingTabNavigator.Screen
         name={ETabIconName.Socials}
         component={SocialsScreen}
       />
-    </ProviderHomeTabNavigator.Navigator>
+    </ProviderTradingTabNavigator.Navigator>
   );
 };

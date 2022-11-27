@@ -3,11 +3,13 @@ import {
   IAppSliceState,
   IAppSliceSetTokenAction,
   IAppSliceSetUserAction,
+  IAppSliceSetHideDrawerHeaderAction,
 } from "./types";
 
 const initialState: IAppSliceState = {
   token: undefined,
   user: undefined,
+  hideDrawerHeader: false,
 };
 
 export const appSlice = createSlice({
@@ -20,9 +22,15 @@ export const appSlice = createSlice({
     setUser: (state, action: IAppSliceSetUserAction) => {
       state.user = action.payload.user;
     },
+    setHideDrawerHeader: (
+      state,
+      action: IAppSliceSetHideDrawerHeaderAction
+    ) => {
+      state.hideDrawerHeader = action.payload.hideDrawerHeader;
+    },
   },
 });
 
-export const { setToken, setUser } = appSlice.actions;
+export const { setToken, setUser, setHideDrawerHeader } = appSlice.actions;
 
 export default appSlice.reducer;

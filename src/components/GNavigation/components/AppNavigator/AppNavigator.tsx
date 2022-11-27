@@ -48,9 +48,10 @@ const createScreenOptions = () => {
 };
 
 export const AppNavigator: FC = () => {
-  const { user } = useSelector<{ appSlice: IAppSliceState }, IAppSliceState>(
-    (state) => state.appSlice
-  );
+  const { user, hideDrawerHeader } = useSelector<
+    { appSlice: IAppSliceState },
+    IAppSliceState
+  >((state) => state.appSlice);
 
   return (
     <NavigationContainer>
@@ -67,6 +68,7 @@ export const AppNavigator: FC = () => {
               drawerIcon: ({ color }) => (
                 <Ionicons name="home-outline" size={22} color={color} />
               ),
+              headerShown: !hideDrawerHeader,
             }}
           />
         )}
