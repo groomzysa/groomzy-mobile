@@ -8,6 +8,7 @@ import { TAB_ICON } from "./constants";
 import { ETabIcon, ETabIconName } from "./types";
 import { theme } from "../../../../../../utils/theme";
 import { Services } from "../Services/Services";
+import { Details } from "../Details/Details";
 
 const ProviderTradingTabNavigator = createBottomTabNavigator();
 
@@ -55,7 +56,7 @@ export const ProviderTradingNavigator: FC = () => {
       />
       <ProviderTradingTabNavigator.Screen
         name={ETabIconName.Provider_Details}
-        component={DetailsScreen}
+        component={Details}
       />
       <ProviderTradingTabNavigator.Screen
         name={ETabIconName.Socials}
