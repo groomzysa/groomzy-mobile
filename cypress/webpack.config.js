@@ -1,6 +1,6 @@
-const path = require('path');
+var path = require('path');
 
-const appDirectory = path.resolve(__dirname, '../')
+var appDirectory = path.resolve(__dirname, '../')
 
 module.exports = {
   module: {

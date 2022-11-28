@@ -8,8 +8,9 @@ import { useDispatch } from "react-redux";
 
 import { starSVG } from "../../../../../assets/star";
 import { GCarousel } from "../../../../components";
-import { setHideDrawerHeader } from "../../../../store/slices/appSlice";
-import { addressName, fullName } from "../../util";
+import { setHideDrawerHeader } from "../../../../store/slices/appSlice/appSlice";
+import { setProvider } from "../../../../store/slices/explorerSlice/explorerSlice";
+import { addressName } from "../../util";
 import {
   Caption,
   Info,
@@ -48,6 +49,7 @@ export const ProviderSummary: FC<IProviderSummaryProps> = ({
             <TouchableOpacity
               onPress={() => {
                 dispatch(setHideDrawerHeader({ hideDrawerHeader: true }));
+                dispatch(setProvider({ provider }));
                 navigation.navigate("ProviderTrading");
               }}
             >

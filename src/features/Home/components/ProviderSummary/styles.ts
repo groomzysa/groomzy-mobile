@@ -45,6 +45,7 @@ export const Caption = styled(Text)`
 
 export const ViewButtonContainer = styled(View)`
   flex-direction: row;
+  justify-content: space-between;
   padding-top: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xxsmall}px;
   padding-bottom: ${({ theme }: { theme: ITheme }) =>

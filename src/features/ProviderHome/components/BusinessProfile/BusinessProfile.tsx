@@ -19,12 +19,12 @@ import {
   UPDATE_PROVIDER_BUSINESS_DETAILS_MESSAGE,
 } from "../../../../utils/messages";
 import { useSelector } from "react-redux";
-import { IAppSliceState } from "../../../../store/slices/types";
+import { IAppSliceState } from "../../../../store/slices/appSlice/types";
 import { Flex1, Flex2 } from "../../../../utils/common/styles";
 
 export const BusinessProfile: FC = () => {
-  const { user } = useSelector<{ appSlice: IAppSliceState }, IAppSliceState>(
-    (state) => state.appSlice
+  const { user } = useSelector<{ app: IAppSliceState }, IAppSliceState>(
+    (state) => state.app
   );
 
   const [image, setImage] = useState<string>();
@@ -233,6 +233,7 @@ export const BusinessProfile: FC = () => {
           value={phoneNumber || user?.provider?.profile?.phone || ""}
           onTextChange={setPhoneNumber}
           errorMessage={phoneNumberError}
+          keyboardType="phone-pad"
         />
 
         <Space></Space>
@@ -249,6 +250,7 @@ export const BusinessProfile: FC = () => {
               }
               onTextChange={setStreetNumber}
               errorMessage={streetNumberError}
+              keyboardType="numeric"
             />
           </Flex1>
           <Flex2>
@@ -299,6 +301,7 @@ export const BusinessProfile: FC = () => {
               }
               onTextChange={setAreaCode}
               errorMessage={areaCodeError}
+              keyboardType="numeric"
             />
           </Flex1>
         </FlexRowContainer>

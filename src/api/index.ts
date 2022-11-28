@@ -12,7 +12,7 @@ export const api = createApi({
     //@ts-ignore
     client: graphqlClient,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).appSlice.token;
+      const token = (getState() as RootState).app.token;
 
       // If we have a token set in state,
       // update auth header.

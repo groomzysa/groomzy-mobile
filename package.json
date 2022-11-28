@@ -36,6 +36,7 @@
     "dotenv": "^16.0.3",
     "expo": "~46.0.13",
     "expo-image-picker": "~13.3.1",
+    "expo-location": "~14.3.0",
     "expo-status-bar": "~1.4.0",
     "graphql-request": "^5.0.0",
     "isemail": "^3.2.0",

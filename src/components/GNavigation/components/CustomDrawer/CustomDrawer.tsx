@@ -7,8 +7,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { removeToken } from "../../../../api/helpers";
-import { setToken, setUser } from "../../../../store/slices/appSlice";
-import { IAppSliceState } from "../../../../store/slices/types";
+import { setToken, setUser } from "../../../../store/slices/appSlice/appSlice";
+import { IAppSliceState } from "../../../../store/slices/appSlice/types";
 import {
   AppDrawerHeaderImage,
   AppDrawerHeaderImageBackground,
@@ -22,8 +22,8 @@ import {
 import { ICustomDrawerProps } from "./types";
 
 export const CustomDrawer: FC<ICustomDrawerProps> = ({ drawerProps }) => {
-  const { user } = useSelector<{ appSlice: IAppSliceState }, IAppSliceState>(
-    (state) => state.appSlice
+  const { user } = useSelector<{ app: IAppSliceState }, IAppSliceState>(
+    (state) => state.app
   );
   const dispatch = useDispatch();
 

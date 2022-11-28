@@ -12,7 +12,7 @@ import {
 import { TextStyled, ContentContainer } from "./styles";
 import { SignInProps } from "./types";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../store/slices/appSlice";
+import { setToken } from "../../store/slices/appSlice/appSlice";
 import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,

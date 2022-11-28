@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
-import { setHideDrawerHeader } from "../../../../store/slices/appSlice";
+import { setHideDrawerHeader } from "../../../../store/slices/appSlice/appSlice";
 import { SafeAreaViewContainer } from "../../../../utils/common/styles";
 import { HomeExplorer } from "../HomeExplorer/HomeExplorer";
 import { ProviderTrading } from "../ProviderTrading/ProviderTrading";

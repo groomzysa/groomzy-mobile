@@ -1,11 +1,21 @@
-import { User } from "../../api/graphql/api.schema";
+import { User } from "../../../api/graphql/api.schema";
 
+/**
+ * 
+ * States
+ * 
+ */
 export interface IAppSliceState {
   token?: string;
   user?: User;
   hideDrawerHeader?: boolean;
 }
 
+/**
+ * 
+ * Actions
+ * 
+ */
 export interface IAppSliceSetTokenAction {
   type: string;
   payload: {

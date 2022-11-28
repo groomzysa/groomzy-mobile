@@ -12,7 +12,7 @@ import { TRootAppDrawerParamList } from "./types";
 import { Home, ProviderHome, SignIn, SignUp } from "../../../../features";
 import { UserRole } from "../../../../api/graphql/api.schema";
 import { useSelector } from "react-redux";
-import { IAppSliceState } from "../../../../store/slices/types";
+import { IAppSliceState } from "../../../../store/slices/appSlice/types";
 
 const Drawer = createDrawerNavigator<TRootAppDrawerParamList>();
 
@@ -49,9 +49,9 @@ const createScreenOptions = () => {
 
 export const AppNavigator: FC = () => {
   const { user, hideDrawerHeader } = useSelector<
-    { appSlice: IAppSliceState },
+    { app: IAppSliceState },
     IAppSliceState
-  >((state) => state.appSlice);
+  >((state) => state.app);
 
   return (
     <NavigationContainer>
