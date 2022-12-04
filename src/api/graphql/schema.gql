@@ -53,6 +53,16 @@ type Client {
   bookings: [Booking!]
 }
 
+enum DayType {
+  MON
+  TUE
+  WED
+  THR
+  FRI
+  SAT
+  SUN
+}
+
 enum DurationUnitType {
   MIN
   HRS
@@ -61,18 +71,28 @@ enum DurationUnitType {
 scalar File
 
 type Mutation {
-  addProvider(tradingName: String!, phone: String!, logo: File): Provider!
-  addProviderAddress(streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!): Address!
   addService(name: String!, description: String!, price: Float!, duration: Float!, durationUnit: DurationUnitType!, inHouse: Boolean!, category: CategoryType!): Service!
   addStaff(firstName: String!, lastName: String!): Staff!
+  addTradingAddress(streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!): Address!
+  addTradingInfo(tradingName: String!, phone: String!, logo: File): Provider!
   addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!, userImage: File): User!
   deleteService(serviceId: Int!): Service!
   deleteStaff(staffId: Int!): Staff!
   signIn(email: String!, password: String!, role: UserRole!): Token!
-  updateProvider(providerId: Int!, tradingName: String, phone: String, logo: File): Provider!
-  updateProviderAddress(addressId: Int!, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String): Address!
   updateService(serviceId: Int!, name: String, description: String, duration: Float, durationUnit: DurationUnitType, inHouse: Boolean, price: Float, category: CategoryType): Service!
   updateStaff(staffId: Int!, firstName: String, lastName: String): Staff!
+  updateTradingAddress(addressId: Int!, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String): Address!
+  updateTradingInfo(providerId: Int!, tradingName: String, phone: String, logo: File): Provider!
+}
+
+type OperatingTime {
+  id: Int!
+  createdAt: String
+  updatedAt: String
+  day: DayType
+  opens: String
+  closes: String
+  provider: Provider
 }
 
 type Provider {
@@ -87,6 +107,7 @@ type Provider {
   services: [Service!]
   staffs: [Staff!]
   bookings: [Booking!]
+  operatingTimes: [OperatingTime!]
 }
 
 type Query {

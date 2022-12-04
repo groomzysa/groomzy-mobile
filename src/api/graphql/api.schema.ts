@@ -65,6 +65,16 @@ export type Client = {
   user?: Maybe<User>;
 };
 
+export enum DayType {
+  Fri = 'FRI',
+  Mon = 'MON',
+  Sat = 'SAT',
+  Sun = 'SUN',
+  Thr = 'THR',
+  Tue = 'TUE',
+  Wed = 'WED'
+}
+
 export enum DurationUnitType {
   Hrs = 'HRS',
   Min = 'MIN'
@@ -72,35 +82,18 @@ export enum DurationUnitType {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addProvider: Provider;
-  addProviderAddress: Address;
   addService: Service;
   addStaff: Staff;
+  addTradingAddress: Address;
+  addTradingInfo: Provider;
   addUser: User;
   deleteService: Service;
   deleteStaff: Staff;
   signIn: Token;
-  updateProvider: Provider;
-  updateProviderAddress: Address;
   updateService: Service;
   updateStaff: Staff;
-};
-
-
-export type MutationAddProviderArgs = {
-  logo?: InputMaybe<Scalars['File']>;
-  phone: Scalars['String'];
-  tradingName: Scalars['String'];
-};
-
-
-export type MutationAddProviderAddressArgs = {
-  areaCode: Scalars['String'];
-  city: Scalars['String'];
-  province: Scalars['String'];
-  streetName: Scalars['String'];
-  streetNumber: Scalars['String'];
-  town: Scalars['String'];
+  updateTradingAddress: Address;
+  updateTradingInfo: Provider;
 };
 
 
@@ -118,6 +111,23 @@ export type MutationAddServiceArgs = {
 export type MutationAddStaffArgs = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+};
+
+
+export type MutationAddTradingAddressArgs = {
+  areaCode: Scalars['String'];
+  city: Scalars['String'];
+  province: Scalars['String'];
+  streetName: Scalars['String'];
+  streetNumber: Scalars['String'];
+  town: Scalars['String'];
+};
+
+
+export type MutationAddTradingInfoArgs = {
+  logo?: InputMaybe<Scalars['File']>;
+  phone: Scalars['String'];
+  tradingName: Scalars['String'];
 };
 
 
@@ -148,25 +158,6 @@ export type MutationSignInArgs = {
 };
 
 
-export type MutationUpdateProviderArgs = {
-  logo?: InputMaybe<Scalars['File']>;
-  phone?: InputMaybe<Scalars['String']>;
-  providerId: Scalars['Int'];
-  tradingName?: InputMaybe<Scalars['String']>;
-};
-
-
-export type MutationUpdateProviderAddressArgs = {
-  addressId: Scalars['Int'];
-  areaCode?: InputMaybe<Scalars['String']>;
-  city?: InputMaybe<Scalars['String']>;
-  province?: InputMaybe<Scalars['String']>;
-  streetName?: InputMaybe<Scalars['String']>;
-  streetNumber?: InputMaybe<Scalars['String']>;
-  town?: InputMaybe<Scalars['String']>;
-};
-
-
 export type MutationUpdateServiceArgs = {
   category?: InputMaybe<CategoryType>;
   description?: InputMaybe<Scalars['String']>;
@@ -185,6 +176,36 @@ export type MutationUpdateStaffArgs = {
   staffId: Scalars['Int'];
 };
 
+
+export type MutationUpdateTradingAddressArgs = {
+  addressId: Scalars['Int'];
+  areaCode?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  province?: InputMaybe<Scalars['String']>;
+  streetName?: InputMaybe<Scalars['String']>;
+  streetNumber?: InputMaybe<Scalars['String']>;
+  town?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateTradingInfoArgs = {
+  logo?: InputMaybe<Scalars['File']>;
+  phone?: InputMaybe<Scalars['String']>;
+  providerId: Scalars['Int'];
+  tradingName?: InputMaybe<Scalars['String']>;
+};
+
+export type OperatingTime = {
+  __typename?: 'OperatingTime';
+  closes?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  day?: Maybe<DayType>;
+  id: Scalars['Int'];
+  opens?: Maybe<Scalars['String']>;
+  provider?: Maybe<Provider>;
+  updatedAt?: Maybe<Scalars['String']>;
+};
+
 export type Provider = {
   __typename?: 'Provider';
   addresses?: Maybe<Array<Address>>;
@@ -192,6 +213,7 @@ export type Provider = {
   createdAt?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   logoUrl?: Maybe<Scalars['String']>;
+  operatingTimes?: Maybe<Array<OperatingTime>>;
   phone?: Maybe<Scalars['String']>;
   services?: Maybe<Array<Service>>;
   staffs?: Maybe<Array<Staff>>;
@@ -272,16 +294,7 @@ export enum UserStatus {
   Suspended = 'SUSPENDED'
 }
 
-export type AddProviderMutationVariables = Exact<{
-  tradingName: Scalars['String'];
-  phone: Scalars['String'];
-  logo?: InputMaybe<Scalars['File']>;
-}>;
-
-
-export type AddProviderMutation = { __typename?: 'Mutation', addProvider: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, logoUrl?: string | null } };
-
-export type AddProviderAddressMutationVariables = Exact<{
+export type AddTradingAddressMutationVariables = Exact<{
   streetNumber: Scalars['String'];
   streetName: Scalars['String'];
   town: Scalars['String'];
@@ -291,19 +304,18 @@ export type AddProviderAddressMutationVariables = Exact<{
 }>;
 
 
-export type AddProviderAddressMutation = { __typename?: 'Mutation', addProviderAddress: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } };
+export type AddTradingAddressMutation = { __typename?: 'Mutation', addTradingAddress: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } };
 
-export type UpdateProviderMutationVariables = Exact<{
-  providerId: Scalars['Int'];
-  tradingName?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
+export type AddTradingInfoMutationVariables = Exact<{
+  tradingName: Scalars['String'];
+  phone: Scalars['String'];
   logo?: InputMaybe<Scalars['File']>;
 }>;
 
 
-export type UpdateProviderMutation = { __typename?: 'Mutation', updateProvider: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, logoUrl?: string | null } };
+export type AddTradingInfoMutation = { __typename?: 'Mutation', addTradingInfo: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, logoUrl?: string | null } };
 
-export type UpdateProviderAddressMutationVariables = Exact<{
+export type UpdateTradingAddressMutationVariables = Exact<{
   addressId: Scalars['Int'];
   streetNumber?: InputMaybe<Scalars['String']>;
   streetName?: InputMaybe<Scalars['String']>;
@@ -314,7 +326,17 @@ export type UpdateProviderAddressMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProviderAddressMutation = { __typename?: 'Mutation', updateProviderAddress: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } };
+export type UpdateTradingAddressMutation = { __typename?: 'Mutation', updateTradingAddress: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } };
+
+export type UpdateTradingInfoMutationVariables = Exact<{
+  providerId: Scalars['Int'];
+  tradingName?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['File']>;
+}>;
+
+
+export type UpdateTradingInfoMutation = { __typename?: 'Mutation', updateTradingInfo: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, logoUrl?: string | null } };
 
 export type AddServiceMutationVariables = Exact<{
   name: Scalars['String'];

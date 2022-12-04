@@ -10,13 +10,13 @@ You will be redirectd to sign in shortly.
 
 /**
  *
- * Provider business details success messages
+ * Provider business profile success messages
  *
  */
-export const ADD_PROVIDER_BUSINESS_DETAILS_MESSAGE = `Business details added successfuly`;
-export const ADD_PROVIDER_ADDRESS_MESSAGE = `Address added successfuly`;
-export const UPDATE_PROVIDER_BUSINESS_DETAILS_MESSAGE = `Business details updated successfuly`;
-export const UPDATE_PROVIDER_ADDRESS_MESSAGE = `Address updated successfuly`;
+export const ADD_PROVIDER_TRADING_INFO_MESSAGE = `Trading info added successfuly`;
+export const ADD_PROVIDER_TRADING_ADDRESS_MESSAGE = `Trading address added successfuly`;
+export const UPDATE_PROVIDER_TRADING_INFO_MESSAGE = `Trading info updated successfuly`;
+export const UPDATE_PROVIDER_TRADING_ADDRESS_MESSAGE = `Trading address updated successfuly`;
 
 /**
  *

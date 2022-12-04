@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
-import { Container, Content, Space } from "./styles";
+import { Container, Content } from "./styles";
 import { useFetchProvider } from "../../../../api/hooks/queries";
-import { ActivityIndicator, Divider } from "react-native-paper";
+import { ActivityIndicator } from "react-native-paper";
 import { GButton, GErrorMessage } from "../../../../components";
-import { BusinessAddress, BusinessDetails } from "./components";
+import { TradingAddress, TradingInfo } from "./components";
 import { useBusinessProfileHandlers } from "./hooks";
 import { Flex1, FlexRowContainer } from "../../../../utils/common/styles";
 
@@ -57,9 +57,9 @@ export const BusinessProfile: FC = () => {
             </Flex1>
           </FlexRowContainer>
           {providerHasError && <GErrorMessage message={providerError} />}
-          {showBusinessDetails && <BusinessDetails provider={provider} />}
+          {showBusinessDetails && <TradingInfo provider={provider} />}
           {showAddressDetails && (
-            <BusinessAddress address={provider?.addresses?.[0]} />
+            <TradingAddress address={provider?.addresses?.[0]} />
           )}
         </Content>
       )}

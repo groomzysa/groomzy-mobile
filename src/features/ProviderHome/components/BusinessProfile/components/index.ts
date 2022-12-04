@@ -1,2 +1,2 @@
-export { BusinessDetails } from "./BusinessDetails/BusinessDetails";
-export { BusinessAddress } from "./BusinessAddress/BusinessAddress";
+export { TradingInfo } from "./TradingInfo/TradingInfo";
+export { TradingAddress } from "./TradingAddress/TradingAddress";

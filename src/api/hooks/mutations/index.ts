@@ -11,10 +11,10 @@ export { useSignIn } from "./user/useSignIn";
  * Provider mutations
  *
  */
-export { useAddProvider } from "./provider/useAddProvider";
-export { useUpdateProvider } from "./provider/useUpdateProvider";
-export { useAddProviderAddress } from "./provider/useAddProviderAddress";
-export { useUpdateProviderAddress } from "./provider/useUpdateProviderAddress";
+export { useAddTradingInfo } from "./provider/useAddTradingInfo";
+export { useUpdateTradingInfo } from "./provider/useUpdateTradingInfo";
+export { useAddTradingAddress } from "./provider/useAddTradingAddress";
+export { useUpdateTradingAddress } from "./provider/useUpdateTradingAddress";
 
 /**
  *
