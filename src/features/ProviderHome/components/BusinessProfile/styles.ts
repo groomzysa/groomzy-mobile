@@ -20,8 +20,3 @@ export const Space = styled(View)`
   padding-bottom: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.small}px;
 `;
-export const FlexRowContainer = styled(View)`
-  flex-grow: 1;
-  flex-direction: row;
-  justify-content: space-between;
-`;

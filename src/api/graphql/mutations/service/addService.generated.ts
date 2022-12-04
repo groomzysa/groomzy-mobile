@@ -9,33 +9,22 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
+import { api } from '../../..';
 export type AddServiceMutationVariables = Types.Exact<{
-  name: Types.Scalars["String"];
-  description: Types.Scalars["String"];
-  price: Types.Scalars["Float"];
-  duration: Types.Scalars["Float"];
+  name: Types.Scalars['String'];
+  description: Types.Scalars['String'];
+  price: Types.Scalars['Float'];
+  duration: Types.Scalars['Float'];
   durationUnit: Types.DurationUnitType;
-  inHouse: Types.Scalars["Boolean"];
+  inHouse: Types.Scalars['Boolean'];
   category: Types.CategoryType;
 }>;
 
-export type AddServiceMutationResult = {
-  __typename?: "Mutation";
-  addService: {
-    __typename?: "Service";
-    id: number;
-    name: string;
-    description?: string | null;
-    price?: number | null;
-    duration?: number | null;
-    durationUnit?: Types.DurationUnitType | null;
-    inHouse?: boolean | null;
-    category?: Types.CategoryType | null;
-  };
-};
+
+export type AddServiceMutationResult = { __typename?: 'Mutation', addService: { __typename?: 'Service', id: number, name?: string | null, description?: string | null, price?: number | null, duration?: number | null, durationUnit?: Types.DurationUnitType | null, inHouse?: boolean | null, category?: Types.CategoryType | null } };
+
 
 export const AddServiceDocument = `
     mutation addService($name: String!, $description: String!, $price: Float!, $duration: Float!, $durationUnit: DurationUnitType!, $inHouse: Boolean!, $category: CategoryType!) {
@@ -62,14 +51,12 @@ export const AddServiceDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    addService: build.mutation<
-      AddServiceMutationResult,
-      AddServiceMutationVariables
-    >({
-      query: (variables) => ({ document: AddServiceDocument, variables }),
+    addService: build.mutation<AddServiceMutationResult, AddServiceMutationVariables>({
+      query: (variables) => ({ document: AddServiceDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useAddServiceMutation } = injectedRtkApi;
+

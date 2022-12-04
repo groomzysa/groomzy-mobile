@@ -20,7 +20,6 @@ import { theme } from "../../../../utils/theme";
 
 export const Services: FC = () => {
   const [addDialogVisible, setAddDialogVisible] = React.useState(false);
-  const [updateDialogVisible, setUpdateDialogVisible] = React.useState(false);
 
   /**
    *
@@ -36,10 +35,8 @@ export const Services: FC = () => {
    *
    */
   const showAddDialogHandler = () => setAddDialogVisible(true);
-  const showUpdateDialogHandler = () => setUpdateDialogVisible(true);
 
   const hideAddDialogHandler = () => setAddDialogVisible(false);
-  const hideUpdateDialogHandler = () => setUpdateDialogVisible(false);
 
   return (
     <Container>
@@ -63,7 +60,7 @@ export const Services: FC = () => {
           {servicesHasError && <GErrorMessage message={servicesError} />}
           <FlatListContainer>
             <FlatList
-              data={services}
+              data={services || []}
               renderItem={({ item: service }) => (
                 <FlatListItemWrapper>
                   <Service service={service} />

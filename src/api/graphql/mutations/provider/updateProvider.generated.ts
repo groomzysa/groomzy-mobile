@@ -9,91 +9,44 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
+import { api } from '../../..';
 export type UpdateProviderMutationVariables = Types.Exact<{
-  providerId: Types.Scalars["Int"];
-  tradingName?: Types.InputMaybe<Types.Scalars["String"]>;
-  streetNumber?: Types.InputMaybe<Types.Scalars["String"]>;
-  streetName?: Types.InputMaybe<Types.Scalars["String"]>;
-  town?: Types.InputMaybe<Types.Scalars["String"]>;
-  city?: Types.InputMaybe<Types.Scalars["String"]>;
-  province?: Types.InputMaybe<Types.Scalars["String"]>;
-  areaCode?: Types.InputMaybe<Types.Scalars["String"]>;
-  phone?: Types.InputMaybe<Types.Scalars["String"]>;
-  logo?: Types.InputMaybe<Types.Scalars["File"]>;
+  providerId: Types.Scalars['Int'];
+  tradingName?: Types.InputMaybe<Types.Scalars['String']>;
+  phone?: Types.InputMaybe<Types.Scalars['String']>;
+  logo?: Types.InputMaybe<Types.Scalars['File']>;
 }>;
 
-export type UpdateProviderMutationResult = {
-  __typename?: "Mutation";
-  updateProvider: {
-    __typename?: "Provider";
-    id: number;
-    profile?: {
-      __typename?: "BusinessProfile";
-      id: number;
-      tradingName?: string | null;
-      phone?: string | null;
-      logoUrl?: string | null;
-      address?: {
-        __typename?: "Address";
-        id: number;
-        streetNumber?: string | null;
-        streetName?: string | null;
-        town?: string | null;
-        city?: string | null;
-        province?: string | null;
-        areaCode?: string | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type UpdateProviderMutationResult = { __typename?: 'Mutation', updateProvider: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, logoUrl?: string | null } };
+
 
 export const UpdateProviderDocument = `
-    mutation updateProvider($providerId: Int!, $tradingName: String, $streetNumber: String, $streetName: String, $town: String, $city: String, $province: String, $areaCode: String, $phone: String, $logo: File) {
+    mutation updateProvider($providerId: Int!, $tradingName: String, $phone: String, $logo: File) {
   updateProvider(
     providerId: $providerId
     tradingName: $tradingName
-    streetNumber: $streetNumber
-    streetName: $streetName
-    town: $town
-    city: $city
-    province: $province
-    areaCode: $areaCode
     phone: $phone
     logo: $logo
   ) {
     id
-    profile {
-      id
-      tradingName
-      phone
-      logoUrl
-      address {
-        id
-        streetNumber
-        streetName
-        town
-        city
-        province
-        areaCode
-      }
-    }
+    tradingName
+    phone
+    logoUrl
   }
 }
     `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    updateProvider: build.mutation<
-      UpdateProviderMutationResult,
-      UpdateProviderMutationVariables
-    >({
-      query: (variables) => ({ document: UpdateProviderDocument, variables }),
+    updateProvider: build.mutation<UpdateProviderMutationResult, UpdateProviderMutationVariables>({
+      query: (variables) => ({ document: UpdateProviderDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useUpdateProviderMutation } = injectedRtkApi;
+

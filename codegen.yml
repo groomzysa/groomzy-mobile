@@ -1,7 +1,7 @@
 overwrite: true
-schema: "src/api/graphql/schema.graphql"
+schema: "src/api/graphql/schema.gql"
 
-documents: "src/api/graphql/**/*.graphql"
+documents: "src/api/graphql/**/*.gql"
 
 generates:
   src/api/graphql/api.schema.ts:
@@ -33,7 +33,3 @@ generates:
       operationResultSuffix: Result
       dedupeOperationSuffix: true
       useTypeImports: true
-
-hooks:
-  afterAllFileWrite:
-    - prettier --write

@@ -5,7 +5,9 @@ import styled from "styled-components/native";
 import { ITheme } from "../../utils/theme/types";
 
 export const ButtonContainer = styled(View)`
-  padding: ${({ theme }: { theme: ITheme }) =>
+  padding-top: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.xxsmall}px;
+  padding-bottom: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xxsmall}px;
   margin: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xxsmall}px;

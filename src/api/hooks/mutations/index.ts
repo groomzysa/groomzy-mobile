@@ -13,6 +13,8 @@ export { useSignIn } from "./user/useSignIn";
  */
 export { useAddProvider } from "./provider/useAddProvider";
 export { useUpdateProvider } from "./provider/useUpdateProvider";
+export { useAddProviderAddress } from "./provider/useAddProviderAddress";
+export { useUpdateProviderAddress } from "./provider/useUpdateProviderAddress";
 
 /**
  *

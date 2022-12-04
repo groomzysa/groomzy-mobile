@@ -28,7 +28,7 @@ export const ProviderSummary: FC<IProviderSummaryProps> = ({
   provider,
   navigation,
 }) => {
-  const { user, profile } = provider;
+  const { tradingName, addresses } = provider;
   const dispatch = useDispatch();
   const placeholderImageUrl =
     "https://images.unsplash.com/photo-1633681926035-ec1ac984418a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8c2Fsb258ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60";
@@ -44,7 +44,7 @@ export const ProviderSummary: FC<IProviderSummaryProps> = ({
       />
       <Info>
         <Section>
-          <Title>{profile?.tradingName || user?.firstName || "Provider"}</Title>
+          <Title>{tradingName || "Provider"}</Title>
           <SectionEnd>
             <TouchableOpacity
               onPress={() => {
@@ -75,7 +75,7 @@ export const ProviderSummary: FC<IProviderSummaryProps> = ({
           </SectionEnd>
         </Section>
 
-        <Caption>{profile?.address && addressName(profile.address)}</Caption>
+        <Caption>{addresses?.[0] && addressName(addresses[0])}</Caption>
       </Info>
     </ProviderSummaryCard>
   );

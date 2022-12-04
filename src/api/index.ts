@@ -6,7 +6,6 @@ import { RootState } from "../store/store";
 
 const graphqlClient: GraphQLClient = new GraphQLClient(API_BASE_URL);
 
-// console.log("How many time do we get here?");
 export const api = createApi({
   baseQuery: graphqlRequestBaseQuery({
     //@ts-ignore

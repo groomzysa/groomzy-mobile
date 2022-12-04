@@ -1,6 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
-import { validate } from "isemail";
-import { UserRole } from "../../api/graphql/api.schema";
+import React, { FC, useState } from "react";
 import { useAddUser } from "../../api/hooks/mutations";
 import {
   GButton,
@@ -18,8 +16,9 @@ import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../utils/common/styles";
+import { useSignUpEffects, useSignUpHandlers } from "./hooks";
 
-export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
+export const SignUp: FC<SignUpProps> = ({ navigation }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [firstNameError, setFirstNameError] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -29,6 +28,7 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
   const [password, setPassword] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [isProvider, setIsProvider] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   /**
    *
@@ -43,67 +43,17 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
     addUserError,
   } = useAddUser();
 
-  /**
-   *
-   * Effects
-   *
-   */
-  useEffect(() => {
-    if (!addUser) return;
+  const { addUserhandler, showPasswordHandler } = useSignUpHandlers();
 
-    // After user signed up successfully
-    // Reset state and redirect to sign in screen
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-    setIsProvider(false);
-
-    setTimeout(() => {
-      navigation.reset({ routes: [{ name: "Sign in" }] });
-    }, 5000);
-  }, [addUser]);
-
-  /**
-   *
-   * Handlers
-   *
-   */
-  const addUserhandler = () => {
-    const emailAbort = !email || !validate(email);
-    const passwordAbort = !password || password.length < 5;
-    const abortSignUp = !firstName || !lastName || emailAbort || passwordAbort;
-    if (!firstName) {
-      setFirstNameError("First name is required!");
-    } else if (firstNameError) {
-      setFirstNameError("");
-    }
-    if (!lastName) {
-      setLastNameError("Last name is required!");
-    } else if (lastNameError) {
-      setLastNameError("");
-    }
-    if (!validate(email)) {
-      setEmailError("Email is invalid.");
-    } else if (emailError) {
-      setEmailError("");
-    }
-    if (password.length < 5) {
-      setPasswordError("Password is too short!");
-    } else if (passwordError) {
-      setPasswordError("");
-    }
-
-    if (abortSignUp) return;
-
-    addUserTrigger({
-      email,
-      firstName,
-      lastName,
-      password,
-      role: isProvider ? UserRole.Provider : UserRole.Client,
-    });
-  };
+  useSignUpEffects({
+    navigation,
+    setEmail,
+    setFirstName,
+    setIsProvider,
+    setLastName,
+    setPassword,
+    addUser,
+  });
 
   return (
     <KeyboardAvoidingViewContainer>
@@ -150,7 +100,11 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
             value={password}
             onTextChange={setPassword}
             errorMessage={passwordError}
-            secureTextEntry
+            sufixIcon={showPassword ? "eye-outline" : "eye-off-outline"}
+            sufixIconOnPress={() =>
+              showPasswordHandler({ setShowPassword, showPassword })
+            }
+            secureTextEntry={!showPassword}
           />
           <GRadioButton
             label="Service provider?"
@@ -159,7 +113,24 @@ export const SignUp: FC<SignUpProps> = ({ navigation, route }) => {
           />
           <GButton
             label="Sing up"
-            onPress={addUserhandler}
+            onPress={() =>
+              addUserhandler({
+                addUserTrigger,
+                email,
+                emailError,
+                firstName,
+                firstNameError,
+                isProvider,
+                lastName,
+                lastNameError,
+                password,
+                passwordError,
+                setEmailError,
+                setFirstNameError,
+                setLastNameError,
+                setPasswordError,
+              })
+            }
             loading={addUserLoading}
           />
           <TextStyled

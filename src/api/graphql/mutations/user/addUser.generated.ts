@@ -9,31 +9,21 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
+import { api } from '../../..';
 export type AddUserMutationVariables = Types.Exact<{
-  firstName: Types.Scalars["String"];
-  lastName: Types.Scalars["String"];
-  email: Types.Scalars["String"];
-  password: Types.Scalars["String"];
+  firstName: Types.Scalars['String'];
+  lastName: Types.Scalars['String'];
+  email: Types.Scalars['String'];
+  password: Types.Scalars['String'];
   role: Types.UserRole;
-  userImage?: Types.InputMaybe<Types.Scalars["File"]>;
+  userImage?: Types.InputMaybe<Types.Scalars['File']>;
 }>;
 
-export type AddUserMutationResult = {
-  __typename?: "Mutation";
-  addUser: {
-    __typename?: "User";
-    id: number;
-    firstName?: string | null;
-    lastName?: string | null;
-    email?: string | null;
-    role?: Types.UserRole | null;
-    state?: Types.UserStatus | null;
-    userImageUrl?: string | null;
-  };
-};
+
+export type AddUserMutationResult = { __typename?: 'Mutation', addUser: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email?: string | null, role?: Types.UserRole | null, state?: Types.UserStatus | null, userImageUrl?: string | null } };
+
 
 export const AddUserDocument = `
     mutation addUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $role: UserRole!, $userImage: File) {
@@ -59,10 +49,11 @@ export const AddUserDocument = `
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     addUser: build.mutation<AddUserMutationResult, AddUserMutationVariables>({
-      query: (variables) => ({ document: AddUserDocument, variables }),
+      query: (variables) => ({ document: AddUserDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useAddUserMutation } = injectedRtkApi;
+

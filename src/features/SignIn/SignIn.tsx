@@ -1,7 +1,4 @@
 import React, { FC, useState, useEffect } from "react";
-import { validate } from "isemail";
-import { UserRole } from "../../api/graphql/api.schema";
-import { storeToken } from "../../api/helpers";
 import { useSignIn } from "../../api/hooks/mutations";
 import {
   GButton,
@@ -12,11 +9,11 @@ import {
 import { TextStyled, ContentContainer } from "./styles";
 import { SignInProps } from "./types";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../store/slices/appSlice/appSlice";
 import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../utils/common/styles";
+import { useSignInEffects, useSignInHandlers } from "./hooks";
 
 export const SignIn: FC<SignInProps> = ({ navigation }) => {
   const [email, setEmail] = useState<string>("");
@@ -24,6 +21,8 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
   const [password, setPassword] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [isProvider, setIsProvider] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const dispatch = useDispatch();
 
   /**
@@ -34,59 +33,15 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
   const { signInTrigger, token, signInLoading, signInHasError, signInError } =
     useSignIn();
 
-  /**
-   *
-   * Effects
-   *
-   */
-  useEffect(() => {
-    if (!token) return;
+  const { showPasswordHandler, signInHandler } = useSignInHandlers();
 
-    // After user signed in successfully
-    // Reset state and redirect to home screen
-    setEmail("");
-    setPassword("");
-    setIsProvider(false);
-
-    dispatch(setToken({ token: token }));
-
-    async function storeNewToken(input: string) {
-      await storeToken(input);
-    }
-    storeNewToken(token);
-
-    navigation.reset({ routes: [{ name: "Home" }] });
-  }, [token]);
-
-  /**
-   *
-   * Handlers
-   *
-   */
-  const signInHandler = () => {
-    const emailAbort = !email || !validate(email);
-    const passwordAbort = !password || password.length < 5;
-    const abortSignIn = emailAbort || passwordAbort;
-
-    if (!validate(email)) {
-      setEmailError("Email is invalid.");
-    } else if (emailError) {
-      setEmailError("");
-    }
-    if (password.length < 5) {
-      setPasswordError("Password is too short!");
-    } else if (passwordError) {
-      setPasswordError("");
-    }
-
-    if (abortSignIn) return;
-
-    signInTrigger({
-      email,
-      password,
-      role: isProvider ? UserRole.Provider : UserRole.Client,
-    });
-  };
+  useSignInEffects({
+    navigation,
+    setEmail,
+    setIsProvider,
+    setPassword,
+    token,
+  });
 
   return (
     <KeyboardAvoidingViewContainer>
@@ -111,7 +66,11 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
             value={password}
             onTextChange={setPassword}
             errorMessage={passwordError}
-            secureTextEntry
+            sufixIcon={showPassword ? "eye-outline" : "eye-off-outline"}
+            sufixIconOnPress={() =>
+              showPasswordHandler({ setShowPassword, showPassword })
+            }
+            secureTextEntry={!showPassword}
           />
           <GRadioButton
             label="Service provider?"
@@ -120,7 +79,18 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
           />
           <GButton
             label="Sing in"
-            onPress={signInHandler}
+            onPress={() =>
+              signInHandler({
+                email,
+                emailError,
+                isProvider,
+                password,
+                passwordError,
+                setEmailError,
+                setPasswordError,
+                signInTrigger,
+              })
+            }
             loading={signInLoading}
           />
           <TextStyled>Forgot password?</TextStyled>

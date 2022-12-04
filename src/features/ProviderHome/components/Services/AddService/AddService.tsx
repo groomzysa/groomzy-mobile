@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import Dialog from "react-native-dialog";
 import {
   CategoryType,
@@ -20,7 +20,7 @@ import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../../../../utils/common/styles";
-import { ADD_SERVICE_MESSAGE } from "../../../../../utils/messages";
+import { useAddServiceEffects, useAddServiceHandlers } from "./hooks";
 import { ErrorText, SubTitleText } from "./styles";
 import { IAddServiceProps } from "./types";
 
@@ -52,116 +52,29 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
     addServiceError,
   } = useAddService();
 
-  /**
-   *
-   * Effects
-   *
-   */
-  useEffect(() => {
-    if (!addService) return;
+  const {
+    addServiceHandler,
+    categoryBarberHandler,
+    categoryHairdresserHandler,
+    categoryMakeupArtistHandler,
+    categoryNailTechnicianHandler,
+    categorySpaHandler,
+    durationUnitHrsHandler,
+    durationUnitMinHandler,
+  } = useAddServiceHandlers();
 
-    setSuccessMessage(ADD_SERVICE_MESSAGE);
-
-    // After user added service successfully
-    // Reset state and close dialog
-    setName("");
-    setDescription("");
-    setPrice("");
-    setDuration("");
-    setDurationUnit(undefined);
-    setCategory(undefined);
-  }, [addService]);
-
-  useEffect(() => {
-    if (!successMessage) return;
-
-    setTimeout(() => {
-      setSuccessMessage("");
-      hideDialog();
-    }, 3000);
-  }, [successMessage]);
-
-  /**
-   *
-   * Handlers
-   *
-   */
-  const durationUnitMinHandler = () => {
-    setDurationUnit(DurationUnitType.Min);
-  };
-
-  const durationUnitHrsHandler = () => {
-    setDurationUnit(DurationUnitType.Hrs);
-  };
-
-  const categoryBarberHandler = () => {
-    setCategory(CategoryType.Barber);
-  };
-  const categoryHairdresserHandler = () => {
-    setCategory(CategoryType.Hairdresser);
-  };
-  const categoryMakeupArtistHandler = () => {
-    setCategory(CategoryType.MakeupArtist);
-  };
-  const categoryNailTechnicianHandler = () => {
-    setCategory(CategoryType.NailTechnician);
-  };
-  const categorySpaHandler = () => {
-    setCategory(CategoryType.Spa);
-  };
-
-  const addServiceHandler = () => {
-    const arbortAddService =
-      !name ||
-      !description ||
-      !price ||
-      !duration ||
-      !durationUnit ||
-      !category;
-
-    if (!name) {
-      setNameError("Name is required!");
-    } else if (nameError) {
-      setNameError("");
-    }
-    if (!description) {
-      setDescriptionError("Description is required!");
-    } else if (descriptionError) {
-      setDescriptionError("");
-    }
-    if (!price) {
-      setPriceError("Price is required!");
-    } else if (priceError) {
-      setPriceError("");
-    }
-    if (!duration) {
-      setDurationError("Duration is required!");
-    } else if (durationError) {
-      setDurationError("");
-    }
-    if (!durationUnit) {
-      setDurationUnitError("Duration unit is required!");
-    } else if (durationUnitError) {
-      setDurationUnitError("");
-    }
-    if (!category) {
-      setCategoryError("Category is required!");
-    } else if (categoryError) {
-      setCategoryError("");
-    }
-
-    if (arbortAddService) return;
-
-    addServiceTrigger({
-      name,
-      description,
-      price: Number(price),
-      duration: Number(duration),
-      durationUnit,
-      category,
-      inHouse: false,
-    });
-  };
+  useAddServiceEffects({
+    addService,
+    hideDialog,
+    setCategory,
+    setDescription,
+    setDuration,
+    setDurationUnit,
+    setName,
+    setPrice,
+    setSuccessMessage,
+    successMessage,
+  });
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -210,7 +123,7 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
                     ? "checked"
                     : "unchecked"
                 }
-                onPress={durationUnitMinHandler}
+                onPress={() => durationUnitMinHandler(setDurationUnit)}
               />
             </Flex1>
             <Flex1>
@@ -221,7 +134,7 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
                     ? "checked"
                     : "unchecked"
                 }
-                onPress={durationUnitHrsHandler}
+                onPress={() => durationUnitHrsHandler(setDurationUnit)}
               />
             </Flex1>
           </FlexRowContainer>
@@ -234,21 +147,21 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
               status={
                 category === CategoryType.Barber ? "checked" : "unchecked"
               }
-              onPress={categoryBarberHandler}
+              onPress={() => categoryBarberHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.Hairdresser}
               status={
                 category === CategoryType.Hairdresser ? "checked" : "unchecked"
               }
-              onPress={categoryHairdresserHandler}
+              onPress={() => categoryHairdresserHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.MakeupArtist.toString().replace("_", " ")}
               status={
                 category === CategoryType.MakeupArtist ? "checked" : "unchecked"
               }
-              onPress={categoryMakeupArtistHandler}
+              onPress={() => categoryMakeupArtistHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.NailTechnician.toString().replace("_", " ")}
@@ -257,18 +170,40 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
                   ? "checked"
                   : "unchecked"
               }
-              onPress={categoryNailTechnicianHandler}
+              onPress={() => categoryNailTechnicianHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.Spa}
               status={category === CategoryType.Spa ? "checked" : "unchecked"}
-              onPress={categorySpaHandler}
+              onPress={() => categorySpaHandler(setCategory)}
             />
           </FlexColumContainer>
           <FlexRowEndContainer>
             <GButton
               label="Add"
-              onPress={addServiceHandler}
+              onPress={() =>
+                addServiceHandler({
+                  addServiceTrigger,
+                  category,
+                  categoryError,
+                  description,
+                  descriptionError,
+                  duration,
+                  durationError,
+                  durationUnit,
+                  durationUnitError,
+                  name,
+                  nameError,
+                  price,
+                  priceError,
+                  setCategoryError,
+                  setDescriptionError,
+                  setDurationError,
+                  setDurationUnitError,
+                  setNameError,
+                  setPriceError,
+                })
+              }
               loading={addServiceLoading}
               testID="addServiceButton"
             />

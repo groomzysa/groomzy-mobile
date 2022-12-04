@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import Dialog from "react-native-dialog";
 import { useDeleteService } from "../../../../../api/hooks/mutations";
 import {
@@ -7,7 +7,7 @@ import {
   GSuccessMessage,
 } from "../../../../../components";
 import { FlexRowEndContainer } from "../../../../../utils/common/styles";
-import { DELETE_SERVICE_MESSAGE } from "../../../../../utils/messages";
+import { useDeleteServiceEffects, useDeleteServiceHandlers } from "./hooks";
 import { SubTitleText } from "./styles";
 import { IDeleteServiceProps } from "./types";
 
@@ -32,36 +32,14 @@ export const DeleteService: FC<IDeleteServiceProps> = ({
     deleteServiceError,
   } = useDeleteService();
 
-  /**
-   *
-   * Effects
-   *
-   */
-  useEffect(() => {
-    if (!deleteService) return;
+  const { deleteServiceHandler } = useDeleteServiceHandlers();
 
-    setSuccessMessage(DELETE_SERVICE_MESSAGE);
-  }, [deleteService]);
-
-  useEffect(() => {
-    if (!successMessage) return;
-
-    setTimeout(() => {
-      setSuccessMessage("");
-      hideDialog();
-    }, 5000);
-  }, [successMessage]);
-
-  /**
-   *
-   * Handlers
-   *
-   */
-  const deleteServiceHandler = () => {
-    deleteServiceTrigger({
-      serviceId,
-    });
-  };
+  useDeleteServiceEffects({
+    deleteService,
+    hideDialog,
+    setSuccessMessage,
+    successMessage,
+  });
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -74,7 +52,12 @@ export const DeleteService: FC<IDeleteServiceProps> = ({
       <FlexRowEndContainer>
         <GButton
           label="Delete"
-          onPress={deleteServiceHandler}
+          onPress={() =>
+            deleteServiceHandler({
+              deleteServiceTrigger,
+              serviceId,
+            })
+          }
           loading={deleteServiceLoading}
           testID="deleteServiceButton"
         />

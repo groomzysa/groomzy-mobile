@@ -1,0 +1,16 @@
+query provider {
+  provider {
+    id
+    tradingName
+    phone
+    addresses {
+      id
+      streetNumber
+      streetName
+      town
+      city
+      province
+      areaCode
+    }
+  }
+}

@@ -9,89 +9,38 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
+import { api } from '../../..';
 export type AddProviderMutationVariables = Types.Exact<{
-  tradingName: Types.Scalars["String"];
-  streetNumber: Types.Scalars["String"];
-  streetName: Types.Scalars["String"];
-  town: Types.Scalars["String"];
-  city: Types.Scalars["String"];
-  province: Types.Scalars["String"];
-  areaCode: Types.Scalars["String"];
-  phone: Types.Scalars["String"];
-  logo?: Types.InputMaybe<Types.Scalars["File"]>;
+  tradingName: Types.Scalars['String'];
+  phone: Types.Scalars['String'];
+  logo?: Types.InputMaybe<Types.Scalars['File']>;
 }>;
 
-export type AddProviderMutationResult = {
-  __typename?: "Mutation";
-  addProvider: {
-    __typename?: "Provider";
-    id: number;
-    profile?: {
-      __typename?: "BusinessProfile";
-      id: number;
-      tradingName?: string | null;
-      phone?: string | null;
-      logoUrl?: string | null;
-      address?: {
-        __typename?: "Address";
-        id: number;
-        streetNumber?: string | null;
-        streetName?: string | null;
-        town?: string | null;
-        city?: string | null;
-        province?: string | null;
-        areaCode?: string | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type AddProviderMutationResult = { __typename?: 'Mutation', addProvider: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, logoUrl?: string | null } };
+
 
 export const AddProviderDocument = `
-    mutation addProvider($tradingName: String!, $streetNumber: String!, $streetName: String!, $town: String!, $city: String!, $province: String!, $areaCode: String!, $phone: String!, $logo: File) {
-  addProvider(
-    tradingName: $tradingName
-    streetNumber: $streetNumber
-    streetName: $streetName
-    town: $town
-    city: $city
-    province: $province
-    areaCode: $areaCode
-    phone: $phone
-    logo: $logo
-  ) {
+    mutation addProvider($tradingName: String!, $phone: String!, $logo: File) {
+  addProvider(tradingName: $tradingName, phone: $phone, logo: $logo) {
     id
-    profile {
-      id
-      tradingName
-      phone
-      logoUrl
-      address {
-        id
-        streetNumber
-        streetName
-        town
-        city
-        province
-        areaCode
-      }
-    }
+    tradingName
+    phone
+    logoUrl
   }
 }
     `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    addProvider: build.mutation<
-      AddProviderMutationResult,
-      AddProviderMutationVariables
-    >({
-      query: (variables) => ({ document: AddProviderDocument, variables }),
+    addProvider: build.mutation<AddProviderMutationResult, AddProviderMutationVariables>({
+      query: (variables) => ({ document: AddProviderDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useAddProviderMutation } = injectedRtkApi;
+

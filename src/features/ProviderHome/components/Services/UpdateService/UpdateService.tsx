@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import Dialog from "react-native-dialog";
 import {
   CategoryType,
@@ -20,7 +20,7 @@ import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../../../../utils/common/styles";
-import { UPDATE_SERVICE_MESSAGE } from "../../../../../utils/messages";
+import { useUpdateServiceEffects, useUpdateServiceHandlers } from "./hooks";
 import { SubTitleText } from "./styles";
 import { IUpdateServiceProps } from "./types";
 
@@ -52,80 +52,29 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
     updateServiceError,
   } = useUpdateService();
 
-  /**
-   *
-   * Effects
-   *
-   */
-  useEffect(() => {
-    if (!updateService) return;
+  const {
+    categoryBarberHandler,
+    categoryHairdresserHandler,
+    categoryMakeupArtistHandler,
+    categoryNailTechnicianHandler,
+    categorySpaHandler,
+    durationUnitHrsHandler,
+    durationUnitMinHandler,
+    updateServiceHandler,
+  } = useUpdateServiceHandlers();
 
-    setSuccessMessage(UPDATE_SERVICE_MESSAGE);
-
-    // After service updated successfully
-    // Reset state
-    setName("");
-    setDescription("");
-    setPrice("");
-    setDuration("");
-    setDurationUnit(undefined);
-    setCategory(undefined);
-
-    setTimeout(() => {
-      hideDialog();
-    }, 5000);
-  }, [updateService]);
-
-  useEffect(() => {
-    if (!successMessage) return;
-
-    setTimeout(() => {
-      setSuccessMessage("");
-      hideDialog();
-    }, 5000);
-  }, [successMessage]);
-
-  /**
-   *
-   * Handlers
-   *
-   */
-  const durationUnitMinHandler = () => {
-    setDurationUnit(DurationUnitType.Min);
-  };
-
-  const durationUnitHrsHandler = () => {
-    setDurationUnit(DurationUnitType.Hrs);
-  };
-
-  const categoryBarberHandler = () => {
-    setCategory(CategoryType.Barber);
-  };
-  const categoryHairdresserHandler = () => {
-    setCategory(CategoryType.Hairdresser);
-  };
-  const categoryMakeupArtistHandler = () => {
-    setCategory(CategoryType.MakeupArtist);
-  };
-  const categoryNailTechnicianHandler = () => {
-    setCategory(CategoryType.NailTechnician);
-  };
-  const categorySpaHandler = () => {
-    setCategory(CategoryType.Spa);
-  };
-
-  const updateServiceHandler = () => {
-    updateServiceTrigger({
-      serviceId,
-      name,
-      description,
-      price: Number(price),
-      duration: Number(duration),
-      durationUnit,
-      category,
-      inHouse: false,
-    });
-  };
+  useUpdateServiceEffects({
+    hideDialog,
+    setCategory,
+    setDescription,
+    setDuration,
+    setDurationUnit,
+    setName,
+    setPrice,
+    setSuccessMessage,
+    successMessage,
+    updateService,
+  });
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -174,7 +123,7 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                     ? "checked"
                     : "unchecked"
                 }
-                onPress={durationUnitMinHandler}
+                onPress={() => durationUnitMinHandler(setDurationUnit)}
               />
             </Flex1>
             <Flex1>
@@ -186,7 +135,7 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                     ? "checked"
                     : "unchecked"
                 }
-                onPress={durationUnitHrsHandler}
+                onPress={() => durationUnitHrsHandler(setDurationUnit)}
               />
             </Flex1>
           </FlexRowContainer>
@@ -200,7 +149,7 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                   ? "checked"
                   : "unchecked"
               }
-              onPress={categoryBarberHandler}
+              onPress={() => categoryBarberHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.Hairdresser}
@@ -210,7 +159,7 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                   ? "checked"
                   : "unchecked"
               }
-              onPress={categoryHairdresserHandler}
+              onPress={() => categoryHairdresserHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.MakeupArtist.toString().replace("_", " ")}
@@ -220,7 +169,7 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                   ? "checked"
                   : "unchecked"
               }
-              onPress={categoryMakeupArtistHandler}
+              onPress={() => categoryMakeupArtistHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.NailTechnician.toString().replace("_", " ")}
@@ -230,18 +179,29 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                   ? "checked"
                   : "unchecked"
               }
-              onPress={categoryNailTechnicianHandler}
+              onPress={() => categoryNailTechnicianHandler(setCategory)}
             />
             <GRadioButton
               label={CategoryType.Spa}
               status={category === CategoryType.Spa ? "checked" : "unchecked"}
-              onPress={categorySpaHandler}
+              onPress={() => categorySpaHandler(setCategory)}
             />
           </FlexColumContainer>
           <FlexRowEndContainer>
             <GButton
               label="Update"
-              onPress={updateServiceHandler}
+              onPress={() =>
+                updateServiceHandler({
+                  category,
+                  description,
+                  duration,
+                  durationUnit,
+                  name,
+                  price,
+                  serviceId,
+                  updateServiceTrigger,
+                })
+              }
               loading={updateServiceLoading}
               testID="updateServiceButton"
             />

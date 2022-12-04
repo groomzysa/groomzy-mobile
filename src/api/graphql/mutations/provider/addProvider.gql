@@ -1,0 +1,8 @@
+mutation addProvider($tradingName: String!, $phone: String!, $logo: File) {
+  addProvider(tradingName: $tradingName, phone: $phone, logo: $logo) {
+    id
+    tradingName
+    phone
+    logoUrl
+  }
+}

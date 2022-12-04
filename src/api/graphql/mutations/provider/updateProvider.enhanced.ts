@@ -1,9 +1,9 @@
 import { api } from "./updateProvider.generated";
 
 export const enhancedUpdateProviderApi = api.enhanceEndpoints({
-  addTagTypes: ["User"],
+  addTagTypes: ["Provider"],
   endpoints: {
-    updateProvider: { invalidatesTags: ["User"] },
+    updateProvider: { invalidatesTags: ["Provider"] },
   },
 });
 

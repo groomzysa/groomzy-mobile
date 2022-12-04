@@ -9,34 +9,23 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
+import { api } from '../../..';
 export type UpdateServiceMutationVariables = Types.Exact<{
-  serviceId: Types.Scalars["Int"];
-  name?: Types.InputMaybe<Types.Scalars["String"]>;
-  description?: Types.InputMaybe<Types.Scalars["String"]>;
-  price?: Types.InputMaybe<Types.Scalars["Float"]>;
-  duration?: Types.InputMaybe<Types.Scalars["Float"]>;
+  serviceId: Types.Scalars['Int'];
+  name?: Types.InputMaybe<Types.Scalars['String']>;
+  description?: Types.InputMaybe<Types.Scalars['String']>;
+  price?: Types.InputMaybe<Types.Scalars['Float']>;
+  duration?: Types.InputMaybe<Types.Scalars['Float']>;
   durationUnit?: Types.InputMaybe<Types.DurationUnitType>;
-  inHouse?: Types.InputMaybe<Types.Scalars["Boolean"]>;
+  inHouse?: Types.InputMaybe<Types.Scalars['Boolean']>;
   category?: Types.InputMaybe<Types.CategoryType>;
 }>;
 
-export type UpdateServiceMutationResult = {
-  __typename?: "Mutation";
-  updateService: {
-    __typename?: "Service";
-    id: number;
-    name: string;
-    description?: string | null;
-    price?: number | null;
-    duration?: number | null;
-    durationUnit?: Types.DurationUnitType | null;
-    inHouse?: boolean | null;
-    category?: Types.CategoryType | null;
-  };
-};
+
+export type UpdateServiceMutationResult = { __typename?: 'Mutation', updateService: { __typename?: 'Service', id: number, name?: string | null, description?: string | null, price?: number | null, duration?: number | null, durationUnit?: Types.DurationUnitType | null, inHouse?: boolean | null, category?: Types.CategoryType | null } };
+
 
 export const UpdateServiceDocument = `
     mutation updateService($serviceId: Int!, $name: String, $description: String, $price: Float, $duration: Float, $durationUnit: DurationUnitType, $inHouse: Boolean, $category: CategoryType) {
@@ -64,14 +53,12 @@ export const UpdateServiceDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    updateService: build.mutation<
-      UpdateServiceMutationResult,
-      UpdateServiceMutationVariables
-    >({
-      query: (variables) => ({ document: UpdateServiceDocument, variables }),
+    updateService: build.mutation<UpdateServiceMutationResult, UpdateServiceMutationVariables>({
+      query: (variables) => ({ document: UpdateServiceDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useUpdateServiceMutation } = injectedRtkApi;
+

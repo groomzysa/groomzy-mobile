@@ -9,19 +9,18 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
+import { api } from '../../..';
 export type SignInMutationVariables = Types.Exact<{
-  email: Types.Scalars["String"];
-  password: Types.Scalars["String"];
+  email: Types.Scalars['String'];
+  password: Types.Scalars['String'];
   role: Types.UserRole;
 }>;
 
-export type SignInMutationResult = {
-  __typename?: "Mutation";
-  signIn: { __typename?: "Token"; token: string };
-};
+
+export type SignInMutationResult = { __typename?: 'Mutation', signIn: { __typename?: 'Token', token: string } };
+
 
 export const SignInDocument = `
     mutation signIn($email: String!, $password: String!, $role: UserRole!) {
@@ -34,10 +33,11 @@ export const SignInDocument = `
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     signIn: build.mutation<SignInMutationResult, SignInMutationVariables>({
-      query: (variables) => ({ document: SignInDocument, variables }),
+      query: (variables) => ({ document: SignInDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useSignInMutation } = injectedRtkApi;
+

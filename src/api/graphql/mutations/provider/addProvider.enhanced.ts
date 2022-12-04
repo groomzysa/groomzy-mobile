@@ -1,9 +1,9 @@
 import { api } from "./addProvider.generated";
 
 export const enhancedAddProviderApi = api.enhanceEndpoints({
-  addTagTypes: ["User"],
+  addTagTypes: ["Provider"],
   endpoints: {
-    addProvider: { invalidatesTags: ["User"] },
+    addProvider: { invalidatesTags: ["Provider"] },
   },
 });
 

@@ -12,6 +12,7 @@ export const GTextInput: FC<IGTextInputProps> = ({
   label = "",
   secureTextEntry = false,
   onTextChange = () => {},
+  sufixIconOnPress = () => {},
   errorMessage = "",
   value = "",
   keyboardType = "default",
@@ -28,7 +29,11 @@ export const GTextInput: FC<IGTextInputProps> = ({
         value={value}
         placeholder={placeholder}
         left={prefixIcon && <TextInput.Icon icon={prefixIcon} />}
-        right={prefixIcon && <TextInput.Icon icon={sufixIcon} />}
+        right={
+          sufixIcon && (
+            <TextInput.Icon icon={sufixIcon} onPress={sufixIconOnPress} />
+          )
+        }
         activeUnderlineColor={theme.colors.border.primary}
         secureTextEntry={secureTextEntry}
         onChangeText={onTextChange}

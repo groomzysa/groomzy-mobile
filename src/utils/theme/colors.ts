@@ -11,19 +11,19 @@ export const colors: IColors = {
   },
   text: {
     primary: "#607d8b",
-    secondary: "#c6c6c6",
+    secondary: "#f1f1f1",
   },
   icon: {
     primary: "#607d8b",
-    secondary: "#c6c6c6",
+    secondary: "#f1f1f1",
   },
   border: {
     primary: "#607d8b",
-    secondary: "#c6c6c6",
+    secondary: "#f1f1f1",
   },
   button: {
     primary: "#607d8b",
-    secondary: "#c6c6c6",
+    secondary: "#f1f1f1",
     cancel: "#f44336",
   },
   white: "#ffffff",

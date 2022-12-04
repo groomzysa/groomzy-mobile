@@ -9,90 +9,29 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
-export type ProvidersQueryVariables = Types.Exact<{ [key: string]: never }>;
+import { api } from '../../..';
+export type ProvidersQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
-export type ProvidersQueryResult = {
-  __typename?: "Query";
-  providers: Array<{
-    __typename?: "Provider";
-    id: number;
-    user?: {
-      __typename?: "User";
-      id: number;
-      firstName?: string | null;
-      lastName?: string | null;
-      email?: string | null;
-      role?: Types.UserRole | null;
-      state?: Types.UserStatus | null;
-      address?: {
-        __typename?: "Address";
-        id: number;
-        streetNumber?: string | null;
-        streetName?: string | null;
-        town?: string | null;
-        city?: string | null;
-        province?: string | null;
-        areaCode?: string | null;
-      } | null;
-    } | null;
-    profile?: {
-      __typename?: "BusinessProfile";
-      id: number;
-      tradingName?: string | null;
-      phone?: string | null;
-      logoUrl?: string | null;
-      address?: {
-        __typename?: "Address";
-        id: number;
-        streetNumber?: string | null;
-        streetName?: string | null;
-        town?: string | null;
-        city?: string | null;
-        province?: string | null;
-        areaCode?: string | null;
-      } | null;
-    } | null;
-  }>;
-};
+
+export type ProvidersQueryResult = { __typename?: 'Query', providers: Array<{ __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, addresses?: Array<{ __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null }> | null }> };
+
 
 export const ProvidersDocument = `
     query providers {
   providers {
     id
-    user {
+    tradingName
+    phone
+    addresses {
       id
-      firstName
-      lastName
-      email
-      role
-      state
-      address {
-        id
-        streetNumber
-        streetName
-        town
-        city
-        province
-        areaCode
-      }
-    }
-    profile {
-      id
-      tradingName
-      phone
-      logoUrl
-      address {
-        id
-        streetNumber
-        streetName
-        town
-        city
-        province
-        areaCode
-      }
+      streetNumber
+      streetName
+      town
+      city
+      province
+      areaCode
     }
   }
 }
@@ -100,14 +39,12 @@ export const ProvidersDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    providers: build.query<
-      ProvidersQueryResult,
-      ProvidersQueryVariables | void
-    >({
-      query: (variables) => ({ document: ProvidersDocument, variables }),
+    providers: build.query<ProvidersQueryResult, ProvidersQueryVariables | void>({
+      query: (variables) => ({ document: ProvidersDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useProvidersQuery, useLazyProvidersQuery } = injectedRtkApi;
+

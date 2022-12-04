@@ -9,27 +9,16 @@
  * for this file to be re-created
  */
 
-import type * as Types from "../../api.schema";
+import type * as Types from '../../api.schema';
 
-import { api } from "../../..";
+import { api } from '../../..';
 export type DeleteServiceMutationVariables = Types.Exact<{
-  serviceId: Types.Scalars["Int"];
+  serviceId: Types.Scalars['Int'];
 }>;
 
-export type DeleteServiceMutationResult = {
-  __typename?: "Mutation";
-  deleteService: {
-    __typename?: "Service";
-    id: number;
-    name: string;
-    description?: string | null;
-    price?: number | null;
-    duration?: number | null;
-    durationUnit?: Types.DurationUnitType | null;
-    inHouse?: boolean | null;
-    category?: Types.CategoryType | null;
-  };
-};
+
+export type DeleteServiceMutationResult = { __typename?: 'Mutation', deleteService: { __typename?: 'Service', id: number, name?: string | null, description?: string | null, price?: number | null, duration?: number | null, durationUnit?: Types.DurationUnitType | null, inHouse?: boolean | null, category?: Types.CategoryType | null } };
+
 
 export const DeleteServiceDocument = `
     mutation deleteService($serviceId: Int!) {
@@ -48,14 +37,12 @@ export const DeleteServiceDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    deleteService: build.mutation<
-      DeleteServiceMutationResult,
-      DeleteServiceMutationVariables
-    >({
-      query: (variables) => ({ document: DeleteServiceDocument, variables }),
+    deleteService: build.mutation<DeleteServiceMutationResult, DeleteServiceMutationVariables>({
+      query: (variables) => ({ document: DeleteServiceDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
 export const { useDeleteServiceMutation } = injectedRtkApi;
+

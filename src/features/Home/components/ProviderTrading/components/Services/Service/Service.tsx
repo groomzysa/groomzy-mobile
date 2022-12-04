@@ -11,6 +11,7 @@ import {
 } from "../../../../../../../utils/common/styles";
 import { theme } from "../../../../../../../utils/theme";
 import { ViewService } from "../ViewService/ViewService";
+import { useServiceHandlers } from "./hooks";
 
 export const Service: FC<IServiceProps> = ({ service }) => {
   const {
@@ -25,12 +26,10 @@ export const Service: FC<IServiceProps> = ({ service }) => {
 
   /**
    *
-   * Handlers
+   * Custom hooks
    *
    */
-  const showViewDialogHandler = () => setViewDialogVisible(true);
-
-  const hideViewDialogHandler = () => setViewDialogVisible(false);
+  const { hideViewDialogHandler, showViewDialogHandler } = useServiceHandlers();
 
   return (
     <ServiceCard>
@@ -49,7 +48,9 @@ export const Service: FC<IServiceProps> = ({ service }) => {
         </FlexRowContainer>
       </Card.Content>
       <Card.Actions>
-        <TouchableOpacity onPress={showViewDialogHandler}>
+        <TouchableOpacity
+          onPress={() => showViewDialogHandler({ setViewDialogVisible })}
+        >
           <ViewButtonContainer>
             {/* @ts-ignore */}
             <IconComponentProvider IconComponent={MaterialCommunityIcons}>
@@ -61,7 +62,7 @@ export const Service: FC<IServiceProps> = ({ service }) => {
       <ViewService
         service={service}
         visible={viewDialogVisible}
-        hideDialog={hideViewDialogHandler}
+        hideDialog={() => hideViewDialogHandler({ setViewDialogVisible })}
       />
     </ServiceCard>
   );
