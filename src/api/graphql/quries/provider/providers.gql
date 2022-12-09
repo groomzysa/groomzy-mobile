@@ -12,5 +12,11 @@ query providers {
       province
       areaCode
     }
+    operatingTimes {
+      id
+      day
+      opens
+      closes
+    }
   }
 }

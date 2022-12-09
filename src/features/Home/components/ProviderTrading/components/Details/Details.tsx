@@ -2,14 +2,19 @@ import React, { FC, useState } from "react";
 import { Text } from "react-native";
 import * as Location from "expo-location";
 
-import { Container, Content, MapViewContainer } from "./styles";
-import { GErrorMessage } from "../../../../../../components";
+import { Container, Content, DayTimeCard, MapViewContainer } from "./styles";
+import { GErrorMessage, GTitle } from "../../../../../../components";
 import { useSelector } from "react-redux";
 import { addressName } from "../../../../util";
 import { Marker } from "react-native-maps";
 import { INITIAL_REGION } from "./constants";
 import { useDetailsEffects } from "./hooks";
 import { RootState } from "../../../../../../store/store";
+import {
+  Flex1,
+  FlexRowContainer,
+  FlexRowEndContainer,
+} from "../../../../../../utils/common/styles";
 
 export const Details: FC = () => {
   const {
@@ -66,7 +71,21 @@ export const Details: FC = () => {
             />
           )}
         </MapViewContainer>
-        <Text>Day times</Text>
+        <GTitle title="Trading times" />
+        {provider?.operatingTimes?.map(({ id, day, opens, closes }) => (
+          <DayTimeCard key={id} elevation={1}>
+            <DayTimeCard.Content>
+              <FlexRowContainer>
+                <Flex1>
+                  <Text>{day}</Text>
+                </Flex1>
+                <FlexRowEndContainer>
+                  <Text>{`${opens} - ${closes}`}</Text>
+                </FlexRowEndContainer>
+              </FlexRowContainer>
+            </DayTimeCard.Content>
+          </DayTimeCard>
+        ))}
       </Content>
     </Container>
   );
