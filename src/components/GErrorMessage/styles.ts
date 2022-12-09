@@ -2,10 +2,7 @@ import { Text, View } from "react-native";
 import styled from "styled-components/native";
 import { ITheme } from "../../utils/theme/types";
 
-export const ErrorMessageContainer = styled(View)`
-  margin: ${({ theme }: { theme: ITheme }) =>
-    theme.spacing.container.xxsmall}px;
-`;
+export const ErrorMessageContainer = styled(View)``;
 
 export const ErrorMessage = styled(Text)`
   display: flex;

@@ -2481,6 +2481,13 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
+"@react-native-community/datetimepicker@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.2.0.tgz#50bc629e70e4030c48205c01efbc65a8f35d82d4"
+  integrity sha512-w1ZS+wYO3qSASliRp+B7mPphOhtVm++rhSbj1WsgXdgLgDXSkDxpMnAXXQu9M0XdcgBwVJ6wDExeIwuzU5Jtfg==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/eslint-config@^3.1.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-config/-/eslint-config-3.2.0.tgz#42f677d5fff385bccf1be1d3b8faa8c086cf998d"
@@ -2517,6 +2524,11 @@
   dependencies:
     chroma-js "^2.4.2"
     react-native-flex-layout "^0.1.5"
+
+"@react-native-picker/picker@2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.2.tgz#2925eb8e76ff6b584c80529adc251df963be9141"
+  integrity sha512-0nY8638h1J3wKz6P3IJMpOoxJDdOj7Dk/K2hP/xpqP3KnIY0lmoqYlhyNihuyVPocDGajf6SA7LFFsFepQ56ag==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -12273,6 +12285,11 @@ react-native-maps@0.31.1:
     "@types/geojson" "^7946.0.7"
     deprecated-react-native-prop-types "^2.3.0"
 
+react-native-pager-view@5.4.24:
+  version "5.4.24"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.24.tgz#8626e757ddc55e41eca66d2f8a8a75aec54591ee"
+  integrity sha512-dRMB7i3B+mu4NCeIN6gqbR/kC/rr2wzqO0gisXDdJwJr78G24sWoTNpLEDFo3G8TFHY9nTMutVl5CUvkN2dp6g==
+
 react-native-paper@5.0.0-rc.6:
   version "5.0.0-rc.6"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.0.0-rc.6.tgz#d0f050b04d137daae6e3d457634b26d8332ddaac"
@@ -12329,6 +12346,13 @@ react-native-svgxml-web@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-native-svgxml-web/-/react-native-svgxml-web-2.4.0.tgz#77c4b18349c0c3db792e3979f59ac6e2754a985b"
   integrity sha512-3Gar73WWs2HqnvgxAsUIsT6aJ9r4FhCsEUdm7yJ3JkZS45FKobLj2WhW4FNDELXeM5XhRx7NbET+iebnFy3WIA==
+
+react-native-tab-view@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.3.2.tgz#4afc995e41b97e0457e95b487763d3f9dc318dcc"
+  integrity sha512-s0xr+wiMBHdjsWgbPTyZemgv7jJ+zKPBw/MIQIlKAMo4VCNV1vAZEbOHaHpGbqgYFwsmFXjKZNXQ5UJAIJXlDQ==
+  dependencies:
+    use-latest-callback "^0.1.5"
 
 react-native-vector-icons@^9.2.0:
   version "9.2.0"

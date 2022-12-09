@@ -9,8 +9,6 @@ export const ButtonContainer = styled(View)`
     theme.spacing.container.xxsmall}px;
   padding-bottom: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xxsmall}px;
-  margin: ${({ theme }: { theme: ITheme }) =>
-    theme.spacing.container.xxsmall}px;
 `;
 
 export const ButtonStyled = styled(Button)`

@@ -1,10 +1,18 @@
 import { validate } from "isemail";
 import { UserRole } from "../../../api/graphql/api.schema";
+import { useAddUser } from "../../../api/hooks/mutations";
 import { IaddUserHandlerParams, IshowPasswordHandlerParams } from "./types";
 
 export const useSignUpHandlers = () => {
-  const addUserhandler = ({
+  const {
     addUserTrigger,
+    addUser,
+    addUserLoading,
+    addUserHasError,
+    addUserError,
+  } = useAddUser();
+
+  const addUserhandler = ({
     email,
     firstName,
     isProvider,
@@ -62,6 +70,10 @@ export const useSignUpHandlers = () => {
   };
 
   return {
+    addUser,
+    addUserLoading,
+    addUserHasError,
+    addUserError,
     addUserhandler,
     showPasswordHandler,
   };

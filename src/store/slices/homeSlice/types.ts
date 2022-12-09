@@ -1,22 +1,22 @@
 import { Provider } from "../../../api/graphql/api.schema";
 
 /**
- * 
+ *
  * States
- * 
+ *
  */
 
-export interface IExplorerSliceState {
+export interface IHomeSliceState {
   provider?: Provider;
 }
 
 /**
- * 
+ *
  * Actions
- * 
+ *
  */
 
-export interface IExplorerSliceSetProviderAction {
+export interface IHomeSliceSetProviderAction {
   type: string;
   payload: {
     provider?: Provider;

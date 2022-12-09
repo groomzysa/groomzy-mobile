@@ -71,14 +71,17 @@ enum DurationUnitType {
 scalar File
 
 type Mutation {
+  addOperatingTime(day: DayType!, opens: String!, closes: String!): OperatingTime!
   addService(name: String!, description: String!, price: Float!, duration: Float!, durationUnit: DurationUnitType!, inHouse: Boolean!, category: CategoryType!): Service!
   addStaff(firstName: String!, lastName: String!): Staff!
   addTradingAddress(streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!): Address!
   addTradingInfo(tradingName: String!, phone: String!, logo: File): Provider!
   addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!, userImage: File): User!
+  deleteOperatingTime(operatingTimeId: Int!): OperatingTime!
   deleteService(serviceId: Int!): Service!
   deleteStaff(staffId: Int!): Staff!
   signIn(email: String!, password: String!, role: UserRole!): Token!
+  updateOperatingTime(operatingTimeId: Int!, day: DayType, opens: String, closes: String): OperatingTime!
   updateService(serviceId: Int!, name: String, description: String, duration: Float, durationUnit: DurationUnitType, inHouse: Boolean, price: Float, category: CategoryType): Service!
   updateStaff(staffId: Int!, firstName: String, lastName: String): Staff!
   updateTradingAddress(addressId: Int!, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String): Address!
@@ -111,6 +114,7 @@ type Provider {
 }
 
 type Query {
+  operatingTimes: [OperatingTime!]!
   provider: Provider
   providers: [Provider!]!
   services: [Service!]!

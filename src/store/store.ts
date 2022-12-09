@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import appReducer from "./slices/appSlice/appSlice";
-import explorerReducer from "./slices/explorerSlice/explorerSlice";
+import homeReducer from "./slices/homeSlice/homeSlice";
+import homeProviderReducer from "./slices/providerHomeSlice/providerHomeSlice";
 
 import { api } from "../api";
 
@@ -8,7 +9,8 @@ export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     app: appReducer,
-    explorer: explorerReducer
+    home: homeReducer,
+    homeProvider: homeProviderReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([api.middleware]),

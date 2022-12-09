@@ -1,5 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
-import { useSignIn } from "../../api/hooks/mutations";
+import React, { FC, useState } from "react";
 import {
   GButton,
   GErrorMessage,
@@ -8,7 +7,6 @@ import {
 } from "../../components";
 import { TextStyled, ContentContainer } from "./styles";
 import { SignInProps } from "./types";
-import { useDispatch } from "react-redux";
 import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
@@ -23,17 +21,20 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
   const [isProvider, setIsProvider] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const dispatch = useDispatch();
-
   /**
    *
    * Custom hooks
    *
    */
-  const { signInTrigger, token, signInLoading, signInHasError, signInError } =
-    useSignIn();
 
-  const { showPasswordHandler, signInHandler } = useSignInHandlers();
+  const {
+    token,
+    signInLoading,
+    signInHasError,
+    signInError,
+    showPasswordHandler,
+    signInHandler,
+  } = useSignInHandlers();
 
   useSignInEffects({
     navigation,
@@ -88,7 +89,6 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
                 passwordError,
                 setEmailError,
                 setPasswordError,
-                signInTrigger,
               })
             }
             loading={signInLoading}

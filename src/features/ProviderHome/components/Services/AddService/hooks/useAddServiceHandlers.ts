@@ -3,9 +3,18 @@ import {
   CategoryType,
   DurationUnitType,
 } from "../../../../../../api/graphql/api.schema";
+import { useAddService } from "../../../../../../api/hooks/mutations";
 import { IaddServiceHandlerParams } from "./types";
 
 export const useAddServiceHandlers = () => {
+  const {
+    addServiceTrigger,
+    addService,
+    addServiceLoading,
+    addServiceHasError,
+    addServiceError,
+  } = useAddService();
+
   const durationUnitMinHandler = (
     setDurationUnit: Dispatch<SetStateAction<DurationUnitType | undefined>>
   ) => {
@@ -49,7 +58,6 @@ export const useAddServiceHandlers = () => {
   };
 
   const addServiceHandler = ({
-    addServiceTrigger,
     category,
     categoryError,
     description,
@@ -122,6 +130,10 @@ export const useAddServiceHandlers = () => {
   };
 
   return {
+    addService,
+    addServiceLoading,
+    addServiceHasError,
+    addServiceError,
     durationUnitMinHandler,
     durationUnitHrsHandler,
     categoryBarberHandler,

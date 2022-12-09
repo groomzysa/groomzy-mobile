@@ -7,3 +7,5 @@ export { GButton } from "./GButton/GButton";
 export { GRadioButton } from "./GRadioButton/GRadioButton";
 export { GErrorMessage } from "./GErrorMessage/GErrorMessage";
 export { GSuccessMessage } from "./GSuccessMessage/GSuccessMessage";
+export { GBSelect } from "./GBSelect/GBSelect";
+export { GDateTimePicker } from "./GDateTimePicker/GDateTimePicker";

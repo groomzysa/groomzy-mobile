@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeToken } from "../../../../api/helpers";
 import { setToken, setUser } from "../../../../store/slices/appSlice/appSlice";
 import { IAppSliceState } from "../../../../store/slices/appSlice/types";
+import { RootState } from "../../../../store/store";
 import {
   AppDrawerHeaderImage,
   AppDrawerHeaderImageBackground,
@@ -22,9 +23,9 @@ import {
 import { ICustomDrawerProps } from "./types";
 
 export const CustomDrawer: FC<ICustomDrawerProps> = ({ drawerProps }) => {
-  const { user } = useSelector<{ app: IAppSliceState }, IAppSliceState>(
-    (state) => state.app
-  );
+  const {
+    app: { user },
+  } = useSelector<RootState, Pick<RootState, "app">>((state) => state);
   const dispatch = useDispatch();
 
   return (

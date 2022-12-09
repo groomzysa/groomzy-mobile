@@ -1,15 +1,21 @@
-import React, { FC, useState } from "react";
-import { Container, Content } from "./styles";
+import React, { FC } from "react";
+import { Container, Space, TabButton } from "./styles";
 import { useFetchProvider } from "../../../../api/hooks/queries";
+import { TradingAddress, TradingInfo, TradingTimes } from "./components";
+import { TabView, SceneMap, TabBarProps } from "react-native-tab-view";
+import { Animated, useWindowDimensions, View } from "react-native";
+import { GErrorMessage } from "../../../../components";
 import { ActivityIndicator } from "react-native-paper";
-import { GButton, GErrorMessage } from "../../../../components";
-import { TradingAddress, TradingInfo } from "./components";
-import { useBusinessProfileHandlers } from "./hooks";
-import { Flex1, FlexRowContainer } from "../../../../utils/common/styles";
 
 export const BusinessProfile: FC = () => {
-  const [showBusinessDetails, setShowBusinessDetails] = useState<boolean>(true);
-  const [showAddressDetails, setShowAddressDetails] = useState<boolean>(false);
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "tradingInfo", title: "Info" },
+    { key: "tradingAddress", title: "Address" },
+    { key: "tradingTimes", title: "Times" },
+  ]);
 
   /**
    *
@@ -19,50 +25,95 @@ export const BusinessProfile: FC = () => {
   const { provider, providerLoading, providerHasError, providerError } =
     useFetchProvider();
 
-  const { showAddressDetailsHandler, showBusinessDetailsHandler } =
-    useBusinessProfileHandlers();
+  /**
+   * 
+   *Handlers
+
+   */
+
+  const indexChangeHandler = (index: number) => setIndex(index);
+
+  const renderTabBarHandler = (props: TabBarProps<any>) => {
+    const inputRange = props.navigationState.routes.map((x, i) => i);
+
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+        }}
+      >
+        {props.navigationState.routes.map((route, i) => {
+          const opacity = props.position.interpolate({
+            inputRange,
+            outputRange: inputRange.map((inputIndex) =>
+              inputIndex === i ? 1 : 0.5
+            ),
+          });
+
+          const currentTab = props.navigationState.index === i;
+
+          return (
+            <TabButton
+              key={i}
+              activeColor={props.activeColor || ""}
+              currentTab={currentTab}
+              currentTabIndex={props.navigationState.index}
+              inputRangeLength={inputRange.length}
+              onPress={() => setIndex(i)}
+            >
+              <Animated.Text
+                style={{ opacity, fontWeight: currentTab ? "500" : "normal" }}
+              >
+                {route.title}
+              </Animated.Text>
+            </TabButton>
+          );
+        })}
+      </View>
+    );
+  };
+
+  const renderSceneHandler = SceneMap({
+    tradingInfo: () => (
+      <Container>
+        <Space />
+        {providerHasError && <GErrorMessage message={providerError} />}
+        {providerLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <TradingInfo provider={provider} />
+        )}
+      </Container>
+    ),
+    tradingAddress: () => (
+      <Container>
+        <Space />
+        {providerHasError && <GErrorMessage message={providerError} />}
+        {providerLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <TradingAddress address={provider?.addresses?.[0]} />
+        )}
+      </Container>
+    ),
+    tradingTimes: () => (
+      <Container>
+        <Space />
+        {providerHasError && <GErrorMessage message={providerError} />}
+        {providerLoading ? <ActivityIndicator /> : <TradingTimes />}
+      </Container>
+    ),
+  });
 
   return (
-    <Container>
-      {providerLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Content>
-          <FlexRowContainer>
-            <Flex1>
-              <GButton
-                label="Trading Info"
-                variant={showBusinessDetails ? "secondary" : "primary"}
-                onPress={() =>
-                  showBusinessDetailsHandler({
-                    setShowAddressDetails,
-                    setShowBusinessDetails,
-                  })
-                }
-                // disabled={!showBusinessDetails}
-              />
-            </Flex1>
-            <Flex1>
-              <GButton
-                label="Trading Address"
-                variant={showAddressDetails ? "secondary" : "primary"}
-                onPress={() =>
-                  showAddressDetailsHandler({
-                    setShowAddressDetails,
-                    setShowBusinessDetails,
-                  })
-                }
-                // disabled={!showAddressDetails}
-              />
-            </Flex1>
-          </FlexRowContainer>
-          {providerHasError && <GErrorMessage message={providerError} />}
-          {showBusinessDetails && <TradingInfo provider={provider} />}
-          {showAddressDetails && (
-            <TradingAddress address={provider?.addresses?.[0]} />
-          )}
-        </Content>
-      )}
-    </Container>
+    <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderSceneHandler}
+      renderTabBar={(props) =>
+        renderTabBarHandler({ ...props, activeColor: "#77ccff" })
+      }
+      onIndexChange={indexChangeHandler}
+      initialLayout={{ width: layout.width }}
+    />
   );
 };

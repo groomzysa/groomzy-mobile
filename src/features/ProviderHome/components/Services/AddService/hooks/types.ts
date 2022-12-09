@@ -1,13 +1,9 @@
-import { BaseQueryFn, MutationDefinition } from "@reduxjs/toolkit/dist/query";
-import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { Dispatch, SetStateAction } from "react";
 import {
   CategoryType,
   DurationUnitType,
-  Exact,
   Service,
 } from "../../../../../../api/graphql/api.schema";
-import { AddServiceMutationResult } from "../../../../../../api/graphql/mutations/service/addService.generated";
 
 export interface IuseAddServiceEffectsParams {
   addService: Service | undefined;
@@ -41,21 +37,4 @@ export interface IaddServiceHandlerParams {
   setDurationError: Dispatch<SetStateAction<string>>;
   setDurationUnitError: Dispatch<SetStateAction<string>>;
   setCategoryError: Dispatch<SetStateAction<string>>;
-  addServiceTrigger: MutationTrigger<
-    MutationDefinition<
-      Exact<{
-        name: string;
-        description: string;
-        price: number;
-        duration: number;
-        durationUnit: DurationUnitType;
-        inHouse: boolean;
-        category: CategoryType;
-      }>,
-      any,
-      "Services",
-      AddServiceMutationResult,
-      "api"
-    >
-  >;
 }

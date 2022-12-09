@@ -5,17 +5,16 @@ import * as Location from "expo-location";
 import { Container, Content, MapViewContainer } from "./styles";
 import { GErrorMessage } from "../../../../../../components";
 import { useSelector } from "react-redux";
-import { IExplorerSliceState } from "../../../../../../store/slices/explorerSlice/types";
 import { addressName } from "../../../../util";
 import { Marker } from "react-native-maps";
 import { INITIAL_REGION } from "./constants";
 import { useDetailsEffects } from "./hooks";
+import { RootState } from "../../../../../../store/store";
 
 export const Details: FC = () => {
-  const { provider } = useSelector<
-    { explorer: IExplorerSliceState },
-    IExplorerSliceState
-  >((state) => state.explorer);
+  const {
+    home: { provider },
+  } = useSelector<RootState, Pick<RootState, "home">>((state) => state);
   const [locationStatus, setLocationStatus] =
     useState<Location.PermissionStatus>();
   const [providerCoordinate, setProviderCoordinate] =

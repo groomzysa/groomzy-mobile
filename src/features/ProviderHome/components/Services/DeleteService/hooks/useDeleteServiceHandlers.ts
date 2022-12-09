@@ -1,8 +1,16 @@
+import { useDeleteService } from "../../../../../../api/hooks/mutations";
 import { IdeleteServiceHandlersParams } from "./types";
 
 export const useDeleteServiceHandlers = () => {
-  const deleteServiceHandler = ({
+  const {
     deleteServiceTrigger,
+    deleteService,
+    deleteServiceLoading,
+    deleteServiceHasError,
+    deleteServiceError,
+  } = useDeleteService();
+
+  const deleteServiceHandler = ({
     serviceId,
   }: IdeleteServiceHandlersParams) => {
     deleteServiceTrigger({
@@ -12,5 +20,9 @@ export const useDeleteServiceHandlers = () => {
 
   return {
     deleteServiceHandler,
+    deleteService,
+    deleteServiceLoading,
+    deleteServiceHasError,
+    deleteServiceError,
   };
 };

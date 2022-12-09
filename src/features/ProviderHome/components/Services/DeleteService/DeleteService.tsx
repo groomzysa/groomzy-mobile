@@ -1,14 +1,14 @@
 import React, { FC, useState } from "react";
 import Dialog from "react-native-dialog";
-import { useDeleteService } from "../../../../../api/hooks/mutations";
 import {
   GButton,
   GErrorMessage,
   GSuccessMessage,
 } from "../../../../../components";
 import { FlexRowEndContainer } from "../../../../../utils/common/styles";
+import { DELETE_SERVICE_MESSAGE } from "../../../../../utils/messages";
 import { useDeleteServiceEffects, useDeleteServiceHandlers } from "./hooks";
-import { SubTitleText } from "./styles";
+import { ActionButtonContainer, SubTitleText } from "./styles";
 import { IDeleteServiceProps } from "./types";
 
 export const DeleteService: FC<IDeleteServiceProps> = ({
@@ -16,7 +16,6 @@ export const DeleteService: FC<IDeleteServiceProps> = ({
   visible,
   hideDialog,
 }) => {
-  const [successMessage, setSuccessMessage] = useState<string>("");
   const { id: serviceId } = service;
 
   /**
@@ -24,49 +23,48 @@ export const DeleteService: FC<IDeleteServiceProps> = ({
    * Custom hooks
    *
    */
+
   const {
-    deleteServiceTrigger,
+    deleteServiceHandler,
     deleteService,
     deleteServiceLoading,
     deleteServiceHasError,
     deleteServiceError,
-  } = useDeleteService();
-
-  const { deleteServiceHandler } = useDeleteServiceHandlers();
+  } = useDeleteServiceHandlers();
 
   useDeleteServiceEffects({
     deleteService,
     hideDialog,
-    setSuccessMessage,
-    successMessage,
   });
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
       <Dialog.Title>Delete service</Dialog.Title>
-      {successMessage && <GSuccessMessage message={successMessage} />}
       {deleteServiceHasError && <GErrorMessage message={deleteServiceError} />}
 
-      <SubTitleText>Are you sure want to delete this service?</SubTitleText>
+      <SubTitleText>{DELETE_SERVICE_MESSAGE}</SubTitleText>
 
       <FlexRowEndContainer>
-        <GButton
-          label="Delete"
-          onPress={() =>
-            deleteServiceHandler({
-              deleteServiceTrigger,
-              serviceId,
-            })
-          }
-          loading={deleteServiceLoading}
-          testID="deleteServiceButton"
-        />
-        <GButton
-          label="Cancel"
-          onPress={hideDialog}
-          testID="cancelAddServiceButton"
-          variant="cancel"
-        />
+        <ActionButtonContainer>
+          <GButton
+            label="Delete"
+            onPress={() =>
+              deleteServiceHandler({
+                serviceId,
+              })
+            }
+            loading={deleteServiceLoading}
+            testID="deleteServiceButton"
+          />
+        </ActionButtonContainer>
+        <ActionButtonContainer>
+          <GButton
+            label="Cancel"
+            onPress={hideDialog}
+            testID="cancelAddServiceButton"
+            variant="cancel"
+          />
+        </ActionButtonContainer>
       </FlexRowEndContainer>
     </Dialog.Container>
   );

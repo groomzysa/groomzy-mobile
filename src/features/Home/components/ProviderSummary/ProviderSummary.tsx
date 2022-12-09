@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { starSVG } from "../../../../../assets/star";
 import { GCarousel } from "../../../../components";
 import { setHideDrawerHeader } from "../../../../store/slices/appSlice/appSlice";
-import { setProvider } from "../../../../store/slices/explorerSlice/explorerSlice";
+import { setProvider } from "../../../../store/slices/homeSlice/homeSlice";
 import { addressName } from "../../util";
 import {
   Caption,

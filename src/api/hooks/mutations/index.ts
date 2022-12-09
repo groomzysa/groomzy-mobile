@@ -24,3 +24,12 @@ export { useUpdateTradingAddress } from "./provider/useUpdateTradingAddress";
 export { useAddService } from "./service/useAddService";
 export { useUpdateService } from "./service/useUpdateService";
 export { useDeleteService } from "./service/useDeleteService";
+
+/**
+ *
+ * Operating time mutations
+ *
+ */
+export { useAddOperatingTime } from "./operatingTimes/useAddOperatingTime";
+export { useDeleteOperatingTime } from "./operatingTimes/useDeleteOperatingTime";
+export { useUpdateOperatingTime } from "./operatingTimes/useUpdateOperatingTime";

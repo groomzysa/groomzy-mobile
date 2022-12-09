@@ -6,7 +6,7 @@ import {
 } from "../../../../../api/graphql/api.schema";
 import { GButton, GRadioButton, GTextInput } from "../../../../../components";
 import { FlexRowEndContainer } from "../../../../../utils/common/styles";
-import { SubTitleText } from "./styles";
+import { ActionButtonContainer, SubTitleText } from "./styles";
 import { IViewServiceProps } from "./types";
 
 export const ViewService: FC<IViewServiceProps> = ({
@@ -81,11 +81,13 @@ export const ViewService: FC<IViewServiceProps> = ({
         <GRadioButton label={CategoryType.Spa} status="checked" disabled />
       )}
       <FlexRowEndContainer>
-        <GButton
-          label="Done"
-          onPress={hideDialog}
-          testID="updateServiceButton"
-        />
+        <ActionButtonContainer>
+          <GButton
+            label="Done"
+            onPress={hideDialog}
+            testID="updateServiceButton"
+          />
+        </ActionButtonContainer>
       </FlexRowEndContainer>
     </Dialog.Container>
   );

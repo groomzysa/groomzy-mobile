@@ -4,7 +4,6 @@ import {
   CategoryType,
   DurationUnitType,
 } from "../../../../../api/graphql/api.schema";
-import { useUpdateService } from "../../../../../api/hooks/mutations";
 import {
   GButton,
   GErrorMessage,
@@ -21,7 +20,7 @@ import {
   ScrollViewContainer,
 } from "../../../../../utils/common/styles";
 import { useUpdateServiceEffects, useUpdateServiceHandlers } from "./hooks";
-import { SubTitleText } from "./styles";
+import { ActionButtonContainer, SubTitleText } from "./styles";
 import { IUpdateServiceProps } from "./types";
 
 export const UpdateService: FC<IUpdateServiceProps> = ({
@@ -44,15 +43,12 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
    * Custom hooks
    *
    */
+
   const {
-    updateServiceTrigger,
     updateService,
     updateServiceLoading,
     updateServiceHasError,
     updateServiceError,
-  } = useUpdateService();
-
-  const {
     categoryBarberHandler,
     categoryHairdresserHandler,
     categoryMakeupArtistHandler,
@@ -188,29 +184,32 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
             />
           </FlexColumContainer>
           <FlexRowEndContainer>
-            <GButton
-              label="Update"
-              onPress={() =>
-                updateServiceHandler({
-                  category,
-                  description,
-                  duration,
-                  durationUnit,
-                  name,
-                  price,
-                  serviceId,
-                  updateServiceTrigger,
-                })
-              }
-              loading={updateServiceLoading}
-              testID="updateServiceButton"
-            />
-            <GButton
-              label="Cancel"
-              onPress={hideDialog}
-              testID="cancelAddServiceButton"
-              variant="cancel"
-            />
+            <ActionButtonContainer>
+              <GButton
+                label="Update"
+                onPress={() =>
+                  updateServiceHandler({
+                    category,
+                    description,
+                    duration,
+                    durationUnit,
+                    name,
+                    price,
+                    serviceId,
+                  })
+                }
+                loading={updateServiceLoading}
+                testID="updateServiceButton"
+              />
+            </ActionButtonContainer>
+            <ActionButtonContainer>
+              <GButton
+                label="Cancel"
+                onPress={hideDialog}
+                testID="cancelAddServiceButton"
+                variant="cancel"
+              />
+            </ActionButtonContainer>
           </FlexRowEndContainer>
         </ScrollViewContainer>
       </KeyboardAvoidingViewContainer>

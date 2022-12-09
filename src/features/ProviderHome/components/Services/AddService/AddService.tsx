@@ -4,7 +4,6 @@ import {
   CategoryType,
   DurationUnitType,
 } from "../../../../../api/graphql/api.schema";
-import { useAddService } from "../../../../../api/hooks/mutations";
 import {
   GButton,
   GErrorMessage,
@@ -21,7 +20,7 @@ import {
   ScrollViewContainer,
 } from "../../../../../utils/common/styles";
 import { useAddServiceEffects, useAddServiceHandlers } from "./hooks";
-import { ErrorText, SubTitleText } from "./styles";
+import { ActionButtonContainer, ErrorText, SubTitleText } from "./styles";
 import { IAddServiceProps } from "./types";
 
 export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
@@ -44,15 +43,12 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
    * Custom hooks
    *
    */
+
   const {
-    addServiceTrigger,
     addService,
     addServiceLoading,
     addServiceHasError,
     addServiceError,
-  } = useAddService();
-
-  const {
     addServiceHandler,
     categoryBarberHandler,
     categoryHairdresserHandler,
@@ -179,40 +175,43 @@ export const AddService: FC<IAddServiceProps> = ({ visible, hideDialog }) => {
             />
           </FlexColumContainer>
           <FlexRowEndContainer>
-            <GButton
-              label="Add"
-              onPress={() =>
-                addServiceHandler({
-                  addServiceTrigger,
-                  category,
-                  categoryError,
-                  description,
-                  descriptionError,
-                  duration,
-                  durationError,
-                  durationUnit,
-                  durationUnitError,
-                  name,
-                  nameError,
-                  price,
-                  priceError,
-                  setCategoryError,
-                  setDescriptionError,
-                  setDurationError,
-                  setDurationUnitError,
-                  setNameError,
-                  setPriceError,
-                })
-              }
-              loading={addServiceLoading}
-              testID="addServiceButton"
-            />
-            <GButton
-              label="Cancel"
-              onPress={hideDialog}
-              testID="cancelAddServiceButton"
-              variant="cancel"
-            />
+            <ActionButtonContainer>
+              <GButton
+                label="Add"
+                onPress={() =>
+                  addServiceHandler({
+                    category,
+                    categoryError,
+                    description,
+                    descriptionError,
+                    duration,
+                    durationError,
+                    durationUnit,
+                    durationUnitError,
+                    name,
+                    nameError,
+                    price,
+                    priceError,
+                    setCategoryError,
+                    setDescriptionError,
+                    setDurationError,
+                    setDurationUnitError,
+                    setNameError,
+                    setPriceError,
+                  })
+                }
+                loading={addServiceLoading}
+                testID="addServiceButton"
+              />
+            </ActionButtonContainer>
+            <ActionButtonContainer>
+              <GButton
+                label="Cancel"
+                onPress={hideDialog}
+                testID="cancelAddServiceButton"
+                variant="cancel"
+              />
+            </ActionButtonContainer>
           </FlexRowEndContainer>
         </ScrollViewContainer>
       </KeyboardAvoidingViewContainer>

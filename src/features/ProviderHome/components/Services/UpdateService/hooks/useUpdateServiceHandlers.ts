@@ -3,9 +3,18 @@ import {
   CategoryType,
   DurationUnitType,
 } from "../../../../../../api/graphql/api.schema";
+import { useUpdateService } from "../../../../../../api/hooks/mutations";
 import { IupdateServiceHandlerParams } from "./types";
 
 export const useUpdateServiceHandlers = () => {
+  const {
+    updateServiceTrigger,
+    updateService,
+    updateServiceLoading,
+    updateServiceHasError,
+    updateServiceError,
+  } = useUpdateService();
+
   const durationUnitMinHandler = (
     setDurationUnit: Dispatch<SetStateAction<DurationUnitType | undefined>>
   ) => {
@@ -50,7 +59,6 @@ export const useUpdateServiceHandlers = () => {
 
   const updateServiceHandler = ({
     serviceId,
-    updateServiceTrigger,
     category,
     description,
     duration,
@@ -58,14 +66,6 @@ export const useUpdateServiceHandlers = () => {
     name,
     price,
   }: IupdateServiceHandlerParams) => {
-    const arbortAddService =
-      !name ||
-      !description ||
-      !price ||
-      !duration ||
-      !durationUnit ||
-      !category;
-
     updateServiceTrigger({
       serviceId,
       name,
@@ -79,6 +79,10 @@ export const useUpdateServiceHandlers = () => {
   };
 
   return {
+    updateService,
+    updateServiceLoading,
+    updateServiceHasError,
+    updateServiceError,
     durationUnitMinHandler,
     durationUnitHrsHandler,
     categoryBarberHandler,

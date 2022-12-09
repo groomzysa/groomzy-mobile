@@ -1,8 +1,12 @@
 import { validate } from "isemail";
 import { UserRole } from "../../../api/graphql/api.schema";
+import { useSignIn } from "../../../api/hooks/mutations";
 import { IshowPasswordHandlerParams, IsignInHandlerParams } from "./types";
 
 export const useSignInHandlers = () => {
+  const { signInTrigger, token, signInLoading, signInHasError, signInError } =
+    useSignIn();
+
   const signInHandler = ({
     email,
     emailError,
@@ -11,7 +15,6 @@ export const useSignInHandlers = () => {
     passwordError,
     setEmailError,
     setPasswordError,
-    signInTrigger,
   }: IsignInHandlerParams) => {
     const emailAbort = !email || !validate(email);
     const passwordAbort = !password || password.length < 5;
@@ -45,6 +48,10 @@ export const useSignInHandlers = () => {
   };
 
   return {
+    token,
+    signInLoading,
+    signInHasError,
+    signInError,
     signInHandler,
     showPasswordHandler,
   };

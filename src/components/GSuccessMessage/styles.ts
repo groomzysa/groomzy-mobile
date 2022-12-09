@@ -2,10 +2,7 @@ import { Text, View } from "react-native";
 import styled from "styled-components/native";
 import { ITheme } from "../../utils/theme/types";
 
-export const SuccessMessageContainer = styled(View)`
-  margin: ${({ theme }: { theme: ITheme }) =>
-    theme.spacing.container.xxsmall}px;
-`;
+export const SuccessMessageContainer = styled(View)``;
 
 export const SuccessMessage = styled(Text)`
   display: flex;

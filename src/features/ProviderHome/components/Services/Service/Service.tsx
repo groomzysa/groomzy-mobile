@@ -81,6 +81,7 @@ export const Service: FC<IServiceProps> = ({ service }) => {
           </ViewButtonContainer>
         </TouchableOpacity>
       </Card.Actions>
+
       <UpdateService
         service={service}
         visible={updateDialogVisible}

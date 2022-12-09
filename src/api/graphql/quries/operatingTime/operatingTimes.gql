@@ -1,0 +1,8 @@
+query operatingTimes {
+  operatingTimes {
+    id
+    day
+    opens
+    closes
+  }
+}

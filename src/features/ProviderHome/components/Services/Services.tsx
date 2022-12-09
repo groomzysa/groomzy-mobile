@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { ActivityIndicator, FlatList, TouchableOpacity } from "react-native";
 
 import {
@@ -6,7 +6,6 @@ import {
   Content,
   AddButtonContainer,
   AddButtonText,
-  ServiceContainer,
   FlatListContainer,
   FlatListItemWrapper,
 } from "./styles";
@@ -39,44 +38,47 @@ export const Services: FC = () => {
   const hideAddDialogHandler = () => setAddDialogVisible(false);
 
   return (
-    <Container>
-      {servicesLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Content>
-          <TouchableOpacity
-            onPress={() => {
-              showAddDialogHandler();
-            }}
-          >
-            <AddButtonContainer>
-              {/* @ts-ignore */}
-              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon name="plus" size={22} color={"white"} />
-                <AddButtonText>Add</AddButtonText>
-              </IconComponentProvider>
-            </AddButtonContainer>
-          </TouchableOpacity>
-          {servicesHasError && <GErrorMessage message={servicesError} />}
-          <FlatListContainer>
-            <FlatList
-              data={services || []}
-              renderItem={({ item: service }) => (
-                <FlatListItemWrapper>
-                  <Service service={service} />
-                </FlatListItemWrapper>
-              )}
-              contentContainerStyle={{
-                padding: theme.spacing.container.xsmall,
+    <>
+      <Container>
+        {servicesLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <Content>
+            <TouchableOpacity
+              onPress={() => {
+                showAddDialogHandler();
               }}
-            />
-          </FlatListContainer>
-        </Content>
-      )}
+            >
+              <AddButtonContainer>
+                {/* @ts-ignore */}
+                <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                  <Icon name="plus" size={22} color={"white"} />
+                  <AddButtonText>Add</AddButtonText>
+                </IconComponentProvider>
+              </AddButtonContainer>
+            </TouchableOpacity>
+            {servicesHasError && <GErrorMessage message={servicesError} />}
+            <FlatListContainer>
+              <FlatList
+                data={services || []}
+                renderItem={({ item: service }) => (
+                  <FlatListItemWrapper>
+                    <Service service={service} />
+                  </FlatListItemWrapper>
+                )}
+                contentContainerStyle={{
+                  padding: theme.spacing.container.xsmall,
+                }}
+              />
+            </FlatListContainer>
+          </Content>
+        )}
+      </Container>
+
       <AddService
         visible={addDialogVisible}
         hideDialog={hideAddDialogHandler}
       />
-    </Container>
+    </>
   );
 };

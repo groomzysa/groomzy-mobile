@@ -31,22 +31,4 @@ export interface IupdateServiceHandlerParams {
   duration: string;
   durationUnit: DurationUnitType | undefined;
   category: CategoryType | undefined;
-  updateServiceTrigger: MutationTrigger<
-    MutationDefinition<
-      Exact<{
-        serviceId: number;
-        name?: InputMaybe<string> | undefined;
-        description?: InputMaybe<string> | undefined;
-        price?: InputMaybe<number> | undefined;
-        duration?: InputMaybe<number> | undefined;
-        durationUnit?: InputMaybe<DurationUnitType> | undefined;
-        inHouse?: InputMaybe<boolean> | undefined;
-        category?: InputMaybe<CategoryType> | undefined;
-      }>,
-      any,
-      "Services",
-      UpdateServiceMutationResult,
-      "api"
-    >
-  >;
 }

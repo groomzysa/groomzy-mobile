@@ -82,18 +82,28 @@ export enum DurationUnitType {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addOperatingTime: OperatingTime;
   addService: Service;
   addStaff: Staff;
   addTradingAddress: Address;
   addTradingInfo: Provider;
   addUser: User;
+  deleteOperatingTime: OperatingTime;
   deleteService: Service;
   deleteStaff: Staff;
   signIn: Token;
+  updateOperatingTime: OperatingTime;
   updateService: Service;
   updateStaff: Staff;
   updateTradingAddress: Address;
   updateTradingInfo: Provider;
+};
+
+
+export type MutationAddOperatingTimeArgs = {
+  closes: Scalars['String'];
+  day: DayType;
+  opens: Scalars['String'];
 };
 
 
@@ -141,6 +151,11 @@ export type MutationAddUserArgs = {
 };
 
 
+export type MutationDeleteOperatingTimeArgs = {
+  operatingTimeId: Scalars['Int'];
+};
+
+
 export type MutationDeleteServiceArgs = {
   serviceId: Scalars['Int'];
 };
@@ -155,6 +170,14 @@ export type MutationSignInArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   role: UserRole;
+};
+
+
+export type MutationUpdateOperatingTimeArgs = {
+  closes?: InputMaybe<Scalars['String']>;
+  day?: InputMaybe<DayType>;
+  opens?: InputMaybe<Scalars['String']>;
+  operatingTimeId: Scalars['Int'];
 };
 
 
@@ -224,6 +247,7 @@ export type Provider = {
 
 export type Query = {
   __typename?: 'Query';
+  operatingTimes: Array<OperatingTime>;
   provider?: Maybe<Provider>;
   providers: Array<Provider>;
   services: Array<Service>;
@@ -293,6 +317,32 @@ export enum UserStatus {
   Pending = 'PENDING',
   Suspended = 'SUSPENDED'
 }
+
+export type AddOperatingTimeMutationVariables = Exact<{
+  day: DayType;
+  opens: Scalars['String'];
+  closes: Scalars['String'];
+}>;
+
+
+export type AddOperatingTimeMutation = { __typename?: 'Mutation', addOperatingTime: { __typename?: 'OperatingTime', id: number, day?: DayType | null, opens?: string | null, closes?: string | null } };
+
+export type DeleteOperatingTimeMutationVariables = Exact<{
+  operatingTimeId: Scalars['Int'];
+}>;
+
+
+export type DeleteOperatingTimeMutation = { __typename?: 'Mutation', deleteOperatingTime: { __typename?: 'OperatingTime', id: number, day?: DayType | null, opens?: string | null, closes?: string | null } };
+
+export type UpdateOperatingTimeMutationVariables = Exact<{
+  operatingTimeId: Scalars['Int'];
+  day?: InputMaybe<DayType>;
+  opens?: InputMaybe<Scalars['String']>;
+  closes?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateOperatingTimeMutation = { __typename?: 'Mutation', updateOperatingTime: { __typename?: 'OperatingTime', id: number, day?: DayType | null, opens?: string | null, closes?: string | null } };
 
 export type AddTradingAddressMutationVariables = Exact<{
   streetNumber: Scalars['String'];
@@ -392,6 +442,11 @@ export type SignInMutationVariables = Exact<{
 
 
 export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'Token', token: string } };
+
+export type OperatingTimesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OperatingTimesQuery = { __typename?: 'Query', operatingTimes: Array<{ __typename?: 'OperatingTime', id: number, day?: DayType | null, opens?: string | null, closes?: string | null }> };
 
 export type ProviderQueryVariables = Exact<{ [key: string]: never; }>;
 

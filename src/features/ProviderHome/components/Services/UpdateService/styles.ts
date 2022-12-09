@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import styled from "styled-components/native";
 import { ITheme } from "../../../../../utils/theme/types";
 
@@ -17,4 +17,9 @@ export const ErrorText = styled(Text)`
   margin-left: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xsmall}px;
   color: ${({ theme }: { theme: ITheme }) => theme.colors.error};
+`;
+
+export const ActionButtonContainer = styled(View)`
+  margin: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.xxsmall}px;
 `;

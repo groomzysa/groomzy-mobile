@@ -1,9 +1,6 @@
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { MutationDefinition } from "@reduxjs/toolkit/dist/query";
-import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { Dispatch, SetStateAction } from "react";
-import { Exact, User, UserRole } from "../../../api/graphql/api.schema";
-import { AddUserMutationResult } from "../../../api/graphql/mutations/user/addUser.generated";
+import { User } from "../../../api/graphql/api.schema";
 import { TRootAppDrawerParamList } from "../../../components/GNavigation/components/AppNavigator/types";
 
 export interface IuseSignUpEffectsParams {
@@ -34,22 +31,6 @@ export interface IaddUserHandlerParams {
   setLastNameError: Dispatch<SetStateAction<string>>;
   setEmailError: Dispatch<SetStateAction<string>>;
   setPasswordError: Dispatch<SetStateAction<string>>;
-  addUserTrigger: MutationTrigger<
-    MutationDefinition<
-      Exact<{
-        firstName: string;
-        lastName: string;
-        email: string;
-        password: string;
-        role: UserRole;
-        userImage?: any;
-      }>,
-      any,
-      never,
-      AddUserMutationResult,
-      "api"
-    >
-  >;
 }
 
 export interface IshowPasswordHandlerParams {

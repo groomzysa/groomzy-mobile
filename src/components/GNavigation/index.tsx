@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../../api/helpers";
 import { useFetchUser } from "../../api/hooks/queries";
 import { setToken, setUser } from "../../store/slices/appSlice/appSlice";
-import { IAppSliceState } from "../../store/slices/appSlice/types";
+import { RootState } from "../../store/store";
 
 import { AppNavigator } from "./components";
 
 export const GNavigation: FC = () => {
   const { userFetchTrigger, user } = useFetchUser();
-  const { token } = useSelector<{ app: IAppSliceState }, IAppSliceState>(
-    (state) => state.app
-  );
+  const {
+    app: { token },
+  } = useSelector<RootState, Pick<RootState, "app">>((state) => state);
   const dispatch = useDispatch();
 
   /**

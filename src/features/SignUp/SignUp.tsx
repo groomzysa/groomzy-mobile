@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-import { useAddUser } from "../../api/hooks/mutations";
 import {
   GButton,
   GErrorMessage,
@@ -35,15 +34,15 @@ export const SignUp: FC<SignUpProps> = ({ navigation }) => {
    * Custom hooks
    *
    */
+
   const {
-    addUserTrigger,
     addUser,
     addUserLoading,
     addUserHasError,
     addUserError,
-  } = useAddUser();
-
-  const { addUserhandler, showPasswordHandler } = useSignUpHandlers();
+    addUserhandler,
+    showPasswordHandler,
+  } = useSignUpHandlers();
 
   useSignUpEffects({
     navigation,
@@ -115,7 +114,6 @@ export const SignUp: FC<SignUpProps> = ({ navigation }) => {
             label="Sing up"
             onPress={() =>
               addUserhandler({
-                addUserTrigger,
                 email,
                 emailError,
                 firstName,

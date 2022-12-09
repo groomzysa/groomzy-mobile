@@ -15,11 +15,6 @@ export const Content = styled(View)`
   width: 100%;
 `;
 
-export const ServiceContainer = styled(View)`
-  margin-bottom: ${({ theme }: { theme: ITheme }) =>
-    theme.spacing.container.xsmall}px;
-`;
-
 export const AddButtonContainer = styled(View)`
   flex-direction: row;
   padding-top: ${({ theme }: { theme: ITheme }) =>
