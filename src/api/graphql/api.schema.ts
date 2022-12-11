@@ -80,6 +80,11 @@ export enum DurationUnitType {
   Min = 'MIN'
 }
 
+export type Message = {
+  __typename?: 'Message';
+  message: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addOperatingTime: OperatingTime;
@@ -88,6 +93,7 @@ export type Mutation = {
   addTradingAddress: Address;
   addTradingInfo: Provider;
   addUser: User;
+  contactMail: Message;
   deleteOperatingTime: OperatingTime;
   deleteService: Service;
   deleteStaff: Staff;
@@ -148,6 +154,15 @@ export type MutationAddUserArgs = {
   password: Scalars['String'];
   role: UserRole;
   userImage?: InputMaybe<Scalars['File']>;
+};
+
+
+export type MutationContactMailArgs = {
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  message: Scalars['String'];
+  subject: Scalars['String'];
 };
 
 
@@ -317,6 +332,17 @@ export enum UserStatus {
   Pending = 'PENDING',
   Suspended = 'SUSPENDED'
 }
+
+export type ContactMailMutationVariables = Exact<{
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  subject: Scalars['String'];
+  message: Scalars['String'];
+}>;
+
+
+export type ContactMailMutation = { __typename?: 'Mutation', contactMail: { __typename?: 'Message', message: string } };
 
 export type AddOperatingTimeMutationVariables = Exact<{
   day: DayType;

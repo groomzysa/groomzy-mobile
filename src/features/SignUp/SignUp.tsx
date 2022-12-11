@@ -77,7 +77,7 @@ export const SignUp: FC<SignUpProps> = ({ navigation }) => {
             <Flex1>
               <GTextInput
                 testID="lastName"
-                label="last name"
+                label="Last name"
                 value={lastName}
                 onTextChange={setLastName}
                 errorMessage={lastNameError}
@@ -87,7 +87,7 @@ export const SignUp: FC<SignUpProps> = ({ navigation }) => {
 
           <GTextInput
             testID="email"
-            label="email"
+            label="Email"
             value={email}
             onTextChange={setEmail}
             errorMessage={emailError}
@@ -95,7 +95,7 @@ export const SignUp: FC<SignUpProps> = ({ navigation }) => {
           />
           <GTextInput
             testID="password"
-            label="password"
+            label="Password"
             value={password}
             onTextChange={setPassword}
             errorMessage={passwordError}

@@ -9,10 +9,15 @@ import { theme } from "../../../../utils/theme";
 import { GSafeArea } from "../../../GSafeArea/GSafeArea";
 import { CustomDrawer } from "../CustomDrawer/CustomDrawer";
 import { TRootAppDrawerParamList } from "./types";
-import { Home, ProviderHome, SignIn, SignUp } from "../../../../features";
+import {
+  Contact,
+  Home,
+  ProviderHome,
+  SignIn,
+  SignUp,
+} from "../../../../features";
 import { UserRole } from "../../../../api/graphql/api.schema";
 import { useSelector } from "react-redux";
-import { IAppSliceState } from "../../../../store/slices/appSlice/types";
 import { RootState } from "../../../../store/store";
 
 const Drawer = createDrawerNavigator<TRootAppDrawerParamList>();
@@ -20,12 +25,6 @@ const Drawer = createDrawerNavigator<TRootAppDrawerParamList>();
 const About: FC = () => (
   <GSafeArea>
     <Text>About screen</Text>
-  </GSafeArea>
-);
-
-const Contact: FC = () => (
-  <GSafeArea>
-    <Text>Contact</Text>
   </GSafeArea>
 );
 

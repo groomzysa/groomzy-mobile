@@ -47,3 +47,12 @@ This dialog will close shortly`;
 export const DELETE_OPERATING_TIME_MESSAGE = `Are you sure want to delete this operating time?
         
 This will be deleted permanently.`;
+
+/**
+ *
+ * Contact mail success messages
+ *
+ */
+export const CONTACT_MAIL_SENT_MESSAGE = `Message sent successfuly.
+
+We will be in touch.`;

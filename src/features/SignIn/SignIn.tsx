@@ -55,7 +55,7 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
           {signInHasError && <GErrorMessage message={signInError} />}
           <GTextInput
             testID="email"
-            label="email"
+            label="Email"
             value={email}
             onTextChange={setEmail}
             errorMessage={emailError}
@@ -63,7 +63,7 @@ export const SignIn: FC<SignInProps> = ({ navigation }) => {
           />
           <GTextInput
             testID="password"
-            label="password"
+            label="Password"
             value={password}
             onTextChange={setPassword}
             errorMessage={passwordError}

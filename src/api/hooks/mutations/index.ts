@@ -33,3 +33,10 @@ export { useDeleteService } from "./service/useDeleteService";
 export { useAddOperatingTime } from "./operatingTimes/useAddOperatingTime";
 export { useDeleteOperatingTime } from "./operatingTimes/useDeleteOperatingTime";
 export { useUpdateOperatingTime } from "./operatingTimes/useUpdateOperatingTime";
+
+/**
+ *
+ * Contact mail mutations
+ *
+ */
+export { useContactMail } from "./useContactMail";

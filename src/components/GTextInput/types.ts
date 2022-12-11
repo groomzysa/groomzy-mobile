@@ -12,6 +12,7 @@ export interface IGTextInputProps {
   errorMessage?: string;
   value?: string;
   multiline?: boolean;
+  numberOfLines?: number;
   disabled?: boolean;
   keyboardType?:
     | "default"
