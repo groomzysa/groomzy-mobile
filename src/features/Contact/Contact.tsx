@@ -92,7 +92,7 @@ export const Contact: FC = () => {
             onTextChange={setMessage}
             errorMessage={messageError}
             multiline
-            numberOfLines={10}
+            numberOfLines={8}
           />
 
           <GButton

@@ -10,6 +10,7 @@ import { GSafeArea } from "../../../GSafeArea/GSafeArea";
 import { CustomDrawer } from "../CustomDrawer/CustomDrawer";
 import { TRootAppDrawerParamList } from "./types";
 import {
+  About,
   Contact,
   Home,
   ProviderHome,
@@ -21,12 +22,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 
 const Drawer = createDrawerNavigator<TRootAppDrawerParamList>();
-
-const About: FC = () => (
-  <GSafeArea>
-    <Text>About screen</Text>
-  </GSafeArea>
-);
 
 const Account: FC = () => (
   <GSafeArea>
