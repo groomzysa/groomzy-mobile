@@ -1,6 +1,7 @@
 import { Icon, IconComponentProvider } from "@react-native-material/core";
 import React, { FC } from "react";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import {
   GButton,
   GErrorMessage,
@@ -45,6 +46,8 @@ export const Contact: FC = () => {
     successMessage,
     visitFacebook,
     visitInstagram,
+    visitWhatsapp,
+    visitTiktok,
   } = useContactMailHandlers();
 
   return (
@@ -121,6 +124,22 @@ export const Contact: FC = () => {
                 {/* @ts-ignore */}
                 <IconComponentProvider IconComponent={MaterialCommunityIcons}>
                   <Icon name="facebook" size={30} color={"blue"} />
+                </IconComponentProvider>
+              </TouchableOpacity>
+            </SocialContainer>
+            <SocialContainer>
+              <TouchableOpacity onPress={visitWhatsapp}>
+                {/* @ts-ignore */}
+                <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                  <Icon name="whatsapp" size={30} color={"green"} />
+                </IconComponentProvider>
+              </TouchableOpacity>
+            </SocialContainer>
+            <SocialContainer>
+              <TouchableOpacity onPress={visitTiktok}>
+                {/* @ts-ignore */}
+                <IconComponentProvider IconComponent={FontAwesome5}>
+                  <Icon name="tiktok" size={24} color={"black"} />
                 </IconComponentProvider>
               </TouchableOpacity>
             </SocialContainer>

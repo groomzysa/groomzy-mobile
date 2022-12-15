@@ -14,6 +14,7 @@ export const ContentContainer = styled(View)`
 export const SocialsContainer = styled(View)`
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   margin: ${({ theme }: { theme: ITheme }) => theme.spacing.container.small}px;
 `;
 

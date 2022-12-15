@@ -59,6 +59,15 @@ export const useContactMailHandlers = () => {
     Linking.openURL("https://instagram.com/groomzy_");
   };
 
+  const visitTiktok = () => {
+    //TODO: UPDATE with tiktok account link
+    Linking.openURL("https://instagram.com/groomzy_");
+  };
+
+  const visitWhatsapp = () => {
+    Linking.openURL("https://api.whatsapp.com/send?phone=+27671350513");
+  };
+
   const contactMailHandler = () => {
     const abortContactMail =
       !firstName ||
@@ -132,5 +141,7 @@ export const useContactMailHandlers = () => {
     successMessage,
     visitInstagram,
     visitFacebook,
+    visitWhatsapp,
+    visitTiktok,
   };
 };
