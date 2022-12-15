@@ -4,3 +4,4 @@ export { SignUp } from "./SignUp/SignUp";
 export { SignIn } from "./SignIn/SignIn";
 export { Contact } from "./Contact/Contact";
 export { About } from "./About/About";
+export { Account } from "./Account/Account";

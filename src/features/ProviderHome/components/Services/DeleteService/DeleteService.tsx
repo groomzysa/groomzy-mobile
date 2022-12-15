@@ -1,23 +1,16 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import Dialog from "react-native-dialog";
-import {
-  GButton,
-  GErrorMessage,
-  GSuccessMessage,
-} from "../../../../../components";
+import { GButton, GErrorMessage } from "../../../../../components";
 import { FlexRowEndContainer } from "../../../../../utils/common/styles";
 import { DELETE_SERVICE_MESSAGE } from "../../../../../utils/messages";
-import { useDeleteServiceEffects, useDeleteServiceHandlers } from "./hooks";
+import { useDeleteServiceHandlers } from "./hooks";
 import { ActionButtonContainer, SubTitleText } from "./styles";
 import { IDeleteServiceProps } from "./types";
 
 export const DeleteService: FC<IDeleteServiceProps> = ({
-  service,
   visible,
   hideDialog,
 }) => {
-  const { id: serviceId } = service;
-
   /**
    *
    * Custom hooks
@@ -26,16 +19,10 @@ export const DeleteService: FC<IDeleteServiceProps> = ({
 
   const {
     deleteServiceHandler,
-    deleteService,
     deleteServiceLoading,
     deleteServiceHasError,
     deleteServiceError,
-  } = useDeleteServiceHandlers();
-
-  useDeleteServiceEffects({
-    deleteService,
-    hideDialog,
-  });
+  } = useDeleteServiceHandlers(hideDialog);
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -48,11 +35,7 @@ export const DeleteService: FC<IDeleteServiceProps> = ({
         <ActionButtonContainer>
           <GButton
             label="Delete"
-            onPress={() =>
-              deleteServiceHandler({
-                serviceId,
-              })
-            }
+            onPress={deleteServiceHandler}
             loading={deleteServiceLoading}
             testID="deleteServiceButton"
           />

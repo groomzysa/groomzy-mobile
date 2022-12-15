@@ -1,7 +1,24 @@
+import { useSelector } from "react-redux";
 import { useDeleteService } from "../../../../../../api/hooks/mutations";
+import { RootState } from "../../../../../../store/store";
 import { IdeleteServiceHandlersParams } from "./types";
+import { useDeleteServiceEffects } from "./useDeleteServiceEffects";
 
-export const useDeleteServiceHandlers = () => {
+export const useDeleteServiceHandlers = (hideDialog: () => void) => {
+  /**
+   *
+   * States
+   *
+   */
+  const {
+    homeProvider: { service },
+  } = useSelector<RootState, Pick<RootState, "homeProvider">>((state) => state);
+
+  /**
+   *
+   * Custom hooks
+   *
+   */
   const {
     deleteServiceTrigger,
     deleteService,
@@ -10,17 +27,27 @@ export const useDeleteServiceHandlers = () => {
     deleteServiceError,
   } = useDeleteService();
 
-  const deleteServiceHandler = ({
-    serviceId,
-  }: IdeleteServiceHandlersParams) => {
+  useDeleteServiceEffects({
+    deleteService,
+    hideDialog,
+  });
+
+  /**
+   *
+   * Handlers
+   *
+   */
+
+  const deleteServiceHandler = () => {
+    if (!service) return;
+
     deleteServiceTrigger({
-      serviceId,
+      serviceId: service.id,
     });
   };
 
   return {
     deleteServiceHandler,
-    deleteService,
     deleteServiceLoading,
     deleteServiceHasError,
     deleteServiceError,

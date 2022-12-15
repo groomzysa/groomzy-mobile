@@ -10,6 +10,8 @@ import { theme } from "../../../../../utils/theme";
 import { UpdateService } from "../UpdateService/UpdateService";
 import { ViewService } from "../ViewService/ViewService";
 import { DeleteService } from "../DeleteService/DeleteService";
+import { useDispatch } from "react-redux";
+import { setService } from "../../../../../store/slices/providerHomeSlice/providerHomeSlice";
 
 export const Service: FC<IServiceProps> = ({ service }) => {
   const {
@@ -23,19 +25,38 @@ export const Service: FC<IServiceProps> = ({ service }) => {
   const [updateDialogVisible, setUpdateDialogVisible] = React.useState(false);
   const [viewDialogVisible, setViewDialogVisible] = React.useState(false);
   const [deleteDialogVisible, setDeleteDialogVisible] = React.useState(false);
+  const dispatch = useDispatch();
 
   /**
    *
    * Handlers
    *
    */
-  const showUpdateDialogHandler = () => setUpdateDialogVisible(true);
-  const showViewDialogHandler = () => setViewDialogVisible(true);
-  const showDeleteDialogHandler = () => setDeleteDialogVisible(true);
+  const showUpdateDialogHandler = () => {
+    dispatch(setService({ service }));
+    setUpdateDialogVisible(true);
+  };
+  const showViewDialogHandler = () => {
+    dispatch(setService({ service }));
+    setViewDialogVisible(true);
+  };
+  const showDeleteDialogHandler = () => {
+    dispatch(setService({ service }));
+    setDeleteDialogVisible(true);
+  };
 
-  const hideUpdateDialogHandler = () => setUpdateDialogVisible(false);
-  const hideViewDialogHandler = () => setViewDialogVisible(false);
-  const hideDeleteDialogHandler = () => setDeleteDialogVisible(false);
+  const hideUpdateDialogHandler = () => {
+    dispatch(setService({ service: undefined }));
+    setUpdateDialogVisible(false);
+  };
+  const hideViewDialogHandler = () => {
+    dispatch(setService({ service: undefined }));
+    setViewDialogVisible(false);
+  };
+  const hideDeleteDialogHandler = () => {
+    dispatch(setService({ service: undefined }));
+    setDeleteDialogVisible(false);
+  };
 
   return (
     <ServiceCard>
@@ -83,17 +104,14 @@ export const Service: FC<IServiceProps> = ({ service }) => {
       </Card.Actions>
 
       <UpdateService
-        service={service}
         visible={updateDialogVisible}
         hideDialog={hideUpdateDialogHandler}
       />
       <ViewService
-        service={service}
         visible={viewDialogVisible}
         hideDialog={hideViewDialogHandler}
       />
       <DeleteService
-        service={service}
         visible={deleteDialogVisible}
         hideDialog={hideDeleteDialogHandler}
       />

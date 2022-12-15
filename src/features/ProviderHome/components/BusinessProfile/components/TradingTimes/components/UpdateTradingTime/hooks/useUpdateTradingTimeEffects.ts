@@ -1,22 +1,22 @@
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DayType } from "../../../../../../../../../api/graphql/api.schema";
 import { UPDATE_OPERATING_TIME_MESSAGE } from "../../../../../../../../../utils/messages";
 import { IuseUpdateTradingTimeEffectsparams } from "./types";
 
 export const useUpdateTradingTimeEffects = ({
-  closesPickerHandler,
-  opensPickerHandler,
   showCloses,
   showOpens,
   hideDialog,
   setCloses,
   setDay,
   setOpens,
-  setSuccessMessage,
-  successMessage,
+  setShowCloses,
+  setShowOpens,
   updateOperatingTime,
 }: IuseUpdateTradingTimeEffectsparams) => {
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   useEffect(() => {
     if (!updateOperatingTime) return;
 
@@ -46,7 +46,10 @@ export const useUpdateTradingTimeEffects = ({
         mode: "time",
         is24Hour: true,
         value: new Date(),
-        onChange: opensPickerHandler,
+        onChange: (event, date) => {
+          setOpens(`${date?.getHours()}:${date?.getMinutes()} hrz`);
+          setShowOpens(false);
+        },
       });
     } else {
       DateTimePickerAndroid.dismiss("time");
@@ -59,10 +62,17 @@ export const useUpdateTradingTimeEffects = ({
         mode: "time",
         is24Hour: true,
         value: new Date(),
-        onChange: closesPickerHandler,
+        onChange: (event, date) => {
+          setCloses(`${date?.getHours()}:${date?.getMinutes()} hrz`);
+          setShowCloses(false);
+        },
       });
     } else {
       DateTimePickerAndroid.dismiss("time");
     }
   }, [showCloses]);
+
+  return {
+    successMessage,
+  };
 };

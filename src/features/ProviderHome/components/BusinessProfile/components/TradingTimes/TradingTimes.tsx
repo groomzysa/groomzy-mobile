@@ -44,7 +44,7 @@ export const TradingTimes: FC = () => {
   const hideAddDialogHandler = () => setAddDialogVisible(false);
 
   return (
-    <View>
+    <>
       <TouchableOpacity
         onPress={() => {
           showAddDialogHandler();
@@ -73,6 +73,6 @@ export const TradingTimes: FC = () => {
         visible={addDialogVisible}
         hideDialog={hideAddDialogHandler}
       />
-    </View>
+    </>
   );
 };

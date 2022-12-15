@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   IAppSliceState,
-  IAppSliceSetTokenAction,
-  IAppSliceSetUserAction,
-  IAppSliceSetHideDrawerHeaderAction,
+  ISetTokenAction,
+  ISetUserAction,
+  IHideDrawerHeaderAction,
 } from "./types";
 
 const initialState: IAppSliceState = {
@@ -16,16 +16,13 @@ export const appSlice = createSlice({
   name: "appSlice",
   initialState,
   reducers: {
-    setToken: (state, action: IAppSliceSetTokenAction) => {
+    setToken: (state, action: ISetTokenAction) => {
       state.token = action.payload.token;
     },
-    setUser: (state, action: IAppSliceSetUserAction) => {
+    setUser: (state, action: ISetUserAction) => {
       state.user = action.payload.user;
     },
-    setHideDrawerHeader: (
-      state,
-      action: IAppSliceSetHideDrawerHeaderAction
-    ) => {
+    setHideDrawerHeader: (state, action: IHideDrawerHeaderAction) => {
       state.hideDrawerHeader = action.payload.hideDrawerHeader;
     },
   },

@@ -8,14 +8,14 @@ import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../utils/common/styles";
-import { ContentContainer } from "./styles";
+import { ContentContainer, TitleText } from "./styles";
 
 export const About: FC = () => {
   return (
     <KeyboardAvoidingViewContainer>
       <ScrollViewContainer>
         <ContentContainer>
-          <GTitle title="Background" />
+          <TitleText>Background</TitleText>
           <Text>
             Groomzy is a concept that was born in times of the 2020 COVID 19
             Global pandemic in response to offer convenient, transparent,
@@ -25,7 +25,7 @@ export const About: FC = () => {
 
           <Divider style={{ marginTop: 8, marginBottom: 8 }} />
 
-          <GTitle title="About" />
+          <TitleText>Birth of Groomzy</TitleText>
           <View>
             <Text>
               Groomzy is a beauty grooming industry booking platform where
@@ -66,7 +66,8 @@ export const About: FC = () => {
 
           <Divider style={{ marginTop: 8, marginBottom: 8 }} />
 
-          <GTitle title="Values and Missions" />
+          <TitleText>Values and Missions</TitleText>
+
           <View>
             <Unorderedlist>
               <Text style={{ color: "gray" }}>

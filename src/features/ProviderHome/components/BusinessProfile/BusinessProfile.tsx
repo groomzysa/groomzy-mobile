@@ -1,11 +1,8 @@
 import React, { FC } from "react";
 import { Container, Space, TabButton } from "./styles";
-import { useFetchProvider } from "../../../../api/hooks/queries";
 import { TradingAddress, TradingInfo, TradingTimes } from "./components";
 import { TabView, SceneMap, TabBarProps } from "react-native-tab-view";
 import { Animated, useWindowDimensions, View } from "react-native";
-import { GErrorMessage } from "../../../../components";
-import { ActivityIndicator } from "react-native-paper";
 
 export const BusinessProfile: FC = () => {
   const layout = useWindowDimensions();
@@ -19,16 +16,8 @@ export const BusinessProfile: FC = () => {
 
   /**
    *
-   * Custom hooks
+   * Handlers
    *
-   */
-  const { provider, providerLoading, providerHasError, providerError } =
-    useFetchProvider();
-
-  /**
-   * 
-   *Handlers
-
    */
 
   const indexChangeHandler = (index: number) => setIndex(index);
@@ -77,30 +66,19 @@ export const BusinessProfile: FC = () => {
     tradingInfo: () => (
       <Container>
         <Space />
-        {providerHasError && <GErrorMessage message={providerError} />}
-        {providerLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <TradingInfo provider={provider} />
-        )}
+        <TradingInfo />
       </Container>
     ),
     tradingAddress: () => (
       <Container>
         <Space />
-        {providerHasError && <GErrorMessage message={providerError} />}
-        {providerLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <TradingAddress address={provider?.addresses?.[0]} />
-        )}
+        <TradingAddress />
       </Container>
     ),
     tradingTimes: () => (
       <Container>
         <Space />
-        {providerHasError && <GErrorMessage message={providerError} />}
-        {providerLoading ? <ActivityIndicator /> : <TradingTimes />}
+        <TradingTimes />
       </Container>
     ),
   });

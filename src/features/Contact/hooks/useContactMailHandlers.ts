@@ -1,5 +1,6 @@
 import { validate } from "isemail";
 import { useState } from "react";
+import { Linking } from "react-native";
 import { useContactMail } from "../../../api/hooks/mutations";
 import { useContactMailEffects } from "./useContactMailEffects";
 
@@ -48,6 +49,15 @@ export const useContactMailHandlers = () => {
    * Handlers
    *
    */
+
+  const visitInstagram = () => {
+    Linking.openURL("https://instagram.com/groomzy_");
+  };
+
+  const visitFacebook = () => {
+    //TODO: UPDATE with facebook page link
+    Linking.openURL("https://instagram.com/groomzy_");
+  };
 
   const contactMailHandler = () => {
     const abortContactMail =
@@ -120,5 +130,7 @@ export const useContactMailHandlers = () => {
     contactMailLoading,
     contactMailHandler,
     successMessage,
+    visitInstagram,
+    visitFacebook,
   };
 };

@@ -1,12 +1,34 @@
-import { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   CategoryType,
   DurationUnitType,
 } from "../../../../../../api/graphql/api.schema";
 import { useUpdateService } from "../../../../../../api/hooks/mutations";
-import { IupdateServiceHandlerParams } from "./types";
+import { RootState } from "../../../../../../store/store";
+import { useUpdateServiceEffects } from "./useUpdateServiceEffects";
 
-export const useUpdateServiceHandlers = () => {
+export const useUpdateServiceHandlers = (hideDialog: () => void) => {
+  /**
+   *
+   * States
+   *
+   */
+  const {
+    homeProvider: { service },
+  } = useSelector<RootState, Pick<RootState, "homeProvider">>((state) => state);
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [duration, setDuration] = useState<string>("");
+  const [durationUnit, setDurationUnit] = useState<DurationUnitType>();
+  const [category, setCategory] = useState<CategoryType>();
+
+  /**
+   *
+   * Custom hooks
+   *
+   */
   const {
     updateServiceTrigger,
     updateService,
@@ -15,59 +37,49 @@ export const useUpdateServiceHandlers = () => {
     updateServiceError,
   } = useUpdateService();
 
-  const durationUnitMinHandler = (
-    setDurationUnit: Dispatch<SetStateAction<DurationUnitType | undefined>>
-  ) => {
+  const { successMessage } = useUpdateServiceEffects({
+    hideDialog,
+    setCategory,
+    setDescription,
+    setDuration,
+    setDurationUnit,
+    setName,
+    setPrice,
+    updateService,
+  });
+
+  const durationUnitMinHandler = () => {
     setDurationUnit(DurationUnitType.Min);
   };
 
-  const durationUnitHrsHandler = (
-    setDurationUnit: Dispatch<SetStateAction<DurationUnitType | undefined>>
-  ) => {
+  const durationUnitHrsHandler = () => {
     setDurationUnit(DurationUnitType.Hrs);
   };
 
-  const categoryBarberHandler = (
-    setCategory: Dispatch<SetStateAction<CategoryType | undefined>>
-  ) => {
+  const categoryBarberHandler = () => {
     setCategory(CategoryType.Barber);
   };
 
-  const categoryHairdresserHandler = (
-    setCategory: Dispatch<SetStateAction<CategoryType | undefined>>
-  ) => {
+  const categoryHairdresserHandler = () => {
     setCategory(CategoryType.Hairdresser);
   };
 
-  const categoryMakeupArtistHandler = (
-    setCategory: Dispatch<SetStateAction<CategoryType | undefined>>
-  ) => {
+  const categoryMakeupArtistHandler = () => {
     setCategory(CategoryType.MakeupArtist);
   };
 
-  const categoryNailTechnicianHandler = (
-    setCategory: Dispatch<SetStateAction<CategoryType | undefined>>
-  ) => {
+  const categoryNailTechnicianHandler = () => {
     setCategory(CategoryType.NailTechnician);
   };
 
-  const categorySpaHandler = (
-    setCategory: Dispatch<SetStateAction<CategoryType | undefined>>
-  ) => {
+  const categorySpaHandler = () => {
     setCategory(CategoryType.Spa);
   };
 
-  const updateServiceHandler = ({
-    serviceId,
-    category,
-    description,
-    duration,
-    durationUnit,
-    name,
-    price,
-  }: IupdateServiceHandlerParams) => {
+  const updateServiceHandler = () => {
+    if (!service) return;
     updateServiceTrigger({
-      serviceId,
+      serviceId: service.id,
       name,
       description,
       price: Number(price),
@@ -79,10 +91,21 @@ export const useUpdateServiceHandlers = () => {
   };
 
   return {
-    updateService,
+    name,
+    setName,
+    description,
+    setDescription,
+    price,
+    setPrice,
+    duration,
+    setDuration,
+    durationUnit,
+    category,
+    service,
     updateServiceLoading,
     updateServiceHasError,
     updateServiceError,
+    successMessage,
     durationUnitMinHandler,
     durationUnitHrsHandler,
     categoryBarberHandler,

@@ -4,37 +4,31 @@ import { GButton, GErrorMessage } from "../../../../../../../../components";
 import { FlexRowEndContainer } from "../../../../../../../../utils/common/styles";
 import { DELETE_OPERATING_TIME_MESSAGE } from "../../../../../../../../utils/messages";
 import { Space } from "../../../../styles";
-import {
-  useDeleteTradingTimeEffects,
-  useDeleteTradingTimeHandlers,
-} from "./hooks";
+import { useDeleteTradingTimeHandlers } from "./hooks";
 import { ActionButtonContainer, SubTitleText } from "./styles";
 import { IDeleteTradingTimeProps } from "./types";
 
 export const DeleteTradingTime: FC<IDeleteTradingTimeProps> = ({
-  operatingTime,
   visible,
   hideDialog,
 }) => {
-  const { id: operatingTimeId } = operatingTime;
-
   /**
    *
    * Custom hooks
    *
    */
   const {
-    deleteOperatingTime,
     deleteOperatingTimeError,
     deleteOperatingTimeHandler,
     deleteOperatingTimeHasError,
     deleteOperatingTimeLoading,
-  } = useDeleteTradingTimeHandlers();
+  } = useDeleteTradingTimeHandlers(hideDialog);
 
-  useDeleteTradingTimeEffects({
-    hideDialog,
-    deleteOperatingTime,
-  });
+  /**
+   *
+   * Templates
+   *
+   */
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -51,7 +45,7 @@ export const DeleteTradingTime: FC<IDeleteTradingTimeProps> = ({
           <GButton
             label="Delete"
             testID="deleteTradingTimeButton"
-            onPress={() => deleteOperatingTimeHandler({ operatingTimeId })}
+            onPress={() => deleteOperatingTimeHandler()}
             loading={deleteOperatingTimeLoading}
           />
         </ActionButtonContainer>

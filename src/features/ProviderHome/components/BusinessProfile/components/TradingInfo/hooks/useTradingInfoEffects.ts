@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ADD_PROVIDER_TRADING_INFO_MESSAGE,
   UPDATE_PROVIDER_TRADING_INFO_MESSAGE,
@@ -8,15 +8,15 @@ import { IuseTradingInfoEffectsParams } from "./types";
 export const useTradingInfoEffects = ({
   addTradingInfo,
   setPhoneNumber,
-  setSuccessMessage,
   setTradingName,
-  successMessage,
   updateTradingInfo,
 }: IuseTradingInfoEffectsParams) => {
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   useEffect(() => {
     setTimeout(() => {
       setSuccessMessage("");
-    }, 5000);
+    }, 3000);
   }, [successMessage]);
 
   useEffect(() => {
@@ -40,4 +40,6 @@ export const useTradingInfoEffects = ({
     setTradingName(updateTradingInfo.tradingName!);
     setPhoneNumber(updateTradingInfo.phone!);
   }, [updateTradingInfo]);
+
+  return { successMessage };
 };

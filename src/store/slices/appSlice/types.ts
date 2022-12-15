@@ -1,9 +1,9 @@
 import { User } from "../../../api/graphql/api.schema";
 
 /**
- * 
+ *
  * States
- * 
+ *
  */
 export interface IAppSliceState {
   token?: string;
@@ -12,25 +12,25 @@ export interface IAppSliceState {
 }
 
 /**
- * 
+ *
  * Actions
- * 
+ *
  */
-export interface IAppSliceSetTokenAction {
+export interface ISetTokenAction {
   type: string;
   payload: {
     token?: string;
   };
 }
 
-export interface IAppSliceSetUserAction {
+export interface ISetUserAction {
   type: string;
   payload: {
     user?: User;
   };
 }
 
-export interface IAppSliceSetHideDrawerHeaderAction {
+export interface IHideDrawerHeaderAction {
   type: string;
   payload: {
     hideDrawerHeader?: boolean;

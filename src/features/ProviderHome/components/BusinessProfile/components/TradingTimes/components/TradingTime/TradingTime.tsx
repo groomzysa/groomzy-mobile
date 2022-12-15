@@ -15,24 +15,45 @@ import { ViewTradingTime } from "../ViewTradingTime/ViewTradingTime";
 import { UpdateTradingTime } from "../UpdateTradingTime/UpdateTradingTime";
 import { DeleteTradingTime } from "../DeleteTradingTime/DeleteTradingTime";
 import { ITradingTimeProps } from "./types";
+import { useDispatch } from "react-redux";
+import { setOperatingTime } from "../../../../../../../../store/slices/providerHomeSlice/providerHomeSlice";
 
 export const TradingTime: FC<ITradingTimeProps> = ({ operatingTime }) => {
   const [updateDialogVisible, setUpdateDialogVisible] = React.useState(false);
   const [viewDialogVisible, setViewDialogVisible] = React.useState(false);
   const [deleteDialogVisible, setDeleteDialogVisible] = React.useState(false);
+  const dispatch = useDispatch();
 
   /**
    *
    * Handlers
    *
    */
-  const showUpdateDialogHandler = () => setUpdateDialogVisible(true);
-  const showViewDialogHandler = () => setViewDialogVisible(true);
-  const showDeleteDialogHandler = () => setDeleteDialogVisible(true);
+  const showUpdateDialogHandler = () => {
+    dispatch(setOperatingTime({ operatingTime }));
+    setUpdateDialogVisible(true);
+  };
+  const showViewDialogHandler = () => {
+    dispatch(setOperatingTime({ operatingTime }));
+    setViewDialogVisible(true);
+  };
+  const showDeleteDialogHandler = () => {
+    dispatch(setOperatingTime({ operatingTime }));
+    setDeleteDialogVisible(true);
+  };
 
-  const hideUpdateDialogHandler = () => setUpdateDialogVisible(false);
-  const hideViewDialogHandler = () => setViewDialogVisible(false);
-  const hideDeleteDialogHandler = () => setDeleteDialogVisible(false);
+  const hideUpdateDialogHandler = () => {
+    dispatch(setOperatingTime({ operatingTime: undefined }));
+    setUpdateDialogVisible(false);
+  };
+  const hideViewDialogHandler = () => {
+    dispatch(setOperatingTime({ operatingTime: undefined }));
+    setViewDialogVisible(false);
+  };
+  const hideDeleteDialogHandler = () => {
+    dispatch(setOperatingTime({ operatingTime: undefined }));
+    setDeleteDialogVisible(false);
+  };
 
   return (
     <TradingTimeCard>
@@ -85,7 +106,6 @@ export const TradingTime: FC<ITradingTimeProps> = ({ operatingTime }) => {
         hideDialog={hideViewDialogHandler}
       />
       <UpdateTradingTime
-        operatingTime={operatingTime}
         visible={updateDialogVisible}
         hideDialog={hideUpdateDialogHandler}
       />

@@ -10,6 +10,7 @@ export const SubTitleText = styled(Text)`
     theme.spacing.container.small}px;
   margin-left: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xsmall}px;
+  font-weight: 500;
 `;
 
 export const ActionButtonContainer = styled(View)`

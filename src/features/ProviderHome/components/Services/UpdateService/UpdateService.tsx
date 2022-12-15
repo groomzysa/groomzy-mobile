@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import Dialog from "react-native-dialog";
 import {
   CategoryType,
@@ -19,25 +19,14 @@ import {
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../../../../utils/common/styles";
-import { useUpdateServiceEffects, useUpdateServiceHandlers } from "./hooks";
+import { useUpdateServiceHandlers } from "./hooks";
 import { ActionButtonContainer, SubTitleText } from "./styles";
 import { IUpdateServiceProps } from "./types";
 
 export const UpdateService: FC<IUpdateServiceProps> = ({
-  service,
   visible,
   hideDialog,
 }) => {
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
-  const [duration, setDuration] = useState<string>("");
-  const [durationUnit, setDurationUnit] = useState<DurationUnitType>();
-  const [category, setCategory] = useState<CategoryType>();
-  const [successMessage, setSuccessMessage] = useState<string>("");
-
-  const { id: serviceId } = service;
-
   /**
    *
    * Custom hooks
@@ -45,7 +34,18 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
    */
 
   const {
-    updateService,
+    category,
+    description,
+    duration,
+    durationUnit,
+    name,
+    price,
+    service,
+    setDescription,
+    setDuration,
+    setName,
+    setPrice,
+    successMessage,
     updateServiceLoading,
     updateServiceHasError,
     updateServiceError,
@@ -57,20 +57,7 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
     durationUnitHrsHandler,
     durationUnitMinHandler,
     updateServiceHandler,
-  } = useUpdateServiceHandlers();
-
-  useUpdateServiceEffects({
-    hideDialog,
-    setCategory,
-    setDescription,
-    setDuration,
-    setDurationUnit,
-    setName,
-    setPrice,
-    setSuccessMessage,
-    successMessage,
-    updateService,
-  });
+  } = useUpdateServiceHandlers(hideDialog);
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -115,11 +102,11 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                 label="MIN"
                 status={
                   durationUnit === DurationUnitType.Min ||
-                  service.durationUnit === DurationUnitType.Min
+                  service?.durationUnit === DurationUnitType.Min
                     ? "checked"
                     : "unchecked"
                 }
-                onPress={() => durationUnitMinHandler(setDurationUnit)}
+                onPress={durationUnitMinHandler}
               />
             </Flex1>
             <Flex1>
@@ -127,11 +114,11 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
                 label="HRS"
                 status={
                   durationUnit === DurationUnitType.Hrs ||
-                  service.durationUnit === DurationUnitType.Hrs
+                  service?.durationUnit === DurationUnitType.Hrs
                     ? "checked"
                     : "unchecked"
                 }
-                onPress={() => durationUnitHrsHandler(setDurationUnit)}
+                onPress={durationUnitHrsHandler}
               />
             </Flex1>
           </FlexRowContainer>
@@ -141,63 +128,53 @@ export const UpdateService: FC<IUpdateServiceProps> = ({
               label={CategoryType.Barber}
               status={
                 category === CategoryType.Barber ||
-                service.category === CategoryType.Barber
+                service?.category === CategoryType.Barber
                   ? "checked"
                   : "unchecked"
               }
-              onPress={() => categoryBarberHandler(setCategory)}
+              onPress={categoryBarberHandler}
             />
             <GRadioButton
               label={CategoryType.Hairdresser}
               status={
                 category === CategoryType.Hairdresser ||
-                service.category === CategoryType.Hairdresser
+                service?.category === CategoryType.Hairdresser
                   ? "checked"
                   : "unchecked"
               }
-              onPress={() => categoryHairdresserHandler(setCategory)}
+              onPress={categoryHairdresserHandler}
             />
             <GRadioButton
               label={CategoryType.MakeupArtist.toString().replace("_", " ")}
               status={
                 category === CategoryType.MakeupArtist ||
-                service.category === CategoryType.MakeupArtist
+                service?.category === CategoryType.MakeupArtist
                   ? "checked"
                   : "unchecked"
               }
-              onPress={() => categoryMakeupArtistHandler(setCategory)}
+              onPress={categoryMakeupArtistHandler}
             />
             <GRadioButton
               label={CategoryType.NailTechnician.toString().replace("_", " ")}
               status={
                 category === CategoryType.NailTechnician ||
-                service.category === CategoryType.NailTechnician
+                service?.category === CategoryType.NailTechnician
                   ? "checked"
                   : "unchecked"
               }
-              onPress={() => categoryNailTechnicianHandler(setCategory)}
+              onPress={categoryNailTechnicianHandler}
             />
             <GRadioButton
               label={CategoryType.Spa}
               status={category === CategoryType.Spa ? "checked" : "unchecked"}
-              onPress={() => categorySpaHandler(setCategory)}
+              onPress={categorySpaHandler}
             />
           </FlexColumContainer>
           <FlexRowEndContainer>
             <ActionButtonContainer>
               <GButton
                 label="Update"
-                onPress={() =>
-                  updateServiceHandler({
-                    category,
-                    description,
-                    duration,
-                    durationUnit,
-                    name,
-                    price,
-                    serviceId,
-                  })
-                }
+                onPress={updateServiceHandler}
                 loading={updateServiceLoading}
                 testID="updateServiceButton"
               />

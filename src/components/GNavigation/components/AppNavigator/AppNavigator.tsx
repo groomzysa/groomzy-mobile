@@ -11,6 +11,7 @@ import { CustomDrawer } from "../CustomDrawer/CustomDrawer";
 import { TRootAppDrawerParamList } from "./types";
 import {
   About,
+  Account,
   Contact,
   Home,
   ProviderHome,
@@ -22,12 +23,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 
 const Drawer = createDrawerNavigator<TRootAppDrawerParamList>();
-
-const Account: FC = () => (
-  <GSafeArea>
-    <Text>Account</Text>
-  </GSafeArea>
-);
 
 const TsAndCs: FC = () => (
   <GSafeArea>
@@ -99,15 +94,18 @@ export const AppNavigator: FC = () => {
             ),
           }}
         />
-        <Drawer.Screen
-          name="Account"
-          component={Account}
-          options={{
-            drawerIcon: ({ color }) => (
-              <Ionicons name="person-outline" size={22} color={color} />
-            ),
-          }}
-        />
+
+        {user && (
+          <Drawer.Screen
+            name="Account"
+            component={Account}
+            options={{
+              drawerIcon: ({ color }) => (
+                <Ionicons name="person-outline" size={22} color={color} />
+              ),
+            }}
+          />
+        )}
 
         {!user && (
           <Drawer.Screen

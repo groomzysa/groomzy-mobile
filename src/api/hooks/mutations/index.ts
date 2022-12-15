@@ -5,6 +5,9 @@
  */
 export { useAddUser } from "./user/useAddUser";
 export { useSignIn } from "./user/useSignIn";
+export { useUpdateAccount } from "./user/useUpdateAccount";
+export { useAddAccountAddress } from "./user/useAddAccountAddress";
+export { useUpdateAccountAddress } from "./user/useUpdateAccountAddress";
 
 /**
  *

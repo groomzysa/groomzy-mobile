@@ -1,7 +1,24 @@
+import { useSelector } from "react-redux";
 import { useDeleteOperatingTime } from "../../../../../../../../../api/hooks/mutations";
-import { IdeleteOperatingTimeHandlersParams } from "./types";
+import { RootState } from "../../../../../../../../../store/store";
+import { useDeleteTradingTimeEffects } from "./useDeleteTradingTimeEffects";
 
-export const useDeleteTradingTimeHandlers = () => {
+export const useDeleteTradingTimeHandlers = (hideDialog: () => void) => {
+  /**
+   *
+   * States
+   *
+   */
+  const {
+    homeProvider: { operatingTime },
+  } = useSelector<RootState, Pick<RootState, "homeProvider">>((state) => state);
+
+  /**
+   *
+   * Custom hooks
+   *
+   */
+
   const {
     deleteOperatingTime,
     deleteOperatingTimeError,
@@ -10,16 +27,26 @@ export const useDeleteTradingTimeHandlers = () => {
     deleteOperatingTimeTrigger,
   } = useDeleteOperatingTime();
 
-  const deleteOperatingTimeHandler = ({
-    operatingTimeId,
-  }: IdeleteOperatingTimeHandlersParams) => {
+  useDeleteTradingTimeEffects({
+    hideDialog,
+    deleteOperatingTime,
+  });
+
+  /**
+   *
+   * Handlers
+   *
+   */
+
+  const deleteOperatingTimeHandler = () => {
+    if (!operatingTime) return;
+
     deleteOperatingTimeTrigger({
-      operatingTimeId,
+      operatingTimeId: operatingTime.id,
     });
   };
 
   return {
-    deleteOperatingTime,
     deleteOperatingTimeError,
     deleteOperatingTimeHasError,
     deleteOperatingTimeLoading,

@@ -1,24 +1,79 @@
+import { isEmpty } from "lodash";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
-  IaddTradingAddresshandlerParams,
-  IupdateTradingAddresshandlerParams,
-} from "./types";
+  useAddTradingAddress,
+  useUpdateTradingAddress,
+} from "../../../../../../../api/hooks/mutations";
+import { RootState } from "../../../../../../../store/store";
+import { IupdateTradingAddresshandlerParams } from "./types";
+import { useTradingAddressEffects } from "./useTradingAddressEffects";
 
 export const useTradingAddressHandlers = () => {
-  const addTradingAddresshandler = ({
+  const {
+    app: { user },
+  } = useSelector<RootState, Pick<RootState, "app">>((state) => state);
+  const providerAddress = user?.provider?.addresses?.[0];
+  const [streetNumber, setStreetNumber] = useState<string>(
+    providerAddress?.streetNumber || ""
+  );
+  const [streetNumberError, setStreetNumberError] = useState<string>("");
+  const [streetName, setStreetName] = useState<string>(
+    providerAddress?.streetName || ""
+  );
+  const [streetNameError, setStreetNameError] = useState<string>("");
+  const [townName, setTownName] = useState<string>(providerAddress?.town || "");
+  const [townNameError, setTownNameError] = useState<string>("");
+  const [cityName, setCityName] = useState<string>(providerAddress?.city || "");
+  const [cityNameError, setCityNameError] = useState<string>("");
+  const [provinceName, setProvinceName] = useState<string>(
+    providerAddress?.province || ""
+  );
+  const [provinceNameError, setProvinceNameError] = useState<string>("");
+  const [areaCode, setAreaCode] = useState<string>(
+    providerAddress?.areaCode || ""
+  );
+  const [areaCodeError, setAreaCodeError] = useState<string>("");
+
+  /**
+   *
+   * Custom hooks
+   *
+   */
+  const {
     addTradingAddressTrigger,
-    areaCode,
-    cityName,
-    provinceName,
-    setAreaCodeError,
-    setCityNameError,
-    setProvinceNameError,
-    setStreetNameError,
-    setStreetNumberError,
-    setTownNameError,
-    streetName,
-    streetNumber,
-    townName,
-  }: IaddTradingAddresshandlerParams) => {
+    addTradingAddress,
+    addTradingAddressLoading,
+    addTradingAddressHasError,
+    addTradingAddressError,
+  } = useAddTradingAddress();
+
+  const {
+    updateTradingAddressTrigger,
+    updateTradingAddress,
+    updateTradingAddressLoading,
+    updateTradingAddressHasError,
+    updateTradingAddressError,
+  } = useUpdateTradingAddress();
+
+  const { successMessage } = useTradingAddressEffects({
+    setAreaCode,
+    setCityName,
+    setProvinceName,
+    setStreetName,
+    setStreetNumber,
+    setTownName,
+    addTradingAddress,
+    updateTradingAddress,
+  });
+
+  /**
+   *
+   * Handlers
+   *
+   */
+
+  const addTradingAddresshandler = () => {
     const abortAddProviderAddress =
       !streetNumber ||
       !streetName ||
@@ -70,20 +125,11 @@ export const useTradingAddressHandlers = () => {
     });
   };
 
-  const updateTradingAddresshandler = ({
-    addressId,
-    areaCode,
-    cityName,
-    provinceName,
-    streetName,
-    streetNumber,
-    townName,
-    updateTradingAddressTrigger,
-  }: IupdateTradingAddresshandlerParams) => {
-    if (!addressId) return;
+  const updateTradingAddresshandler = () => {
+    if (!providerAddress) return;
 
     updateTradingAddressTrigger({
-      addressId,
+      addressId: providerAddress.id,
       streetNumber,
       streetName,
       town: townName,
@@ -94,6 +140,32 @@ export const useTradingAddressHandlers = () => {
   };
 
   return {
+    hasAddress: !isEmpty(providerAddress),
+    streetNumber,
+    streetName,
+    townName,
+    cityName,
+    provinceName,
+    areaCode,
+    streetNumberError,
+    streetNameError,
+    townNameError,
+    cityNameError,
+    provinceNameError,
+    areaCodeError,
+    addTradingAddressLoading,
+    addTradingAddressHasError,
+    addTradingAddressError,
+    updateTradingAddressLoading,
+    updateTradingAddressHasError,
+    updateTradingAddressError,
+    successMessage,
+    setAreaCode,
+    setCityName,
+    setProvinceName,
+    setStreetName,
+    setStreetNumber,
+    setTownName,
     updateTradingAddresshandler,
     addTradingAddresshandler,
   };

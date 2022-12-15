@@ -1,61 +1,36 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { TouchableOpacity, View, Text, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {
-  useAddTradingInfo,
-  useUpdateTradingInfo,
-} from "../../../../../../api/hooks/mutations";
 import {
   GButton,
   GErrorMessage,
   GSuccessMessage,
   GTextInput,
 } from "../../../../../../components";
-import { ITradingInfoProps } from "./types";
-import { useTradingInfoEffects, useTradingInfoHandlers } from "./hooks";
+import { useTradingInfoHandlers } from "./hooks";
 
-export const TradingInfo: FC<ITradingInfoProps> = ({ provider }) => {
-  const [image, setImage] = useState<string>();
-  const [tradingName, setTradingName] = useState<string>(
-    provider?.tradingName || ""
-  );
-  const [tradingNameError, setTradingNameError] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>(provider?.phone || "");
-  const [phoneNumberError, setPhoneNumberError] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string>("");
-
-  /**
-   *
-   * Custom hooks
-   *
-   */
+export const TradingInfo: FC = () => {
   const {
-    addTradingInfoTrigger,
-    addTradingInfo,
+    hasProvider,
+    image,
+    tradingName,
+    tradingNameError,
+    phoneNumber,
+    phoneNumberError,
     addTradingInfoLoading,
     addTradingInfoHasError,
     addTradingInfoError,
-  } = useAddTradingInfo();
-
-  const {
-    updateTradingInfoTrigger,
-    updateTradingInfo,
     updateTradingInfoLoading,
     updateTradingInfoHasError,
     updateTradingInfoError,
-  } = useUpdateTradingInfo();
-
-  const { addTradingInfohandler, pickImageHandler, updateTradingInfohandler } =
-    useTradingInfoHandlers();
-
-  useTradingInfoEffects({
-    setPhoneNumber,
-    setSuccessMessage,
-    setTradingName,
     successMessage,
-    addTradingInfo,
-    updateTradingInfo,
-  });
+    setImage,
+    setTradingName,
+    setPhoneNumber,
+    pickImageHandler,
+    addTradingInfohandler,
+    updateTradingInfohandler,
+  } = useTradingInfoHandlers();
 
   return (
     <>
@@ -84,9 +59,7 @@ export const TradingInfo: FC<ITradingInfoProps> = ({ provider }) => {
         keyboardType="phone-pad"
       />
       <View style={{ marginTop: 20 }}>
-        <TouchableOpacity
-          onPress={async () => await pickImageHandler({ setImage })}
-        >
+        <TouchableOpacity onPress={async () => await pickImageHandler()}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons name="camera" size={22} color="gray" />
             <Text
@@ -111,24 +84,11 @@ export const TradingInfo: FC<ITradingInfoProps> = ({ provider }) => {
       </View>
 
       <GButton
-        label={provider ? "Update details" : "Add details"}
+        label={hasProvider ? "Update details" : "Add details"}
         onPress={
-          provider
-            ? () =>
-                updateTradingInfohandler({
-                  phoneNumber,
-                  tradingName,
-                  updateTradingInfoTrigger,
-                  providerId: provider?.id,
-                })
-            : () =>
-                addTradingInfohandler({
-                  addTradingInfoTrigger,
-                  phoneNumber,
-                  setPhoneNumberError,
-                  setTradingNameError,
-                  tradingName,
-                })
+          hasProvider
+            ? () => updateTradingInfohandler()
+            : () => addTradingInfohandler()
         }
         loading={updateTradingInfoLoading || addTradingInfoLoading}
       />

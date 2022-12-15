@@ -1,15 +1,27 @@
 import { Picker } from "@react-native-picker/picker";
+import { isEmpty } from "lodash";
 import React, { FC } from "react";
 import { PickerContainer, PickerStyled } from "./styles";
 import { IGBSelectProps } from "./types";
 
 export const GBSelect: FC<IGBSelectProps<unknown>> = ({
   items,
+  enabledItems = [],
   variant = "secondary",
   label = "Select",
   selectedValue = "",
   onValueChange = () => {},
 }) => {
+  const isItemEnabled = (value: unknown) => {
+    if (isEmpty(enabledItems)) return true;
+
+    if (enabledItems.find((enabledItem) => enabledItem.value === value)) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <PickerContainer>
       <PickerStyled
@@ -18,8 +30,14 @@ export const GBSelect: FC<IGBSelectProps<unknown>> = ({
         selectedValue={selectedValue}
       >
         <Picker.Item enabled={false} label={label} value="None" />
-        {items.map(({ label, value }) => (
-          <Picker.Item key={value as string} label={label} value={value} />
+        {items.map(({ value, label }) => (
+          <Picker.Item
+            key={value as string}
+            label={label}
+            value={value}
+            enabled={isItemEnabled(value)}
+            color={isItemEnabled(value) ? "none" : "lightgray"}
+          />
         ))}
       </PickerStyled>
     </PickerContainer>

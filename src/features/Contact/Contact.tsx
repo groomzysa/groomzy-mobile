@@ -1,4 +1,6 @@
+import { Icon, IconComponentProvider } from "@react-native-material/core";
 import React, { FC } from "react";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
   GButton,
   GErrorMessage,
@@ -6,11 +8,13 @@ import {
   GTextInput,
 } from "../../components";
 import {
+  FlexRowEndContainer,
   KeyboardAvoidingViewContainer,
   ScrollViewContainer,
 } from "../../utils/common/styles";
 import { useContactMailHandlers } from "./hooks";
-import { ContentContainer } from "./styles";
+import { ContentContainer, SocialContainer, SocialsContainer } from "./styles";
+import { TouchableOpacity } from "react-native";
 
 export const Contact: FC = () => {
   /**
@@ -39,6 +43,8 @@ export const Contact: FC = () => {
     subject,
     subjectError,
     successMessage,
+    visitFacebook,
+    visitInstagram,
   } = useContactMailHandlers();
 
   return (
@@ -100,6 +106,25 @@ export const Contact: FC = () => {
             onPress={contactMailHandler}
             loading={contactMailLoading}
           />
+
+          <SocialsContainer>
+            <SocialContainer>
+              <TouchableOpacity onPress={visitInstagram}>
+                {/* @ts-ignore */}
+                <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                  <Icon name="instagram" size={30} color={"red"} />
+                </IconComponentProvider>
+              </TouchableOpacity>
+            </SocialContainer>
+            <SocialContainer>
+              <TouchableOpacity onPress={visitFacebook}>
+                {/* @ts-ignore */}
+                <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                  <Icon name="facebook" size={30} color={"blue"} />
+                </IconComponentProvider>
+              </TouchableOpacity>
+            </SocialContainer>
+          </SocialsContainer>
         </ContentContainer>
       </ScrollViewContainer>
     </KeyboardAvoidingViewContainer>

@@ -1,21 +1,21 @@
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ADD_OPERATING_TIME_MESSAGE } from "../../../../../../../../../utils/messages";
 import { IuseAddTradingTimeEffectsparams } from "./types";
 
 export const useAddTradingTimeEffects = ({
-  closesPickerHandler,
-  opensPickerHandler,
   showCloses,
   showOpens,
   addOperatingTime,
-  setSuccessMessage,
-  successMessage,
   setCloses,
   setDay,
   setOpens,
+  setShowCloses,
+  setShowOpens,
   hideDialog,
 }: IuseAddTradingTimeEffectsparams) => {
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   useEffect(() => {
     if (!addOperatingTime) return;
 
@@ -45,7 +45,10 @@ export const useAddTradingTimeEffects = ({
         mode: "time",
         is24Hour: true,
         value: new Date(),
-        onChange: opensPickerHandler,
+        onChange: (event, date) => {
+          setOpens(`${date?.getHours()}:${date?.getMinutes()} hrz`);
+          setShowOpens(false);
+        },
       });
     } else {
       DateTimePickerAndroid.dismiss("time");
@@ -58,10 +61,15 @@ export const useAddTradingTimeEffects = ({
         mode: "time",
         is24Hour: true,
         value: new Date(),
-        onChange: closesPickerHandler,
+        onChange: (event, date) => {
+          setCloses(`${date?.getHours()}:${date?.getMinutes()} hrz`);
+          setShowCloses(false);
+        },
       });
     } else {
       DateTimePickerAndroid.dismiss("time");
     }
   }, [showCloses]);
+
+  return { successMessage };
 };

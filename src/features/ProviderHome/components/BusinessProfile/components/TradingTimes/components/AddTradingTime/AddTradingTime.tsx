@@ -1,8 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { TouchableOpacity, Text } from "react-native";
 import Dialog from "react-native-dialog";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { useSelector } from "react-redux";
 import { DayType } from "../../../../../../../../api/graphql/api.schema";
 import {
   GBSelect,
@@ -10,7 +9,6 @@ import {
   GErrorMessage,
   GSuccessMessage,
 } from "../../../../../../../../components";
-import { RootState } from "../../../../../../../../store/store";
 import {
   Flex1,
   FlexColumContainer,
@@ -18,7 +16,8 @@ import {
   FlexRowEndContainer,
 } from "../../../../../../../../utils/common/styles";
 import { Space } from "../../../../styles";
-import { useAddTradingTimeEffects, useAddTradingTimeHandlers } from "./hooks";
+import { DAYS } from "../../constants";
+import { useAddTradingTimeHandlers } from "./hooks";
 import { ActionButtonContainer, ErrorText } from "./styles";
 import { IAddTradingTimeProps } from "./types";
 
@@ -26,53 +25,28 @@ export const AddTradingTime: FC<IAddTradingTimeProps> = ({
   visible,
   hideDialog,
 }) => {
-  const {
-    homeProvider: { dayOptions },
-  } = useSelector<RootState, Pick<RootState, "homeProvider">>((state) => state);
-
-  const [day, setDay] = useState<DayType>();
-  const [dayError, setDayError] = useState<string>("");
-  const [opens, setOpens] = useState<string>("");
-  const [opensError, setOpensError] = useState<string>("");
-  const [closes, setCloses] = useState<string>("");
-  const [closesError, setClosesError] = useState<string>("");
-  const [showOpens, setShowOpens] = useState<boolean>(false);
-  const [showCloses, setShowCloses] = useState<boolean>(false);
-  const [successMessage, setSuccessMessage] = useState<string>("");
-
   /**
    *
    * Custom hooks
    *
    */
   const {
-    addOperatingTime,
+    dayOptions,
+    closes,
+    closesError,
+    day,
+    dayError,
+    opens,
+    opensError,
+    setDay,
+    setShowCloses,
+    setShowOpens,
+    successMessage,
     addOperatingTimeError,
     addOperatingTimeHasError,
     addOperatingTimeLoading,
     addOperatingTimeHandler,
-    closesPickerHandler,
-    opensPickerHandler,
-  } = useAddTradingTimeHandlers({
-    setShowCloses,
-    setShowOpens,
-    setCloses,
-    setOpens,
-  });
-
-  useAddTradingTimeEffects({
-    addOperatingTime,
-    closesPickerHandler,
-    opensPickerHandler,
-    showCloses,
-    showOpens,
-    hideDialog,
-    setCloses,
-    setDay,
-    setOpens,
-    setSuccessMessage,
-    successMessage,
-  });
+  } = useAddTradingTimeHandlers(hideDialog);
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -82,7 +56,8 @@ export const AddTradingTime: FC<IAddTradingTimeProps> = ({
         <GErrorMessage message={addOperatingTimeError} />
       )}
       <GBSelect
-        items={dayOptions}
+        items={DAYS}
+        enabledItems={dayOptions}
         label="Select day"
         onValueChange={(itemValue) => setDay(itemValue as DayType)}
         selectedValue={day}
@@ -130,17 +105,7 @@ export const AddTradingTime: FC<IAddTradingTimeProps> = ({
             label="Add"
             testID="addTradingTimeButton"
             onPress={() => {
-              addOperatingTimeHandler({
-                closes,
-                closesError,
-                day,
-                dayError,
-                opens,
-                opensError,
-                setClosesError,
-                setDayError,
-                setOpensError,
-              });
+              addOperatingTimeHandler();
             }}
             loading={addOperatingTimeLoading}
           />

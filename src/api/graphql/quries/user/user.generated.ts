@@ -15,7 +15,7 @@ import { api } from '../../..';
 export type UserQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type UserQueryResult = { __typename?: 'Query', user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email?: string | null, role?: Types.UserRole | null, state?: Types.UserStatus | null } | null };
+export type UserQueryResult = { __typename?: 'Query', user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email?: string | null, role?: Types.UserRole | null, state?: Types.UserStatus | null, address?: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } | null, provider?: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, addresses?: Array<{ __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null }> | null } | null } | null };
 
 
 export const UserDocument = `
@@ -27,6 +27,29 @@ export const UserDocument = `
     email
     role
     state
+    address {
+      id
+      streetNumber
+      streetName
+      town
+      city
+      province
+      areaCode
+    }
+    provider {
+      id
+      tradingName
+      phone
+      addresses {
+        id
+        streetNumber
+        streetName
+        town
+        city
+        province
+        areaCode
+      }
+    }
   }
 }
     `;

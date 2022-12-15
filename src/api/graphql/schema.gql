@@ -75,6 +75,7 @@ type Message {
 }
 
 type Mutation {
+  addAccountAddress(streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!): Address!
   addOperatingTime(day: DayType!, opens: String!, closes: String!): OperatingTime!
   addService(name: String!, description: String!, price: Float!, duration: Float!, durationUnit: DurationUnitType!, inHouse: Boolean!, category: CategoryType!): Service!
   addStaff(firstName: String!, lastName: String!): Staff!
@@ -86,6 +87,8 @@ type Mutation {
   deleteService(serviceId: Int!): Service!
   deleteStaff(staffId: Int!): Staff!
   signIn(email: String!, password: String!, role: UserRole!): Token!
+  updateAccount(firstName: String, lastName: String, email: String, password: String, userImage: File): User!
+  updateAccountAddress(addressId: Int!, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String): Address!
   updateOperatingTime(operatingTimeId: Int!, day: DayType, opens: String, closes: String): OperatingTime!
   updateService(serviceId: Int!, name: String, description: String, duration: Float, durationUnit: DurationUnitType, inHouse: Boolean, price: Float, category: CategoryType): Service!
   updateStaff(staffId: Int!, firstName: String, lastName: String): Staff!

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ADD_PROVIDER_TRADING_ADDRESS_MESSAGE,
   UPDATE_PROVIDER_TRADING_ADDRESS_MESSAGE,
@@ -10,16 +10,17 @@ export const useTradingAddressEffects = ({
   setCityName,
   setStreetName,
   setStreetNumber,
-  setSuccessMessage,
+  setProvinceName,
   setTownName,
-  successMessage,
   addTradingAddress,
   updateTradingAddress,
 }: IuseTradingAddressEffectsParams) => {
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   useEffect(() => {
     setTimeout(() => {
       setSuccessMessage("");
-    }, 5000);
+    }, 3000);
   }, [successMessage]);
 
   useEffect(() => {
@@ -29,12 +30,12 @@ export const useTradingAddressEffects = ({
 
     // After added provider address successfully
     // Reset state
-    setStreetNumber("");
-    setStreetName("");
-    setTownName("");
-    setCityName("");
-    setTownName("");
-    setAreaCode("");
+    setStreetNumber(addTradingAddress.streetNumber!);
+    setStreetName(addTradingAddress.streetName!);
+    setTownName(addTradingAddress.town!);
+    setCityName(addTradingAddress.city!);
+    setProvinceName(addTradingAddress.province!);
+    setAreaCode(addTradingAddress.areaCode!);
   }, [addTradingAddress]);
 
   useEffect(() => {
@@ -44,11 +45,13 @@ export const useTradingAddressEffects = ({
 
     // After updated provider details successfully
     // Reset state
-    setStreetNumber("");
-    setStreetName("");
-    setTownName("");
-    setCityName("");
-    setTownName("");
-    setAreaCode("");
+    setStreetNumber(updateTradingAddress.streetNumber!);
+    setStreetName(updateTradingAddress.streetName!);
+    setTownName(updateTradingAddress.town!);
+    setCityName(updateTradingAddress.city!);
+    setProvinceName(updateTradingAddress.province!);
+    setAreaCode(updateTradingAddress.areaCode!);
   }, [updateTradingAddress]);
+
+  return { successMessage };
 };

@@ -1,73 +1,54 @@
-import React, { FC, useState } from "react";
-import {
-  useAddTradingAddress,
-  useUpdateTradingAddress,
-} from "../../../../../../api/hooks/mutations";
+import React, { FC } from "react";
 import {
   GButton,
   GErrorMessage,
   GSuccessMessage,
   GTextInput,
-  GTitle,
 } from "../../../../../../components";
-import { ITradingAddressProps } from "./types";
 import {
   Flex1,
   Flex2,
   FlexRowContainer,
 } from "../../../../../../utils/common/styles";
-import { useTradingAddressEffects, useTradingAddressHandlers } from "./hooks";
+import { useTradingAddressHandlers } from "./hooks";
 
-export const TradingAddress: FC<ITradingAddressProps> = ({ address }) => {
-  const [streetNumber, setStreetNumber] = useState<string>("");
-  const [streetNumberError, setStreetNumberError] = useState<string>("");
-  const [streetName, setStreetName] = useState<string>("");
-  const [streetNameError, setStreetNameError] = useState<string>("");
-  const [townName, setTownName] = useState<string>("");
-  const [townNameError, setTownNameError] = useState<string>("");
-  const [cityName, setCityName] = useState<string>("");
-  const [cityNameError, setCityNameError] = useState<string>("");
-  const [provinceName, setProvinceName] = useState<string>("");
-  const [provinceNameError, setProvinceNameError] = useState<string>("");
-  const [areaCode, setAreaCode] = useState<string>("");
-  const [areaCodeError, setAreaCodeError] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string>("");
-
+export const TradingAddress: FC = () => {
   /**
    *
    * Custom hooks
    *
    */
+
   const {
-    addTradingAddressTrigger,
-    addTradingAddress,
-    addTradingAddressLoading,
-    addTradingAddressHasError,
+    hasAddress,
     addTradingAddressError,
-  } = useAddTradingAddress();
-
-  const {
-    updateTradingAddressTrigger,
-    updateTradingAddress,
-    updateTradingAddressLoading,
-    updateTradingAddressHasError,
+    addTradingAddressHasError,
+    addTradingAddressLoading,
+    addTradingAddresshandler,
+    areaCode,
+    areaCodeError,
+    cityName,
+    cityNameError,
+    provinceName,
+    provinceNameError,
+    streetName,
+    streetNameError,
+    streetNumber,
+    streetNumberError,
+    successMessage,
+    townName,
+    townNameError,
     updateTradingAddressError,
-  } = useUpdateTradingAddress();
-
-  const { addTradingAddresshandler, updateTradingAddresshandler } =
-    useTradingAddressHandlers();
-
-  useTradingAddressEffects({
+    updateTradingAddressHasError,
+    updateTradingAddressLoading,
     setAreaCode,
     setCityName,
+    setProvinceName,
     setStreetName,
     setStreetNumber,
-    setSuccessMessage,
     setTownName,
-    successMessage,
-    addTradingAddress,
-    updateTradingAddress,
-  });
+    updateTradingAddresshandler,
+  } = useTradingAddressHandlers();
 
   return (
     <>
@@ -84,7 +65,7 @@ export const TradingAddress: FC<ITradingAddressProps> = ({ address }) => {
           <GTextInput
             testID="streetNumber"
             label="Str No."
-            value={streetNumber || address?.streetNumber || ""}
+            value={streetNumber}
             onTextChange={setStreetNumber}
             errorMessage={streetNumberError}
             keyboardType="numeric"
@@ -94,7 +75,7 @@ export const TradingAddress: FC<ITradingAddressProps> = ({ address }) => {
           <GTextInput
             testID="streetName"
             label="Street name"
-            value={streetName || address?.streetName || ""}
+            value={streetName}
             onTextChange={setStreetName}
             errorMessage={streetNameError}
           />
@@ -104,14 +85,14 @@ export const TradingAddress: FC<ITradingAddressProps> = ({ address }) => {
       <GTextInput
         testID="townName"
         label="Town/Surbub name"
-        value={townName || address?.town || ""}
+        value={townName}
         onTextChange={setTownName}
         errorMessage={townNameError}
       />
       <GTextInput
         testID="cityName"
         label="City name"
-        value={cityName || address?.city || ""}
+        value={cityName}
         onTextChange={setCityName}
         errorMessage={cityNameError}
       />
@@ -120,7 +101,7 @@ export const TradingAddress: FC<ITradingAddressProps> = ({ address }) => {
           <GTextInput
             testID="provinceName"
             label="Province name"
-            value={provinceName || address?.province || ""}
+            value={provinceName}
             onTextChange={setProvinceName}
             errorMessage={provinceNameError}
           />
@@ -129,7 +110,7 @@ export const TradingAddress: FC<ITradingAddressProps> = ({ address }) => {
           <GTextInput
             testID="areaCode"
             label="Code"
-            value={areaCode || address?.areaCode || ""}
+            value={areaCode}
             onTextChange={setAreaCode}
             errorMessage={areaCodeError}
             keyboardType="numeric"
@@ -138,36 +119,11 @@ export const TradingAddress: FC<ITradingAddressProps> = ({ address }) => {
       </FlexRowContainer>
 
       <GButton
-        label={address ? "Update address" : "Add address"}
+        label={hasAddress ? "Update address" : "Add address"}
         onPress={
-          address
-            ? () =>
-                updateTradingAddresshandler({
-                  areaCode,
-                  cityName,
-                  provinceName,
-                  streetName,
-                  streetNumber,
-                  townName,
-                  updateTradingAddressTrigger,
-                  addressId: address?.id,
-                })
-            : () =>
-                addTradingAddresshandler({
-                  addTradingAddressTrigger,
-                  areaCode,
-                  cityName,
-                  provinceName,
-                  setAreaCodeError,
-                  setCityNameError,
-                  setProvinceNameError,
-                  setStreetNameError,
-                  setStreetNumberError,
-                  setTownNameError,
-                  streetName,
-                  streetNumber,
-                  townName,
-                })
+          hasAddress
+            ? () => updateTradingAddresshandler()
+            : () => addTradingAddresshandler()
         }
         loading={updateTradingAddressLoading || addTradingAddressLoading}
       />

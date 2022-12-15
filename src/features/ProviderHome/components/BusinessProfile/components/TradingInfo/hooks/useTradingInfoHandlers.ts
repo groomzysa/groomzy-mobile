@@ -1,12 +1,61 @@
 import ImagePicker from "expo-image-picker";
+import { isEmpty } from "lodash";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
-  IaddTradingInfohandlerParams,
-  IpickImageHandlerParams,
-  IupdateTradingInfohandlerParams,
-} from "./types";
+  useAddTradingInfo,
+  useUpdateTradingInfo,
+} from "../../../../../../../api/hooks/mutations";
+import { RootState } from "../../../../../../../store/store";
+import { useTradingInfoEffects } from "./useTradingInfoEffects";
 
 export const useTradingInfoHandlers = () => {
-  const pickImageHandler = async ({ setImage }: IpickImageHandlerParams) => {
+  const {
+    app: { user },
+  } = useSelector<RootState, Pick<RootState, "app">>((state) => state);
+  const provider = user?.provider;
+  const [image, setImage] = useState<string>();
+  const [tradingName, setTradingName] = useState<string>(
+    provider?.tradingName || ""
+  );
+  const [tradingNameError, setTradingNameError] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>(provider?.phone || "");
+  const [phoneNumberError, setPhoneNumberError] = useState<string>("");
+
+  /**
+   *
+   * Custom hooks
+   *
+   */
+  const {
+    addTradingInfoTrigger,
+    addTradingInfo,
+    addTradingInfoLoading,
+    addTradingInfoHasError,
+    addTradingInfoError,
+  } = useAddTradingInfo();
+
+  const {
+    updateTradingInfoTrigger,
+    updateTradingInfo,
+    updateTradingInfoLoading,
+    updateTradingInfoHasError,
+    updateTradingInfoError,
+  } = useUpdateTradingInfo();
+
+  const { successMessage } = useTradingInfoEffects({
+    setPhoneNumber,
+    setTradingName,
+    addTradingInfo,
+    updateTradingInfo,
+  });
+
+  /**
+   *
+   * Handlers
+   *
+   */
+  const pickImageHandler = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -20,13 +69,7 @@ export const useTradingInfoHandlers = () => {
     }
   };
 
-  const addTradingInfohandler = ({
-    tradingName,
-    phoneNumber,
-    setPhoneNumberError,
-    setTradingNameError,
-    addTradingInfoTrigger,
-  }: IaddTradingInfohandlerParams) => {
+  const addTradingInfohandler = () => {
     const abortAddProvider = !tradingName || !phoneNumber;
     if (!tradingName) {
       setTradingNameError("Trading name is required!");
@@ -47,22 +90,33 @@ export const useTradingInfoHandlers = () => {
     });
   };
 
-  const updateTradingInfohandler = ({
-    phoneNumber,
-    tradingName,
-    providerId,
-    updateTradingInfoTrigger,
-  }: IupdateTradingInfohandlerParams) => {
-    if (!providerId) return;
+  const updateTradingInfohandler = () => {
+    if (!provider) return;
 
     updateTradingInfoTrigger({
-      providerId,
+      providerId: provider.id,
       tradingName,
       phone: phoneNumber,
     });
   };
 
   return {
+    hasProvider: !isEmpty(provider),
+    image,
+    tradingName,
+    tradingNameError,
+    phoneNumber,
+    phoneNumberError,
+    addTradingInfoLoading,
+    addTradingInfoHasError,
+    addTradingInfoError,
+    updateTradingInfoLoading,
+    updateTradingInfoHasError,
+    updateTradingInfoError,
+    successMessage,
+    setImage,
+    setTradingName,
+    setPhoneNumber,
     pickImageHandler,
     addTradingInfohandler,
     updateTradingInfohandler,

@@ -87,6 +87,7 @@ export type Message = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addAccountAddress: Address;
   addOperatingTime: OperatingTime;
   addService: Service;
   addStaff: Staff;
@@ -98,11 +99,23 @@ export type Mutation = {
   deleteService: Service;
   deleteStaff: Staff;
   signIn: Token;
+  updateAccount: User;
+  updateAccountAddress: Address;
   updateOperatingTime: OperatingTime;
   updateService: Service;
   updateStaff: Staff;
   updateTradingAddress: Address;
   updateTradingInfo: Provider;
+};
+
+
+export type MutationAddAccountAddressArgs = {
+  areaCode: Scalars['String'];
+  city: Scalars['String'];
+  province: Scalars['String'];
+  streetName: Scalars['String'];
+  streetNumber: Scalars['String'];
+  town: Scalars['String'];
 };
 
 
@@ -185,6 +198,26 @@ export type MutationSignInArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   role: UserRole;
+};
+
+
+export type MutationUpdateAccountArgs = {
+  email?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  userImage?: InputMaybe<Scalars['File']>;
+};
+
+
+export type MutationUpdateAccountAddressArgs = {
+  addressId: Scalars['Int'];
+  areaCode?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  province?: InputMaybe<Scalars['String']>;
+  streetName?: InputMaybe<Scalars['String']>;
+  streetNumber?: InputMaybe<Scalars['String']>;
+  town?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -448,6 +481,18 @@ export type UpdateServiceMutationVariables = Exact<{
 
 export type UpdateServiceMutation = { __typename?: 'Mutation', updateService: { __typename?: 'Service', id: number, name?: string | null, description?: string | null, price?: number | null, duration?: number | null, durationUnit?: DurationUnitType | null, inHouse?: boolean | null, category?: CategoryType | null } };
 
+export type AddAccountAddressMutationVariables = Exact<{
+  streetNumber: Scalars['String'];
+  streetName: Scalars['String'];
+  town: Scalars['String'];
+  city: Scalars['String'];
+  province: Scalars['String'];
+  areaCode: Scalars['String'];
+}>;
+
+
+export type AddAccountAddressMutation = { __typename?: 'Mutation', addAccountAddress: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } };
+
 export type AddUserMutationVariables = Exact<{
   firstName: Scalars['String'];
   lastName: Scalars['String'];
@@ -468,6 +513,30 @@ export type SignInMutationVariables = Exact<{
 
 
 export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'Token', token: string } };
+
+export type UpdateAccountMutationVariables = Exact<{
+  firstName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  userImage?: InputMaybe<Scalars['File']>;
+}>;
+
+
+export type UpdateAccountMutation = { __typename?: 'Mutation', updateAccount: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email?: string | null, role?: UserRole | null, state?: UserStatus | null, userImageUrl?: string | null } };
+
+export type UpdateAccountAddressMutationVariables = Exact<{
+  addressId: Scalars['Int'];
+  streetNumber?: InputMaybe<Scalars['String']>;
+  streetName?: InputMaybe<Scalars['String']>;
+  town?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  province?: InputMaybe<Scalars['String']>;
+  areaCode?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateAccountAddressMutation = { __typename?: 'Mutation', updateAccountAddress: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } };
 
 export type OperatingTimesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -492,4 +561,4 @@ export type ServicesQuery = { __typename?: 'Query', services: Array<{ __typename
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email?: string | null, role?: UserRole | null, state?: UserStatus | null } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email?: string | null, role?: UserRole | null, state?: UserStatus | null, address?: { __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null } | null, provider?: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, addresses?: Array<{ __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null }> | null } | null } | null };

@@ -11,6 +11,16 @@ export const ContentContainer = styled(View)`
     theme.spacing.container.xxsmall}px;
 `;
 
+export const SocialsContainer = styled(View)`
+  flex-direction: row;
+  justify-content: center;
+  margin: ${({ theme }: { theme: ITheme }) => theme.spacing.container.small}px;
+`;
+
+export const SocialContainer = styled(View)`
+  margin: ${({ theme }: { theme: ITheme }) => theme.spacing.container.xsmall}px;
+`;
+
 export const TextStyled = styled(Text)`
   padding: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xxsmall}px;

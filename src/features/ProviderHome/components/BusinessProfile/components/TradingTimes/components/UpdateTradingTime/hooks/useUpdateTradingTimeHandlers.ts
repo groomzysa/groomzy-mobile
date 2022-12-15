@@ -1,16 +1,33 @@
-import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { DayType } from "../../../../../../../../../api/graphql/api.schema";
 import { useUpdateOperatingTime } from "../../../../../../../../../api/hooks/mutations";
-import {
-  IupdateOperatingTimeHandlerParams,
-  IuseUpdateTradingTimeHandlersParams,
-} from "./types";
+import { RootState } from "../../../../../../../../../store/store";
+import { useUpdateTradingTimeEffects } from "./useUpdateTradingTimeEffects";
 
-export const useUpdateTradingTimeHandlers = ({
-  setShowCloses,
-  setShowOpens,
-  setCloses,
-  setOpens,
-}: IuseUpdateTradingTimeHandlersParams) => {
+export const useUpdateTradingTimeHandlers = (hideDialog: () => void) => {
+  /**
+   *
+   * States
+   *
+   */
+  const {
+    homeProvider: { dayOptions, operatingTime },
+  } = useSelector<RootState, Pick<RootState, "homeProvider">>((state) => state);
+
+  const [day, setDay] = useState<DayType | undefined>(
+    operatingTime?.day as DayType
+  );
+  const [opens, setOpens] = useState<string>(operatingTime?.opens as string);
+  const [closes, setCloses] = useState<string>(operatingTime?.closes as string);
+  const [showOpens, setShowOpens] = useState<boolean>(false);
+  const [showCloses, setShowCloses] = useState<boolean>(false);
+
+  /**
+   *
+   * Custom hooks
+   *
+   */
   const {
     updateOperatingTime,
     updateOperatingTimeError,
@@ -19,30 +36,28 @@ export const useUpdateTradingTimeHandlers = ({
     updateOperatingTimeTrigger,
   } = useUpdateOperatingTime();
 
-  const opensPickerHandler = (
-    event: DateTimePickerEvent,
-    date?: Date | undefined
-  ) => {
-    setOpens(`${date?.getHours()}:${date?.getMinutes()} hrz`);
-    setShowOpens(false);
-  };
+  const { successMessage } = useUpdateTradingTimeEffects({
+    hideDialog,
+    setCloses,
+    setDay,
+    setOpens,
+    setShowCloses,
+    setShowOpens,
+    showCloses,
+    showOpens,
+    updateOperatingTime,
+  });
 
-  const closesPickerHandler = (
-    event: DateTimePickerEvent,
-    date?: Date | undefined
-  ) => {
-    setCloses(`${date?.getHours()}:${date?.getMinutes()} hrz`);
-    setShowCloses(false);
-  };
+  /**
+   *
+   * Handlers
+   *
+   */
+  const updateOperatingTimeHandler = () => {
+    if (!operatingTime) return;
 
-  const updateOperatingTimeHandler = ({
-    operatingTimeId,
-    closes,
-    day,
-    opens,
-  }: IupdateOperatingTimeHandlerParams) => {
     updateOperatingTimeTrigger({
-      operatingTimeId,
+      operatingTimeId: operatingTime.id,
       day,
       opens,
       closes,
@@ -50,12 +65,18 @@ export const useUpdateTradingTimeHandlers = ({
   };
 
   return {
-    updateOperatingTime,
+    operatingTime,
+    dayOptions,
+    day,
+    opens,
+    closes,
+    successMessage,
+    setShowOpens,
+    setShowCloses,
+    setDay,
     updateOperatingTimeError,
     updateOperatingTimeHasError,
     updateOperatingTimeLoading,
-    opensPickerHandler,
-    closesPickerHandler,
     updateOperatingTimeHandler,
   };
 };

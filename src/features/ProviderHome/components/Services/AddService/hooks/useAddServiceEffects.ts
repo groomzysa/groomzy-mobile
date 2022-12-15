@@ -1,19 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ADD_SERVICE_MESSAGE } from "../../../../../../utils/messages";
 import { IuseAddServiceEffectsParams } from "./types";
 
 export const useAddServiceEffects = ({
   addService,
-  successMessage,
   setCategory,
   setDescription,
   setDuration,
   setDurationUnit,
   setName,
   setPrice,
-  setSuccessMessage,
   hideDialog,
 }: IuseAddServiceEffectsParams) => {
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   useEffect(() => {
     if (!addService) return;
 
@@ -39,4 +39,6 @@ export const useAddServiceEffects = ({
       hideDialog();
     }, 3000);
   }, [successMessage]);
+
+  return { successMessage };
 };

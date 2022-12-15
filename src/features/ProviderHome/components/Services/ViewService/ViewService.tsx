@@ -1,21 +1,20 @@
 import React, { FC } from "react";
 import Dialog from "react-native-dialog";
+import { useSelector } from "react-redux";
 import {
   CategoryType,
   DurationUnitType,
 } from "../../../../../api/graphql/api.schema";
 import { GButton, GRadioButton, GTextInput } from "../../../../../components";
+import { RootState } from "../../../../../store/store";
 import { FlexRowEndContainer } from "../../../../../utils/common/styles";
 import { ActionButtonContainer, SubTitleText } from "./styles";
 import { IViewServiceProps } from "./types";
 
-export const ViewService: FC<IViewServiceProps> = ({
-  service,
-  visible,
-  hideDialog,
-}) => {
-  const { name, description, price, duration, durationUnit, category } =
-    service;
+export const ViewService: FC<IViewServiceProps> = ({ visible, hideDialog }) => {
+  const {
+    homeProvider: { service },
+  } = useSelector<RootState, Pick<RootState, "homeProvider">>((state) => state);
 
   return (
     <Dialog.Container visible={visible} onBackdropPress={hideDialog}>
@@ -23,61 +22,61 @@ export const ViewService: FC<IViewServiceProps> = ({
       <GTextInput
         testID="serviceName"
         label="Name"
-        value={name || ""}
+        value={service?.name || ""}
         disabled
       />
       <GTextInput
         testID="serviceDescription"
         label="Description"
-        value={description || ""}
+        value={service?.description || ""}
         multiline
         disabled
       />
       <GTextInput
         testID="servicePrice"
         label="Price"
-        value={price?.toString() || ""}
+        value={service?.price?.toString() || ""}
         disabled
       />
       <GTextInput
         testID="serviceDuration"
         label="Duration"
-        value={duration?.toString() || ""}
+        value={service?.duration?.toString() || ""}
         disabled
       />
       <SubTitleText>Duration unit</SubTitleText>
-      {durationUnit === DurationUnitType.Min && (
+      {service?.durationUnit === DurationUnitType.Min && (
         <GRadioButton label="MIN" status="checked" disabled />
       )}
-      {durationUnit === DurationUnitType.Hrs && (
+      {service?.durationUnit === DurationUnitType.Hrs && (
         <GRadioButton label="HRS" status="checked" disabled />
       )}
       <SubTitleText>Category</SubTitleText>
-      {category === CategoryType.Barber && (
+      {service?.category === CategoryType.Barber && (
         <GRadioButton label={CategoryType.Barber} status="checked" disabled />
       )}
-      {category === CategoryType.Hairdresser && (
+      {service?.category === CategoryType.Hairdresser && (
         <GRadioButton
           label={CategoryType.Hairdresser}
           status="checked"
           disabled
         />
       )}
-      {category === CategoryType.MakeupArtist && (
+      {service?.category === CategoryType.MakeupArtist && (
         <GRadioButton
           label={CategoryType.MakeupArtist.toString().replace("_", " ")}
           status="checked"
           disabled
         />
       )}
-      {category === CategoryType.NailTechnician && (
+      {service?.category === CategoryType.NailTechnician && (
         <GRadioButton
           label={CategoryType.NailTechnician.toString().replace("_", " ")}
           status="checked"
           disabled
         />
       )}
-      {category === CategoryType.Spa && (
+      {service?.category === CategoryType.Spa && (
         <GRadioButton label={CategoryType.Spa} status="checked" disabled />
       )}
       <FlexRowEndContainer>

@@ -16,7 +16,7 @@ export interface IHomeSliceState {
  *
  */
 
-export interface IHomeSliceSetProviderAction {
+export interface ISetProviderAction {
   type: string;
   payload: {
     provider?: Provider;
