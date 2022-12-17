@@ -61,6 +61,7 @@ export const AppNavigator: FC = () => {
             }}
           />
         )}
+
         {user && user.role === UserRole.Provider && (
           <Drawer.Screen
             name="Home"
@@ -72,6 +73,7 @@ export const AppNavigator: FC = () => {
             }}
           />
         )}
+
         <Drawer.Screen
           name="About"
           component={About}
@@ -85,6 +87,7 @@ export const AppNavigator: FC = () => {
             ),
           }}
         />
+
         <Drawer.Screen
           name="Contact"
           component={Contact}
@@ -115,9 +118,11 @@ export const AppNavigator: FC = () => {
               drawerIcon: ({ color }) => (
                 <Ionicons name="log-in-outline" size={22} color={color} />
               ),
+              headerShown: !hideDrawerHeader,
             }}
           />
         )}
+
         {!user && (
           <Drawer.Screen
             name="Sign up"
@@ -129,6 +134,7 @@ export const AppNavigator: FC = () => {
             }}
           />
         )}
+
         <Drawer.Screen
           name="Ts and Cs"
           component={TsAndCs}

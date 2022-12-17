@@ -8,7 +8,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { removeToken } from "../../../../api/helpers";
 import { setToken, setUser } from "../../../../store/slices/appSlice/appSlice";
-import { IAppSliceState } from "../../../../store/slices/appSlice/types";
 import { RootState } from "../../../../store/store";
 import {
   AppDrawerHeaderImage,

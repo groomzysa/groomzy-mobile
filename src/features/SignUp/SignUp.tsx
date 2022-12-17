@@ -7,7 +7,7 @@ import {
   GTextInput,
 } from "../../components";
 import { TextStyled, ContentContainer } from "./styles";
-import { SignUpProps } from "./types";
+import { ISignUpProps } from "./types";
 import { SIGN_UP_MESSAGE } from "../../utils/messages";
 import {
   Flex1,
@@ -17,7 +17,7 @@ import {
 } from "../../utils/common/styles";
 import { useSignUpEffects, useSignUpHandlers } from "./hooks";
 
-export const SignUp: FC<SignUpProps> = ({ navigation }) => {
+export const SignUp: FC<ISignUpProps> = ({ navigation }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [firstNameError, setFirstNameError] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");

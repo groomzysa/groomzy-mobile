@@ -9,4 +9,6 @@ export type TRootAppDrawerParamList = {
   "Sign up": undefined;
   "Sign out": undefined;
   "Ts and Cs": undefined;
+  "Request password reset": undefined;
+  "Reset password": undefined;
 };

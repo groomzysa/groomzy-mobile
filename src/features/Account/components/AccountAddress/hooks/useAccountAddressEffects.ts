@@ -18,6 +18,8 @@ export const useAccountAddressEffects = ({
   const [successMessage, setSuccessMessage] = useState<string>("");
 
   useEffect(() => {
+    if (!successMessage) return;
+
     setTimeout(() => {
       setSuccessMessage("");
     }, 3000);

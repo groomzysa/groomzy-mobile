@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-import { DayType } from "../../../../../../../../api/graphql/api.schema";
 import {
   Flex1,
   FlexRowContainer,

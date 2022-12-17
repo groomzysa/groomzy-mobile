@@ -18,6 +18,8 @@ export const useTradingAddressEffects = ({
   const [successMessage, setSuccessMessage] = useState<string>("");
 
   useEffect(() => {
+    if (!successMessage) return;
+
     setTimeout(() => {
       setSuccessMessage("");
     }, 3000);

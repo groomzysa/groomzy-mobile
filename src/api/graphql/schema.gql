@@ -86,6 +86,8 @@ type Mutation {
   deleteOperatingTime(operatingTimeId: Int!): OperatingTime!
   deleteService(serviceId: Int!): Service!
   deleteStaff(staffId: Int!): Staff!
+  requestPasswordReset(email: String!, role: UserRole!): Message!
+  resetPassword(passwordResetOTP: String!, password: String!): Message!
   signIn(email: String!, password: String!, role: UserRole!): Token!
   updateAccount(firstName: String, lastName: String, email: String, password: String, userImage: File): User!
   updateAccountAddress(addressId: Int!, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String): Address!

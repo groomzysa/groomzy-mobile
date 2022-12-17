@@ -98,6 +98,8 @@ export type Mutation = {
   deleteOperatingTime: OperatingTime;
   deleteService: Service;
   deleteStaff: Staff;
+  requestPasswordReset: Message;
+  resetPassword: Message;
   signIn: Token;
   updateAccount: User;
   updateAccountAddress: Address;
@@ -191,6 +193,18 @@ export type MutationDeleteServiceArgs = {
 
 export type MutationDeleteStaffArgs = {
   staffId: Scalars['Int'];
+};
+
+
+export type MutationRequestPasswordResetArgs = {
+  email: Scalars['String'];
+  role: UserRole;
+};
+
+
+export type MutationResetPasswordArgs = {
+  password: Scalars['String'];
+  passwordResetOTP: Scalars['String'];
 };
 
 
@@ -504,6 +518,22 @@ export type AddUserMutationVariables = Exact<{
 
 
 export type AddUserMutation = { __typename?: 'Mutation', addUser: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email?: string | null, role?: UserRole | null, state?: UserStatus | null, userImageUrl?: string | null } };
+
+export type RequestPasswordResetMutationVariables = Exact<{
+  email: Scalars['String'];
+  role: UserRole;
+}>;
+
+
+export type RequestPasswordResetMutation = { __typename?: 'Mutation', requestPasswordReset: { __typename?: 'Message', message: string } };
+
+export type ResetPasswordMutationVariables = Exact<{
+  passwordResetOTP: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'Message', message: string } };
 
 export type SignInMutationVariables = Exact<{
   email: Scalars['String'];

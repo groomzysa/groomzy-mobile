@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IuseSignUpEffectsParams } from "./types";
+import { IuseSignUpEffects } from "./types";
 
 export const useSignUpEffects = ({
   addUser,
@@ -9,7 +9,7 @@ export const useSignUpEffects = ({
   setIsProvider,
   setLastName,
   setPassword,
-}: IuseSignUpEffectsParams) => {
+}: IuseSignUpEffects) => {
   useEffect(() => {
     if (!addUser) return;
 

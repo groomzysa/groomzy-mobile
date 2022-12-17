@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { storeToken } from "../../../api/helpers";
-import { setToken } from "../../../store/slices/appSlice/appSlice";
-import { IuseSignInEffectsParams } from "./types";
+import { storeToken } from "../../../../../api/helpers";
+import {
+  setHideDrawerHeader,
+  setToken,
+} from "../../../../../store/slices/appSlice/appSlice";
+import { IuseSignInEffects } from "./types";
 
 export const useSignInEffects = ({
   token,
@@ -10,9 +13,12 @@ export const useSignInEffects = ({
   setEmail,
   setIsProvider,
   setPassword,
-}: IuseSignInEffectsParams) => {
+}: IuseSignInEffects) => {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(setHideDrawerHeader({ hideDrawerHeader: false }));
+  }, []);
   useEffect(() => {
     if (!token) return;
 

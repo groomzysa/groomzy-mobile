@@ -1,7 +1,7 @@
 import { validate } from "isemail";
 import { UserRole } from "../../../api/graphql/api.schema";
 import { useAddUser } from "../../../api/hooks/mutations";
-import { IaddUserHandlerParams, IshowPasswordHandlerParams } from "./types";
+import { IaddUserHandler, IshowPasswordHandler } from "./types";
 
 export const useSignUpHandlers = () => {
   const {
@@ -26,7 +26,7 @@ export const useSignUpHandlers = () => {
     setFirstNameError,
     setLastNameError,
     setPasswordError,
-  }: IaddUserHandlerParams) => {
+  }: IaddUserHandler) => {
     const emailAbort = !email || !validate(email);
     const passwordAbort = !password || password.length < 5;
     const abortSignUp = !firstName || !lastName || emailAbort || passwordAbort;
@@ -65,7 +65,7 @@ export const useSignUpHandlers = () => {
   const showPasswordHandler = ({
     setShowPassword,
     showPassword,
-  }: IshowPasswordHandlerParams) => {
+  }: IshowPasswordHandler) => {
     setShowPassword(!showPassword);
   };
 

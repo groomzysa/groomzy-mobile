@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDeleteService } from "../../../../../../api/hooks/mutations";
 import { RootState } from "../../../../../../store/store";
-import { IdeleteServiceHandlersParams } from "./types";
 import { useDeleteServiceEffects } from "./useDeleteServiceEffects";
 
 export const useDeleteServiceHandlers = (hideDialog: () => void) => {

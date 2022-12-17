@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { User } from "../../../api/graphql/api.schema";
 import { TRootAppDrawerParamList } from "../../../components/GNavigation/components/AppNavigator/types";
 
-export interface IuseSignUpEffectsParams {
+export interface IuseSignUpEffects {
   addUser?: User;
   setFirstName: Dispatch<SetStateAction<string>>;
   setLastName: Dispatch<SetStateAction<string>>;
@@ -17,7 +17,7 @@ export interface IuseSignUpEffectsParams {
   >;
 }
 
-export interface IaddUserHandlerParams {
+export interface IaddUserHandler {
   email: string;
   password: string;
   firstName: string;
@@ -33,7 +33,7 @@ export interface IaddUserHandlerParams {
   setPasswordError: Dispatch<SetStateAction<string>>;
 }
 
-export interface IshowPasswordHandlerParams {
+export interface IshowPasswordHandler {
   setShowPassword: Dispatch<SetStateAction<boolean>>;
   showPassword: boolean;
 }
