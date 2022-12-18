@@ -12,6 +12,9 @@ export const useDetailsHandlers = () => {
       case "Twitter":
         Linking.openURL(`https://www.twitter.com/${username}`);
         break;
+      case "Twitter":
+        Linking.openURL(`https://www.facebook.com/${username}`);
+        break;
     }
   };
 
