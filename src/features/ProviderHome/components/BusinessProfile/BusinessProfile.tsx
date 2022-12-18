@@ -1,6 +1,11 @@
 import React, { FC } from "react";
 import { Container, Space, TabButton } from "./styles";
-import { TradingAddress, TradingInfo, TradingTimes } from "./components";
+import {
+  TradingAddress,
+  TradingInfo,
+  TradingSocials,
+  TradingTimes,
+} from "./components";
 import { TabView, SceneMap, TabBarProps } from "react-native-tab-view";
 import { Animated, useWindowDimensions, View } from "react-native";
 
@@ -12,6 +17,7 @@ export const BusinessProfile: FC = () => {
     { key: "tradingInfo", title: "Info" },
     { key: "tradingAddress", title: "Address" },
     { key: "tradingTimes", title: "Times" },
+    { key: "tradingSocials", title: "Socials" },
   ]);
 
   /**
@@ -79,6 +85,12 @@ export const BusinessProfile: FC = () => {
       <Container>
         <Space />
         <TradingTimes />
+      </Container>
+    ),
+    tradingSocials: () => (
+      <Container>
+        <Space />
+        <TradingSocials />
       </Container>
     ),
   });

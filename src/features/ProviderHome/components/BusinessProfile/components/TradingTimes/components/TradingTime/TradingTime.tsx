@@ -100,7 +100,6 @@ export const TradingTime: FC<ITradingTimeProps> = ({ operatingTime }) => {
       </Card.Actions>
 
       <ViewTradingTime
-        operatingTime={operatingTime}
         visible={viewDialogVisible}
         hideDialog={hideViewDialogHandler}
       />
@@ -110,7 +109,6 @@ export const TradingTime: FC<ITradingTimeProps> = ({ operatingTime }) => {
       />
 
       <DeleteTradingTime
-        operatingTime={operatingTime}
         visible={deleteDialogVisible}
         hideDialog={hideDeleteDialogHandler}
       />

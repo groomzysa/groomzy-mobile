@@ -9,9 +9,6 @@ export const Container = styled(View)`
 `;
 
 export const Content = styled(View)`
-  padding: ${({ theme }: { theme: ITheme }) => theme.spacing.container.small}px;
-  margin-right: ${({ theme }: { theme: ITheme }) =>
-    theme.spacing.container.small}px;
   width: 100%;
 `;
 
@@ -30,6 +27,8 @@ export const AddButtonContainer = styled(View)`
   width: 70px;
   border-radius: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.xxsmall}px;
+  margin-left: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.xsmall}px;
   margin-bottom: ${({ theme }: { theme: ITheme }) =>
     theme.spacing.container.small}px;
 `;

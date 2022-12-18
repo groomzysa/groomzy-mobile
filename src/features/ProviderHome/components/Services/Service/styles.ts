@@ -11,8 +11,6 @@ export const ServiceCard = styled(Card)`
 export const ViewButtonContainer = styled(View)`
   flex-direction: column;
   align-items: center;
-  padding: ${({ theme }: { theme: ITheme }) =>
-    theme.spacing.container.xxsmall}px;
   background-color: ${({ theme }: { theme: ITheme }) => theme.colors.white};
   width: 50px;
   border-radius: ${({ theme }: { theme: ITheme }) =>

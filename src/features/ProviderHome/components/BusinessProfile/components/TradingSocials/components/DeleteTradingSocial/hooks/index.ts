@@ -1,0 +1,1 @@
+export { useDeleteTradingSocialHandlers } from "./useDeleteTradingSocialHandlers";

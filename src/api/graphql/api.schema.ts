@@ -90,6 +90,7 @@ export type Mutation = {
   addAccountAddress: Address;
   addOperatingTime: OperatingTime;
   addService: Service;
+  addSocial: Social;
   addStaff: Staff;
   addTradingAddress: Address;
   addTradingInfo: Provider;
@@ -97,6 +98,7 @@ export type Mutation = {
   contactMail: Message;
   deleteOperatingTime: OperatingTime;
   deleteService: Service;
+  deleteSocial: Social;
   deleteStaff: Staff;
   requestPasswordReset: Message;
   resetPassword: Message;
@@ -105,6 +107,7 @@ export type Mutation = {
   updateAccountAddress: Address;
   updateOperatingTime: OperatingTime;
   updateService: Service;
+  updateSocial: Social;
   updateStaff: Staff;
   updateTradingAddress: Address;
   updateTradingInfo: Provider;
@@ -136,6 +139,12 @@ export type MutationAddServiceArgs = {
   inHouse: Scalars['Boolean'];
   name: Scalars['String'];
   price: Scalars['Float'];
+};
+
+
+export type MutationAddSocialArgs = {
+  name: Scalars['String'];
+  username: Scalars['String'];
 };
 
 
@@ -188,6 +197,11 @@ export type MutationDeleteOperatingTimeArgs = {
 
 export type MutationDeleteServiceArgs = {
   serviceId: Scalars['Int'];
+};
+
+
+export type MutationDeleteSocialArgs = {
+  socialId: Scalars['Int'];
 };
 
 
@@ -255,6 +269,13 @@ export type MutationUpdateServiceArgs = {
 };
 
 
+export type MutationUpdateSocialArgs = {
+  name?: InputMaybe<Scalars['String']>;
+  socialId: Scalars['Int'];
+  username?: InputMaybe<Scalars['String']>;
+};
+
+
 export type MutationUpdateStaffArgs = {
   firstName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
@@ -301,6 +322,7 @@ export type Provider = {
   operatingTimes?: Maybe<Array<OperatingTime>>;
   phone?: Maybe<Scalars['String']>;
   services?: Maybe<Array<Service>>;
+  socials?: Maybe<Array<Social>>;
   staffs?: Maybe<Array<Staff>>;
   tradingName?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
@@ -313,6 +335,7 @@ export type Query = {
   provider?: Maybe<Provider>;
   providers: Array<Provider>;
   services: Array<Service>;
+  socials: Array<Social>;
   user?: Maybe<User>;
 };
 
@@ -329,6 +352,16 @@ export type Service = {
   price?: Maybe<Scalars['Float']>;
   staffs?: Maybe<Array<Staff>>;
   updatedAt?: Maybe<Scalars['String']>;
+};
+
+export type Social = {
+  __typename?: 'Social';
+  createdAt?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  provider?: Maybe<Provider>;
+  updatedAt?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 export type Staff = {
@@ -495,6 +528,30 @@ export type UpdateServiceMutationVariables = Exact<{
 
 export type UpdateServiceMutation = { __typename?: 'Mutation', updateService: { __typename?: 'Service', id: number, name?: string | null, description?: string | null, price?: number | null, duration?: number | null, durationUnit?: DurationUnitType | null, inHouse?: boolean | null, category?: CategoryType | null } };
 
+export type AddSocialMutationVariables = Exact<{
+  name: Scalars['String'];
+  username: Scalars['String'];
+}>;
+
+
+export type AddSocialMutation = { __typename?: 'Mutation', addSocial: { __typename?: 'Social', id: number, name?: string | null, username?: string | null } };
+
+export type DeleteSocialMutationVariables = Exact<{
+  socialId: Scalars['Int'];
+}>;
+
+
+export type DeleteSocialMutation = { __typename?: 'Mutation', deleteSocial: { __typename?: 'Social', id: number, name?: string | null, username?: string | null } };
+
+export type UpdateSocialMutationVariables = Exact<{
+  socialId: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateSocialMutation = { __typename?: 'Mutation', updateSocial: { __typename?: 'Social', id: number, name?: string | null, username?: string | null } };
+
 export type AddAccountAddressMutationVariables = Exact<{
   streetNumber: Scalars['String'];
   streetName: Scalars['String'];
@@ -581,12 +638,17 @@ export type ProviderQuery = { __typename?: 'Query', provider?: { __typename?: 'P
 export type ProvidersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProvidersQuery = { __typename?: 'Query', providers: Array<{ __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, addresses?: Array<{ __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null }> | null, operatingTimes?: Array<{ __typename?: 'OperatingTime', id: number, day?: DayType | null, opens?: string | null, closes?: string | null }> | null }> };
+export type ProvidersQuery = { __typename?: 'Query', providers: Array<{ __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, addresses?: Array<{ __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null }> | null, operatingTimes?: Array<{ __typename?: 'OperatingTime', id: number, day?: DayType | null, opens?: string | null, closes?: string | null }> | null, socials?: Array<{ __typename?: 'Social', id: number, name?: string | null, username?: string | null }> | null }> };
 
 export type ServicesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ServicesQuery = { __typename?: 'Query', services: Array<{ __typename?: 'Service', id: number, name?: string | null, description?: string | null, price?: number | null, duration?: number | null, durationUnit?: DurationUnitType | null, inHouse?: boolean | null, category?: CategoryType | null }> };
+
+export type SocialsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SocialsQuery = { __typename?: 'Query', socials: Array<{ __typename?: 'Social', id: number, name?: string | null, username?: string | null }> };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 

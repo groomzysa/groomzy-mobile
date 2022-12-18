@@ -2,19 +2,27 @@ import React, { FC, useState } from "react";
 import { Text } from "react-native";
 import * as Location from "expo-location";
 
-import { Container, Content, DayTimeCard, MapViewContainer } from "./styles";
+import {
+  Container,
+  Content,
+  DetailCard,
+  Header,
+  MapViewContainer,
+  TextStyled,
+} from "./styles";
 import { GErrorMessage, GTitle } from "../../../../../../components";
 import { useSelector } from "react-redux";
 import { addressName } from "../../../../util";
 import { Marker } from "react-native-maps";
 import { INITIAL_REGION } from "./constants";
-import { useDetailsEffects } from "./hooks";
+import { useDetailsEffects, useDetailsHandlers } from "./hooks";
 import { RootState } from "../../../../../../store/store";
 import {
   Flex1,
   FlexRowContainer,
   FlexRowEndContainer,
 } from "../../../../../../utils/common/styles";
+import { isEmpty } from "lodash";
 
 export const Details: FC = () => {
   const {
@@ -31,6 +39,7 @@ export const Details: FC = () => {
    * Custom hooks
    *
    */
+  const { visitSocial } = useDetailsHandlers();
 
   useDetailsEffects({
     locationStatus,
@@ -71,10 +80,32 @@ export const Details: FC = () => {
             />
           )}
         </MapViewContainer>
-        <GTitle title="Trading times" />
-        {provider?.operatingTimes?.map(({ id, day, opens, closes }) => (
-          <DayTimeCard key={id} elevation={1}>
-            <DayTimeCard.Content>
+        {!isEmpty(provider?.socials) && (
+          <>
+            <Header>Trading socials</Header>
+            {provider?.socials?.map(({ name, username }) => (
+              <DetailCard key={name} elevation={1}>
+                <DetailCard.Content>
+                  <FlexRowContainer>
+                    <Flex1>
+                      <Text>{name}</Text>
+                    </Flex1>
+                    <FlexRowEndContainer>
+                      <TextStyled onPress={() => visitSocial(name!, username!)}>
+                        {username}
+                      </TextStyled>
+                    </FlexRowEndContainer>
+                  </FlexRowContainer>
+                </DetailCard.Content>
+              </DetailCard>
+            ))}
+          </>
+        )}
+
+        <Header>Trading times</Header>
+        {provider?.operatingTimes?.map(({ day, opens, closes }) => (
+          <DetailCard key={day} elevation={1}>
+            <DetailCard.Content>
               <FlexRowContainer>
                 <Flex1>
                   <Text>{day}</Text>
@@ -83,8 +114,8 @@ export const Details: FC = () => {
                   <Text>{`${opens} - ${closes}`}</Text>
                 </FlexRowEndContainer>
               </FlexRowContainer>
-            </DayTimeCard.Content>
-          </DayTimeCard>
+            </DetailCard.Content>
+          </DetailCard>
         ))}
       </Content>
     </Container>

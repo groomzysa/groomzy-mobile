@@ -1,0 +1,1 @@
+export { useTradingSocialsEffects } from "./useTradingSocialsEffects";

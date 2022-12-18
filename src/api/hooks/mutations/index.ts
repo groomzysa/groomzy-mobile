@@ -41,6 +41,15 @@ export { useUpdateOperatingTime } from "./operatingTimes/useUpdateOperatingTime"
 
 /**
  *
+ * Social mutations
+ *
+ */
+export { useAddSocial } from "./social/useAddSocial";
+export { useDeleteSocial } from "./social/useDeleteSocial";
+export { useUpdateSocial } from "./social/useUpdateSocial";
+
+/**
+ *
  * Contact mail mutations
  *
  */

@@ -1,6 +1,4 @@
-import { OperatingTime } from "../../../../../../../../api/graphql/api.schema";
-
-export interface IAddTradingTimeProps {
+export interface IUpdateTradingTimeProps {
   visible: boolean;
   hideDialog: () => void;
 }

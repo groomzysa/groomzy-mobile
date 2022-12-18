@@ -18,9 +18,9 @@ import { Space } from "../../../../styles";
 import { DAYS } from "../../constants";
 import { useUpdateTradingTimeHandlers } from "./hooks";
 import { ActionButtonContainer } from "./styles";
-import { IAddTradingTimeProps } from "./types";
+import { IUpdateTradingTimeProps } from "./types";
 
-export const UpdateTradingTime: FC<IAddTradingTimeProps> = ({
+export const UpdateTradingTime: FC<IUpdateTradingTimeProps> = ({
   visible,
   hideDialog,
 }) => {

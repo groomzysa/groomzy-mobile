@@ -18,5 +18,11 @@ query providers {
       opens
       closes
     }
+
+    socials {
+      id
+      name
+      username
+    }
   }
 }

@@ -1,0 +1,1 @@
+export { useUpdateTradingSocialHandlers } from "./useUpdateTradingSocialHandlers";

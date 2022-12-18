@@ -40,6 +40,22 @@ export const DELETED_SERVICE_MESSAGE = `Service deleted successfuly!`;
 
 /**
  *
+ * Social success messages
+ *
+ */
+export const ADD_SOCIAL_MESSAGE = `Social added successfuly!
+
+This dialog will close shortly`;
+export const UPDATE_SOCIAL_MESSAGE = `Social updated successfuly!
+
+This dialog will close shortly`;
+export const DELETE_SOCIAL_MESSAGE = `Are you sure want to delete this social?
+        
+This will be deleted permanently.`;
+export const DELETED_SOCIAL_MESSAGE = `Social deleted successfuly!`;
+
+/**
+ *
  * Operating time success messages
  *
  */
