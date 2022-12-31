@@ -58,7 +58,8 @@ export const TradingInfo: FC = () => {
         errorMessage={phoneNumberError}
         keyboardType="phone-pad"
       />
-      <View style={{ marginTop: 20 }}>
+
+      {/* <View style={{ marginTop: 20 }}>
         <TouchableOpacity onPress={async () => await pickImageHandler()}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons name="camera" size={22} color="gray" />
@@ -81,7 +82,7 @@ export const TradingInfo: FC = () => {
             />
           )}
         </View>
-      </View>
+      </View> */}
 
       <GButton
         label={hasProvider ? "Update details" : "Add details"}

@@ -20,6 +20,10 @@ export const api = createApi({
         headers.set("authorization", `Bearer ${token}`);
       }
 
+      if (isImageUpload) {
+        // headers.set("Content-Type", "enctype");
+      }
+
       headers.set("Accept", "application/json");
 
       return headers;

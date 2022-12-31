@@ -12,7 +12,7 @@ export const Account: FC = () => {
   const [index, setIndex] = useState<number>(0);
   const [routes] = useState<{ key: string; title: string }[]>([
     { key: "accountDetails", title: "Details" },
-    { key: "accountImage", title: "Image" },
+    // { key: "accountImage", title: "Image" },
     { key: "accountAddress", title: "Address" },
   ]);
 
@@ -54,13 +54,14 @@ export const Account: FC = () => {
               currentTabIndex={props.navigationState.index}
               inputRangeLength={inputRange.length}
               onPress={() => {
-                if (i === 1) {
-                  // Set to true to enable request header content type to multipart/form
-                  dispatch(setIsImageUpload({ isImageUpload: true }));
-                } else {
-                  // Set to false to disable request header content type multipart/form
-                  dispatch(setIsImageUpload({ isImageUpload: false }));
-                }
+                // TODO: Enabled once the issue for react native image upload is resolved
+                // if (i === 1) {
+                //   // Set to true to enable request header content type to multipart/form
+                //   dispatch(setIsImageUpload({ isImageUpload: true }));
+                // } else {
+                //   // Set to false to disable request header content type multipart/form
+                //   dispatch(setIsImageUpload({ isImageUpload: false }));
+                // }
 
                 setIndex(i);
               }}
@@ -84,12 +85,12 @@ export const Account: FC = () => {
         <AccountDetails />
       </Container>
     ),
-    accountImage: () => (
-      <Container>
-        <Space />
-        <AccountImage />
-      </Container>
-    ),
+    // accountImage: () => (
+    //   <Container>
+    //     <Space />
+    //     <AccountImage />
+    //   </Container>
+    // ),
     accountAddress: () => (
       <Container>
         <Space />

@@ -61,23 +61,19 @@ export const useAccountImageHandlers = () => {
         quality: 1,
       });
 
-      if (!result?.cancelled) {
-        const fileType = result.uri.split(".").pop();
-        const response = await fetch(result.uri);
+      if (!result?.canceled) {
+        const selectedImage = result.assets[0];
+        const fileType = selectedImage.uri.split(".").pop();
+        const response = await fetch(selectedImage.uri);
         const imageBlob = await response.blob();
 
         const formData = new FormData();
-        formData.append("file", {
-          //@ts-ignore
-          name: `${user?.email}_${user?.role?.toLowerCase()}.${fileType}`,
-          uri: result.uri,
-          type: `image/${fileType}`,
-        });
-        // formData.append(
-        //   "file",
-        //   imageBlob,
-        //   `${user?.email}_${user?.role?.toLowerCase()}.${fileType}`
-        // );
+
+        formData.append(
+          "file",
+          imageBlob,
+          `${user?.email}_${user?.role?.toLowerCase()}.${fileType}`
+        );
 
         setImageUri(result.uri);
         setImage(formData);

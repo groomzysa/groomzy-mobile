@@ -17,6 +17,23 @@ export const AppDrawerHeaderImage = styled(Image)`
     theme.spacing.container.xxsmall}px;
 `;
 
+export const AppDrawerHeaderImageTemplate = styled(View)`
+  height: 80px;
+  width: 80px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  background-color: ${({ theme }: { theme: ITheme }) =>
+    theme.colors.bg.secondary};
+  margin-bottom: ${({ theme }: { theme: ITheme }) =>
+    theme.spacing.container.xxsmall}px;
+`;
+
+export const AppDrawerHeaderImageTemplateText = styled(Text)`
+  font-size: ${({ theme }: { theme: ITheme }) => theme.fontSizes.body.title}px;
+  font-weight: 500;
+`;
+
 export const AppDrawerBottomContainer = styled(View)`
   padding: ${({ theme }: { theme: ITheme }) => theme.spacing.container.small}px;
   border-top-width: 1px;

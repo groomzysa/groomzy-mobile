@@ -17,18 +17,13 @@ import {
   ProviderHome,
   SignIn,
   SignUp,
+  TsAndCs,
 } from "../../../../features";
 import { UserRole } from "../../../../api/graphql/api.schema";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 
 const Drawer = createDrawerNavigator<TRootAppDrawerParamList>();
-
-const TsAndCs: FC = () => (
-  <GSafeArea>
-    <Text>Ts and Cs</Text>
-  </GSafeArea>
-);
 
 const createScreenOptions = () => {
   return {

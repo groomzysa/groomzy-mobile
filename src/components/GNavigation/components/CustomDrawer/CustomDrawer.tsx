@@ -18,6 +18,8 @@ import {
   DrawerItemListContainer,
   DrawerUserName,
   SignOutText,
+  AppDrawerHeaderImageTemplate,
+  AppDrawerHeaderImageTemplateText,
 } from "./styles";
 import { ICustomDrawerProps } from "./types";
 
@@ -26,7 +28,6 @@ export const CustomDrawer: FC<ICustomDrawerProps> = ({ drawerProps }) => {
     app: { user },
   } = useSelector<RootState, Pick<RootState, "app">>((state) => state);
   const dispatch = useDispatch();
-
   return (
     <View style={{ flex: 1 }}>
       <AppDrawerHeaderImageBackground
@@ -34,11 +35,22 @@ export const CustomDrawer: FC<ICustomDrawerProps> = ({ drawerProps }) => {
           uri: "https://images.unsplash.com/photo-1471047283799-ebd97acc0bc3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OTB8fGJhY2tncm91bmQlMjBibHVlJTIwZ3JheXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
         }}
       >
-        <AppDrawerHeaderImage
-          source={{
-            uri: "https://images.unsplash.com/photo-1633681926035-ec1ac984418a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8c2Fsb258ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-          }}
-        />
+        {user?.userImageUrl ? (
+          <AppDrawerHeaderImage
+            source={{
+              uri: user.userImageUrl,
+            }}
+          />
+        ) : (
+          <AppDrawerHeaderImageTemplate>
+            <AppDrawerHeaderImageTemplateText>
+              {user
+                ? `${user.firstName![0].toUpperCase()}${user.lastName![0].toUpperCase()}`
+                : "!"}
+            </AppDrawerHeaderImageTemplateText>
+          </AppDrawerHeaderImageTemplate>
+        )}
+
         <DrawerUserName>
           {
             <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>
