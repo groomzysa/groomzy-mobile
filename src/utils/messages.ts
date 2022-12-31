@@ -7,10 +7,11 @@ export const SIGN_UP_MESSAGE = `Signed up successfuly!
 
 You will be redirectd to sign in shortly.
 `;
-export const ACCOUNT_UPDATED_MESSAGE = `Account updated successfuly!`;
+export const UPDATE_USER_ACCOUNT_MESSAGE = `Account updated successfuly!`;
 
-export const UPDATE_USER_ACCOUNT_ADDRESS_MESSAGE = `Account address added successfuly!`;
-export const ADD_USER_ACCOUNT_ADDRESS_MESSAGE = `Account address updated successfuly!`;
+export const ADD_USER_ACCOUNT_ADDRESS_MESSAGE = `Account address added successfuly!`;
+export const UPDATE_USER_ACCOUNT_ADDRESS_MESSAGE = `Account address updated successfuly!`;
+export const UPDATE_USER_ACCOUNT_IMAGE_MESSAGE = `Account profile image updated successfuly!`;
 
 /**
  *

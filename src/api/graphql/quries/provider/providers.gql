@@ -1,5 +1,5 @@
-query providers {
-  providers {
+query providers($search: String) {
+  providers(search: $search) {
     id
     tradingName
     phone

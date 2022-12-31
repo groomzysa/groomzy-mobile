@@ -1,20 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IHomeSliceState, ISetProviderAction } from "./types";
+import {
+  IHomeSliceState,
+  ISetProviderAction,
+  ISetSearchAction,
+  ISetSearchTmpAction,
+} from "./types";
 
 const initialState: IHomeSliceState = {
   provider: undefined,
+  search: undefined,
+  searchTmp: undefined,
 };
 
 export const homeSlice = createSlice({
   name: "homeSlice",
   initialState,
   reducers: {
-    setProvider: (state, action: ISetProviderAction) => {
-      state.provider = action.payload.provider;
+    setProvider: (state, { payload }: ISetProviderAction) => {
+      state.provider = payload.provider;
+    },
+    setSearch: (state, { payload }: ISetSearchAction) => {
+      state.search = payload.search;
+    },
+    setSearchTmp: (state, { payload }: ISetSearchTmpAction) => {
+      state.searchTmp = payload.searchTmp;
     },
   },
 });
 
-export const { setProvider } = homeSlice.actions;
+export const { setProvider, setSearch, setSearchTmp } = homeSlice.actions;
 
 export default homeSlice.reducer;

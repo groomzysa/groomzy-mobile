@@ -3,7 +3,7 @@ mutation updateAccount(
   $lastName: String
   $email: String
   $password: String
-  $userImage: File
+  $userImage: Upload
 ) {
   updateAccount(
     firstName: $firstName

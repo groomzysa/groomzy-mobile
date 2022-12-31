@@ -12,6 +12,7 @@ export const api = createApi({
     client: graphqlClient,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).app.token;
+      const isImageUpload = (getState() as RootState).account.isImageUpload;
 
       // If we have a token set in state,
       // update auth header.
@@ -19,7 +20,7 @@ export const api = createApi({
         headers.set("authorization", `Bearer ${token}`);
       }
 
-      headers.set("accept", "application/json");
+      headers.set("Accept", "application/json");
 
       return headers;
     },

@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { ActivityIndicator, FlatList } from "react-native";
-import { useFetchProviders } from "../../../../api/hooks/queries";
 import { GErrorMessage, GSearch } from "../../../../components";
 import { theme } from "../../../../utils/theme";
 import { ProviderSummary } from "../ProviderSummary/ProviderSummary";
+import { useHomeExplorerHandlers } from "./hooks";
 import {
   FlatListContainer,
   FlatListItemWrapper,
@@ -13,9 +13,21 @@ import {
 import { IHomeExplorerProps } from "./types";
 
 export const HomeExplorer: FC<IHomeExplorerProps> = ({ navigation }) => {
-  const [search, setSearch] = useState<string>("");
-  const { providers, providersError, providersHasError, providersLoading } =
-    useFetchProviders();
+  /**
+   *
+   * Custom hooks
+   *
+   */
+  const {
+    providers,
+    providersError,
+    providersHasError,
+    providersLoading,
+    searchTmp,
+    searchTmpHandler,
+    refetchProviders,
+    refetchProvidersHandler,
+  } = useHomeExplorerHandlers();
 
   return (
     <HomeExplorerContainer>
@@ -27,8 +39,8 @@ export const HomeExplorer: FC<IHomeExplorerProps> = ({ navigation }) => {
             <GSearch
               testID="homeSearch"
               label="Search service provider"
-              value={search}
-              onTextChange={setSearch}
+              value={searchTmp}
+              onTextChange={searchTmpHandler}
             />
           </SearchContainer>
           {providersHasError && <GErrorMessage message={providersError} />}
@@ -46,6 +58,8 @@ export const HomeExplorer: FC<IHomeExplorerProps> = ({ navigation }) => {
               contentContainerStyle={{
                 padding: theme.spacing.container.xsmall,
               }}
+              onRefresh={() => refetchProvidersHandler(true)}
+              refreshing={refetchProviders}
             />
           </FlatListContainer>
         </>

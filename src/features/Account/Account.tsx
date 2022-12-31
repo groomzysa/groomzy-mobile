@@ -1,18 +1,23 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Animated, useWindowDimensions, View } from "react-native";
 import { SceneMap, TabBarProps, TabView } from "react-native-tab-view";
+import { useDispatch } from "react-redux";
+import { setIsImageUpload } from "../../store/slices/accountSlice/accountSlice";
 
 import { AccountAddress, AccountDetails } from "./components";
+import { AccountImage } from "./components/AccountImage/AccountImage";
 import { Container, Space, TabButton } from "./styles";
 
 export const Account: FC = () => {
-  const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const [index, setIndex] = useState<number>(0);
+  const [routes] = useState<{ key: string; title: string }[]>([
     { key: "accountDetails", title: "Details" },
+    { key: "accountImage", title: "Image" },
     { key: "accountAddress", title: "Address" },
   ]);
+
+  const dispatch = useDispatch();
+  const layout = useWindowDimensions();
 
   /**
    *
@@ -48,7 +53,17 @@ export const Account: FC = () => {
               currentTab={currentTab}
               currentTabIndex={props.navigationState.index}
               inputRangeLength={inputRange.length}
-              onPress={() => setIndex(i)}
+              onPress={() => {
+                if (i === 1) {
+                  // Set to true to enable request header content type to multipart/form
+                  dispatch(setIsImageUpload({ isImageUpload: true }));
+                } else {
+                  // Set to false to disable request header content type multipart/form
+                  dispatch(setIsImageUpload({ isImageUpload: false }));
+                }
+
+                setIndex(i);
+              }}
             >
               <Animated.Text
                 style={{ opacity, fontWeight: currentTab ? "500" : "normal" }}
@@ -67,6 +82,12 @@ export const Account: FC = () => {
       <Container>
         <Space />
         <AccountDetails />
+      </Container>
+    ),
+    accountImage: () => (
+      <Container>
+        <Space />
+        <AccountImage />
       </Container>
     ),
     accountAddress: () => (

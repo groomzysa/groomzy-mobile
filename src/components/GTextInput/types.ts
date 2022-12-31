@@ -7,7 +7,7 @@ export interface IGTextInputProps {
   placeholder?: string;
   label?: string;
   secureTextEntry?: boolean;
-  onTextChange?: Dispatch<SetStateAction<string>>;
+  onTextChange?: (text: string) => void;
   sufixIconOnPress?: () => void;
   errorMessage?: string;
   value?: string;

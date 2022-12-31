@@ -20,20 +20,20 @@ export const homeProviderSlice = createSlice({
   name: "providerHomeSlice",
   initialState,
   reducers: {
-    setDayOptions: (state, action: ISetDayOptionsAction) => {
-      state.dayOptions = action.payload.dayOptions;
+    setDayOptions: (state, { payload }: ISetDayOptionsAction) => {
+      state.dayOptions = payload.dayOptions;
     },
-    setSocialOptions: (state, action: ISetSocialOptionsAction) => {
-      state.socialOptions = action.payload.socialOptions;
+    setSocialOptions: (state, { payload }: ISetSocialOptionsAction) => {
+      state.socialOptions = payload.socialOptions;
     },
-    setOperatingTime: (state, action: ISetOperatingTimeAction) => {
-      state.operatingTime = action.payload.operatingTime;
+    setOperatingTime: (state, { payload }: ISetOperatingTimeAction) => {
+      state.operatingTime = payload.operatingTime;
     },
-    setService: (state, action: ISetServiceAction) => {
-      state.service = action.payload.service;
+    setService: (state, { payload }: ISetServiceAction) => {
+      state.service = payload.service;
     },
-    setSocial: (state, action: ISetSocialAction) => {
-      state.social = action.payload.social;
+    setSocial: (state, { payload }: ISetSocialAction) => {
+      state.social = payload.social;
     },
   },
 });

@@ -68,8 +68,6 @@ enum DurationUnitType {
   HRS
 }
 
-scalar File
-
 type Message {
   message: String!
 }
@@ -80,9 +78,9 @@ type Mutation {
   deleteOperatingTime(operatingTimeId: Int!): OperatingTime!
   updateOperatingTime(operatingTimeId: Int!, day: DayType, opens: String, closes: String): OperatingTime!
   addTradingAddress(streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!): Address!
-  addTradingInfo(tradingName: String!, phone: String!, logo: File): Provider!
+  addTradingInfo(tradingName: String!, phone: String!, logo: Upload): Provider!
   updateTradingAddress(addressId: Int!, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String): Address!
-  updateTradingInfo(providerId: Int!, tradingName: String, phone: String, logo: File): Provider!
+  updateTradingInfo(providerId: Int!, tradingName: String, phone: String, logo: Upload): Provider!
   addService(name: String!, description: String!, price: Float!, duration: Float!, durationUnit: DurationUnitType!, inHouse: Boolean!, category: CategoryType!): Service!
   deleteService(serviceId: Int!): Service!
   updateService(serviceId: Int!, name: String, description: String, duration: Float, durationUnit: DurationUnitType, inHouse: Boolean, price: Float, category: CategoryType): Service!
@@ -93,11 +91,11 @@ type Mutation {
   deleteStaff(staffId: Int!): Staff!
   updateStaff(staffId: Int!, firstName: String, lastName: String): Staff!
   addAccountAddress(streetNumber: String!, streetName: String!, town: String!, city: String!, province: String!, areaCode: String!): Address!
-  addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!, userImage: File): User!
+  addUser(firstName: String!, lastName: String!, email: String!, password: String!, role: UserRole!, userImage: Upload): User!
   requestPasswordReset(email: String!, role: UserRole!): Message!
   resetPassword(passwordResetOTP: String!, password: String!): Message!
   signIn(email: String!, password: String!, role: UserRole!): Token!
-  updateAccount(firstName: String, lastName: String, email: String, password: String, userImage: File): User!
+  updateAccount(firstName: String, lastName: String, email: String, password: String, userImage: Upload): User!
   updateAccountAddress(addressId: Int!, streetNumber: String, streetName: String, town: String, city: String, province: String, areaCode: String): Address!
 }
 
@@ -130,7 +128,7 @@ type Provider {
 type Query {
   operatingTimes: [OperatingTime!]!
   provider: Provider
-  providers: [Provider!]!
+  providers(search: String): [Provider!]!
   services: [Service!]!
   socials: [Social!]!
   user: User
@@ -175,6 +173,8 @@ type Subscription {
 type Token {
   token: String!
 }
+
+scalar Upload
 
 type User {
   id: Int!

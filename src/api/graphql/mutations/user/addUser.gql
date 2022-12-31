@@ -4,7 +4,7 @@ mutation addUser(
   $email: String!
   $password: String!
   $role: UserRole!
-  $userImage: File
+  $userImage: Upload
 ) {
   addUser(
     firstName: $firstName

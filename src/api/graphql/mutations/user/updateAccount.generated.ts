@@ -17,7 +17,7 @@ export type UpdateAccountMutationVariables = Types.Exact<{
   lastName?: Types.InputMaybe<Types.Scalars['String']>;
   email?: Types.InputMaybe<Types.Scalars['String']>;
   password?: Types.InputMaybe<Types.Scalars['String']>;
-  userImage?: Types.InputMaybe<Types.Scalars['File']>;
+  userImage?: Types.InputMaybe<Types.Scalars['Upload']>;
 }>;
 
 
@@ -25,7 +25,7 @@ export type UpdateAccountMutationResult = { __typename?: 'Mutation', updateAccou
 
 
 export const UpdateAccountDocument = `
-    mutation updateAccount($firstName: String, $lastName: String, $email: String, $password: String, $userImage: File) {
+    mutation updateAccount($firstName: String, $lastName: String, $email: String, $password: String, $userImage: Upload) {
   updateAccount(
     firstName: $firstName
     lastName: $lastName

@@ -6,8 +6,13 @@ import { RootState } from "../../../../../store/store";
 import { useAccountDetailsEffects } from "./useAccountDetailsEffects";
 
 export const useAccountDetailsHandlers = () => {
+  /**
+   *
+   * State
+   *
+   */
   const {
-    app: { user },
+    app: { user, token },
   } = useSelector<RootState, Pick<RootState, "app">>((state) => state);
 
   const [firstName, setFirstName] = useState<string>(user?.firstName || "");
@@ -16,6 +21,11 @@ export const useAccountDetailsHandlers = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
+  /**
+   *
+   * Custom hooks
+   *
+   */
   const {
     updateAccountTrigger,
     updateAccount,
@@ -31,6 +41,12 @@ export const useAccountDetailsHandlers = () => {
     setLastName,
     setPassword,
   });
+
+  /**
+   *
+   * Handlers
+   *
+   */
 
   const updateAccounthandler = () => {
     if (!user) return;

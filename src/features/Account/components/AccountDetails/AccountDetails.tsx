@@ -68,6 +68,7 @@ export const AccountDetails: FC = () => {
         sufixIconOnPress={() => showPasswordHandler()}
         secureTextEntry={!showPassword}
       />
+
       <GButton
         label="Update"
         onPress={updateAccounthandler}

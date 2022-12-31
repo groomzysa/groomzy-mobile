@@ -2,7 +2,7 @@ mutation updateTradingInfo(
   $providerId: Int!
   $tradingName: String
   $phone: String
-  $logo: File
+  $logo: Upload
 ) {
   updateTradingInfo(
     providerId: $providerId

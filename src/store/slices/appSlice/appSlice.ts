@@ -16,14 +16,14 @@ export const appSlice = createSlice({
   name: "appSlice",
   initialState,
   reducers: {
-    setToken: (state, action: ISetTokenAction) => {
-      state.token = action.payload.token;
+    setToken: (state, { payload }: ISetTokenAction) => {
+      state.token = payload.token;
     },
-    setUser: (state, action: ISetUserAction) => {
-      state.user = action.payload.user;
+    setUser: (state, { payload }: ISetUserAction) => {
+      state.user = payload.user;
     },
-    setHideDrawerHeader: (state, action: IHideDrawerHeaderAction) => {
-      state.hideDrawerHeader = action.payload.hideDrawerHeader;
+    setHideDrawerHeader: (state, { payload }: IHideDrawerHeaderAction) => {
+      state.hideDrawerHeader = payload.hideDrawerHeader;
     },
   },
 });

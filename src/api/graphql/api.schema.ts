@@ -10,7 +10,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  File: any;
+  Upload: any;
 };
 
 export type Address = {
@@ -165,7 +165,7 @@ export type MutationAddTradingAddressArgs = {
 
 
 export type MutationAddTradingInfoArgs = {
-  logo?: InputMaybe<Scalars['File']>;
+  logo?: InputMaybe<Scalars['Upload']>;
   phone: Scalars['String'];
   tradingName: Scalars['String'];
 };
@@ -177,7 +177,7 @@ export type MutationAddUserArgs = {
   lastName: Scalars['String'];
   password: Scalars['String'];
   role: UserRole;
-  userImage?: InputMaybe<Scalars['File']>;
+  userImage?: InputMaybe<Scalars['Upload']>;
 };
 
 
@@ -234,7 +234,7 @@ export type MutationUpdateAccountArgs = {
   firstName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
-  userImage?: InputMaybe<Scalars['File']>;
+  userImage?: InputMaybe<Scalars['Upload']>;
 };
 
 
@@ -295,7 +295,7 @@ export type MutationUpdateTradingAddressArgs = {
 
 
 export type MutationUpdateTradingInfoArgs = {
-  logo?: InputMaybe<Scalars['File']>;
+  logo?: InputMaybe<Scalars['Upload']>;
   phone?: InputMaybe<Scalars['String']>;
   providerId: Scalars['Int'];
   tradingName?: InputMaybe<Scalars['String']>;
@@ -337,6 +337,11 @@ export type Query = {
   services: Array<Service>;
   socials: Array<Social>;
   user?: Maybe<User>;
+};
+
+
+export type QueryProvidersArgs = {
+  search?: InputMaybe<Scalars['String']>;
 };
 
 export type Service = {
@@ -465,7 +470,7 @@ export type AddTradingAddressMutation = { __typename?: 'Mutation', addTradingAdd
 export type AddTradingInfoMutationVariables = Exact<{
   tradingName: Scalars['String'];
   phone: Scalars['String'];
-  logo?: InputMaybe<Scalars['File']>;
+  logo?: InputMaybe<Scalars['Upload']>;
 }>;
 
 
@@ -488,7 +493,7 @@ export type UpdateTradingInfoMutationVariables = Exact<{
   providerId: Scalars['Int'];
   tradingName?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
-  logo?: InputMaybe<Scalars['File']>;
+  logo?: InputMaybe<Scalars['Upload']>;
 }>;
 
 
@@ -570,7 +575,7 @@ export type AddUserMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
   role: UserRole;
-  userImage?: InputMaybe<Scalars['File']>;
+  userImage?: InputMaybe<Scalars['Upload']>;
 }>;
 
 
@@ -606,7 +611,7 @@ export type UpdateAccountMutationVariables = Exact<{
   lastName?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
-  userImage?: InputMaybe<Scalars['File']>;
+  userImage?: InputMaybe<Scalars['Upload']>;
 }>;
 
 
@@ -635,7 +640,9 @@ export type ProviderQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProviderQuery = { __typename?: 'Query', provider?: { __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, addresses?: Array<{ __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null }> | null } | null };
 
-export type ProvidersQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProvidersQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']>;
+}>;
 
 
 export type ProvidersQuery = { __typename?: 'Query', providers: Array<{ __typename?: 'Provider', id: number, tradingName?: string | null, phone?: string | null, addresses?: Array<{ __typename?: 'Address', id: number, streetNumber?: string | null, streetName?: string | null, town?: string | null, city?: string | null, province?: string | null, areaCode?: string | null }> | null, operatingTimes?: Array<{ __typename?: 'OperatingTime', id: number, day?: DayType | null, opens?: string | null, closes?: string | null }> | null, socials?: Array<{ __typename?: 'Social', id: number, name?: string | null, username?: string | null }> | null }> };

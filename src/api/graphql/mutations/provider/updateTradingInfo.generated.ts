@@ -16,7 +16,7 @@ export type UpdateTradingInfoMutationVariables = Types.Exact<{
   providerId: Types.Scalars['Int'];
   tradingName?: Types.InputMaybe<Types.Scalars['String']>;
   phone?: Types.InputMaybe<Types.Scalars['String']>;
-  logo?: Types.InputMaybe<Types.Scalars['File']>;
+  logo?: Types.InputMaybe<Types.Scalars['Upload']>;
 }>;
 
 
@@ -24,7 +24,7 @@ export type UpdateTradingInfoMutationResult = { __typename?: 'Mutation', updateT
 
 
 export const UpdateTradingInfoDocument = `
-    mutation updateTradingInfo($providerId: Int!, $tradingName: String, $phone: String, $logo: File) {
+    mutation updateTradingInfo($providerId: Int!, $tradingName: String, $phone: String, $logo: Upload) {
   updateTradingInfo(
     providerId: $providerId
     tradingName: $tradingName

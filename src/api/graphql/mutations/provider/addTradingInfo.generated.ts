@@ -15,7 +15,7 @@ import { api } from '../../..';
 export type AddTradingInfoMutationVariables = Types.Exact<{
   tradingName: Types.Scalars['String'];
   phone: Types.Scalars['String'];
-  logo?: Types.InputMaybe<Types.Scalars['File']>;
+  logo?: Types.InputMaybe<Types.Scalars['Upload']>;
 }>;
 
 
@@ -23,7 +23,7 @@ export type AddTradingInfoMutationResult = { __typename?: 'Mutation', addTrading
 
 
 export const AddTradingInfoDocument = `
-    mutation addTradingInfo($tradingName: String!, $phone: String!, $logo: File) {
+    mutation addTradingInfo($tradingName: String!, $phone: String!, $logo: Upload) {
   addTradingInfo(tradingName: $tradingName, phone: $phone, logo: $logo) {
     id
     tradingName

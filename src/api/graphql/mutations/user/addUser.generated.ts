@@ -18,7 +18,7 @@ export type AddUserMutationVariables = Types.Exact<{
   email: Types.Scalars['String'];
   password: Types.Scalars['String'];
   role: Types.UserRole;
-  userImage?: Types.InputMaybe<Types.Scalars['File']>;
+  userImage?: Types.InputMaybe<Types.Scalars['Upload']>;
 }>;
 
 
@@ -26,7 +26,7 @@ export type AddUserMutationResult = { __typename?: 'Mutation', addUser: { __type
 
 
 export const AddUserDocument = `
-    mutation addUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $role: UserRole!, $userImage: File) {
+    mutation addUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $role: UserRole!, $userImage: Upload) {
   addUser(
     firstName: $firstName
     lastName: $lastName
